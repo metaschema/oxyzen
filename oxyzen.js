@@ -94,9 +94,10 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 	_relevantText:function(o){var s=JSON.stringify(o);
 		s=s.replace(/,"([^"]*)":/g,'');s=s.replace(/{"([^"]*)":/g,'');
 		s=s.replace(/","/g,' ');s=s.replace(/""/g,' ');s=s.replace(/"/g,' ');
-		s=s.replace(/<.*\/>/g,' ');
-		s=s.replace(/<!--.*-->/g,' ');
-		s=s.replace(/<.*>(.+)<\/.*>/g,' $1 ');
+		s=s.replace(/<.*\/>/g,' ');		
+		//s=s.replace(/<!--.*-->/g,' ');
+		//s=s.replace(/<.*>(.+)<\/.*>/g,' $1 ');
+		s=s.replace(/(<([^>]+)>)/ig,'');
 		s=s.replace(/<link .*>/g,' ');
 		s=s.replace(/ |{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
 		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');
