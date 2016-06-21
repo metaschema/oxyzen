@@ -108,7 +108,7 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 	 out.all[cw]={v:cw,c:ct};return out;
 	},
 	reindexcollection:function(collname){var _this=this;
-				this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key);console.log('reindexed '+d.key);});
+				this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});
 	},
 	
 		/*------------------------------------------------------------------------------------------------WORD INDEX END*/	
