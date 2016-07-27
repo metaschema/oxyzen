@@ -118,7 +118,7 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 	storage:{
 		list:function(path,next){
 			
-		};
+		}
 	}
   };
 		
