@@ -18,8 +18,7 @@ login:function(provider,method){if(!method){method='redirect'}
 		if(method=='redirect'){firebase.auth().signInWithRedirect(provider);}}else{console.log('Already logged in');}},
 logout:function(){firebase.auth().signOut();},
 initAuth:function(nextToken){if(!nextToken){nextToken=function(r){var i=0;}}firebase.auth().getRedirectResult().then(function(result){f$.user = result.user;
-f$.user.token = result.credential.accessToken;
- if(result.credential){nextToken(result);}else{nextToken(false);}
+ if(result.credential){f$.user.token = result.credential.accessToken;nextToken(result);}else{  nextToken(false);}
   }).catch(function(error) {if (error.code === 'auth/account-exists-with-different-credential') {
 			alert('You have already signed up with a different auth provider for that email.');
    // If you are using multiple auth providers on your app you should handle linking
@@ -115,6 +114,11 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 	},
 	
 		/*------------------------------------------------------------------------------------------------WORD INDEX END*/	
+	},
+	storage:{
+		list:function(path,next){
+			
+		};
 	}
   };
 		
