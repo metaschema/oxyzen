@@ -92,7 +92,8 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 		if(_collection){step=function(d){if(d.key.indexOf(_collection)==0){_this.getone(d.key,uninext);}}}
 		else{step=function(d){_this.getone(d.key,uninext);}}
 	 var xx=s.split(' ');var xlen=xx.length;for(var x=0;x<xlen;x++){xx[x]=xx[x].trim();if(xx[x].length>2){
-		_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/keys').on('child_added',step);}}},
+		_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/keys');tref.off('child_added',step);tref.on('child_added',step);
+		}}},
 	
 	_doindex:function(o,k,f){var RT=this._relevantText(o);var _this=this;var j;
 	 var IDX=this._indexAllandHashedWords(RT);
