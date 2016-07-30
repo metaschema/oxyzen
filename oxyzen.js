@@ -58,10 +58,16 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
  getall:function(col,next){this.db('/'+col).on('child_added',function(d){var v=d.val();v.$key=col+d.key;next(v)})},
 	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
 	var nkey=otype+'-'+x;this._doindex(doc,nkey,this.docnamefield);doc.$key=nkey;return doc;},
-	del:function(key){var _this=this;var doend=function(){_this.db('/'+f$.oxyprefix+'log_'+key.replace('-','/')).remove();_this.db('/'+f$.oxyprefix+'ver_'+key.replace('-','/')).remove();_this.db('/'+key.replace('-','/')).remove();};
+	del:function(key){var _this=this;var doend=function(){_this.db('/'+f$.oxyprefix+'log_'+key.replace('-','/')).remove();_this.db('/'+f$.oxyprefix+'ver_'+key.replace('-','/')).remove();_this.db('/'+key.replace('-','/')).remove();
+		_this.db('/'+f$.oxyprefix+'invdex/'+key.replace('-','/')).once('child_added',function(snap){var IDX=snap.val();var v;
+				var ln=IDX.all.length;for(v=0;v<ln;v++){_this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[v]+'/keys/'+key).remove();}
+				var ln=IDX.hash.length;for(v=0;v<ln;v++){_this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[v]+'/keys/'+key).remove();}
+				_this.db('/'+f$.oxyprefix+'Nndex/'+key).remove();
+				/*TODO CLEAN WINDEX*/
+	});};
 		this.getone(key,function(d){for(var k in d.rels){_this.db(k.replace('-','/')+'/rels/'+key).remove();
 			_this._add(f$.oxyprefix+'log',k,{text:'Unlinked from '+d[_this.docnamefield]+'['+key+'] because it\'s getting deleted.'});
-		}doend();/*TODO CLEAN WINDEX*/});},
+		}doend();});},
 	set:function(doc,log){var k=doc.$key;this._doindex(doc,k,this.docnamefield);var _this=this;delete doc.$key;if(!log){log='Object Modified'}
 			this.getone(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 			_this.db(k.replace('-','/')).set(doc);_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});},
@@ -110,13 +116,12 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 		*/
 		for(j in IDX.all){if(IDX.all[j].v!=''){this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[j].v+'/keys/'+k).set({ct:IDX.all[j].c});}}
 		for(j in IDX.hash){if(IDX.hash[j].v!=''){this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[j].v+'/keys/'+k).set({ct:IDX.hash[j].c});}}
-		if(o[f]){this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}},
+		if(o[f]){this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}
+		this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);},
 	_relevantText:function(o){var s=JSON.stringify(o);
 		s=s.replace(/,"([^"]*)":/g,'');s=s.replace(/{"([^"]*)":/g,'');
 		s=s.replace(/","/g,' ');s=s.replace(/""/g,' ');s=s.replace(/"/g,' ');
-		s=s.replace(/<.*\/>/g,' ');		
-		//s=s.replace(/<!--.*-->/g,' ');
-		//s=s.replace(/<.*>(.+)<\/.*>/g,' $1 ');
+		s=s.replace(/<.*\/>/g,' ');
 		s=s.replace(/(<([^>]+)>)/ig,'');
 		s=s.replace(/<link .*>/g,' ');
 		s=s.replace(/ |{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
