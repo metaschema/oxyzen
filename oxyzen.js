@@ -58,11 +58,10 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
  getall:function(col,next){this.db('/'+col).on('child_added',function(d){var v=d.val();v.$key=col+d.key;next(v)})},
 	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
 	var nkey=otype+'-'+x;this._doindex(doc,nkey,this.docnamefield);doc.$key=nkey;return doc;},
-	del:function(key){var _this=this;var doend=function(){_this.db('/'+f$.oxyprefix+'log_'+key.replace('-','/')).remove();_this.db('/'+f$.oxyprefix+'ver_'+key.replace('-','/')).remove();_this.db('/'+key.replace('-','/')).remove();
+	del:function(key){var _this=this;var doend=function(){_this.db('/'+f$.oxyprefix+'log_'+key.replace('-','/')).remove();_this.db('/'+f$.oxyprefix+'Nndex/'+key).remove();_this.db('/'+f$.oxyprefix+'ver_'+key.replace('-','/')).remove();_this.db('/'+key.replace('-','/')).remove();
 		_this.db('/'+f$.oxyprefix+'invdex/'+key).once('value',function(snap){var IDX=snap.val();var v;
 				var ln=IDX.all.length;for(v=0;v<ln;v++){_this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[v]+'/'+key).remove();}
 				var ln=IDX.hash.length;for(v=0;v<ln;v++){_this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[v]+'/'+key).remove();}
-				_this.db('/'+f$.oxyprefix+'Nndex/'+key).remove();
 				/*TODO CLEAN WINDEX*/
 	});};
 		this.getone(key,function(d){for(var k in d.rels){_this.db(k.replace('-','/')+'/rels/'+key).remove();
