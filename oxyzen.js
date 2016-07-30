@@ -1,7 +1,6 @@
 //OXYGEN for firebase by Hideki Yamamoto
 /*TODO URGENT!!!!!!
 	-Add index for _subcollections 	
-	-Add index only for hashed words 	
 	-Add index only for title words* - use for autocomplete	
 	-Actually perform  Z=Y-X  during the indexing to remove old entries. 
 	-CLEAN INDEXES ON DOCUMENT REMOVAL
