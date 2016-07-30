@@ -59,7 +59,7 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
 	var nkey=otype+'-'+x;this._doindex(doc,nkey,this.docnamefield);doc.$key=nkey;return doc;},
 	del:function(key){var _this=this;var doend=function(){_this.db('/'+f$.oxyprefix+'log_'+key.replace('-','/')).remove();_this.db('/'+f$.oxyprefix+'ver_'+key.replace('-','/')).remove();_this.db('/'+key.replace('-','/')).remove();
-		_this.db('/'+f$.oxyprefix+'invdex/'+key.replace('-','/')).once('child_added',function(snap){var IDX=snap.val();var v;
+		_this.db('/'+f$.oxyprefix+'invdex/'+key.replace('-','/')).once('value',function(snap){var IDX=snap.val();var v;
 				var ln=IDX.all.length;for(v=0;v<ln;v++){_this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[v]+'/'+key).remove();}
 				var ln=IDX.hash.length;for(v=0;v<ln;v++){_this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[v]+'/'+key).remove();}
 				_this.db('/'+f$.oxyprefix+'Nndex/'+key).remove();
