@@ -84,31 +84,30 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 		 tref.on('child_changed',step);
 		}}},
 	_doindex:function(o,k,f){var RT=this._relevantText(o);var _this=this;
-			IDX=_this._indexAllandHashedWords(RT);var j; 
-		_this.db('/'+f$.oxyprefix+'invdex/'+k).once('value',function(snap){var OIDX=snap.val();if(OIDX){
-			for(j in IDX.all){if(IDX.all[j].v!=''){if(!OIDX.all[j]){_this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[j].v+'/'+k).set({ct:IDX.all[j].c});}else{OIDX.all[j].kkk=true}}}
-			for(j in IDX.hash){if(IDX.hash[j].v!=''){if(!OIDX.hash[j]){_this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[j].v+'/'+k).set({ct:IDX.hash[j].c});}else{OIDX.hash[j].kkk=true}}}
-			for(j in OIDX.all){if((!IDX.all[j])||(!IDX.all[j].kkk)){_this.db('/'+f$.oxyprefix+'Wndex/'+OIDX.all[j].v+'/'+k).remove();}}
-			for(j in OIDX.hash){if((!IDX.hash[j])||(!IDX.hash[j].kkk)){_this.db('/'+f$.oxyprefix+'Wndex/'+OIDX.hash[j].v+'/'+k).remove();}}
-			if(o[f]){_this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}
-			_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);			
+			var IDX=this._indexAllandHashedWords(RT);var j; 
+		_this.db('/'+f$.oxyprefix+'invdex/'+k).once('value',function(snap){var OIDX=snap.val();
+		if(OIDX){var flag=false;if(!OIDX.hash){OIDX.hash={}}if(!OIDX.all){OIDX.all={}}
+			for(j in IDX.all){if(j!=''){if(!OIDX.all[j]){_this.db('/'+f$.oxyprefix+'Wndex/'+j+'/'+k).set({ct:IDX.all[j].c});}else{OIDX.all[j].kkk=true}}}
+			for(j in IDX.hash){if(j!=''){if(!OIDX.hash[j]){_this.db('/'+f$.oxyprefix+'Hndex/'+j+'/'+k).set({ct:IDX.hash[j].c});}else{OIDX.hash[j].kkk=true}}}
+			for(j in OIDX.all){if(OIDX.all[j].v!=''){flag=false;if(!IDX.all[j]){flag=true;}else if(!OIDX.all[j].kkk){flag=true;}if(flag){_this.db('/'+f$.oxyprefix+'Wndex/'+j+'/'+k).remove();}}}
+			for(j in OIDX.hash){if(OIDX.hash[j].v!=''){flag=false;if(!IDX.hash[j]){flag=true}else if(!OIDX.hash[j].kkk){flag=true}if(flag){_this.db('/'+f$.oxyprefix+'Hndex/'+j+'/'+k).remove();}}}
+		}else{
+			for(j in IDX.all){if(j!=''){_this.db('/'+f$.oxyprefix+'Wndex/'+j+'/'+k).set({ct:IDX.all[j].c});}}
+			for(j in IDX.hash){if(j!=''){_this.db('/'+f$.oxyprefix+'Hndex/'+j+'/'+k).set({ct:IDX.hash[j].c});}}
 		}
-			else{
-			for(j in IDX.all){if(IDX.all[j].v!=''){_this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[j].v+'/'+k).set({ct:IDX.all[j].c});}}
-			for(j in IDX.hash){if(IDX.hash[j].v!=''){_this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[j].v+'/'+k).set({ct:IDX.hash[j].c});}}
 			if(o[f]){_this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}
-			_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);}
+			_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);
 	});},
 	_indexAllandHashedWords:function(s){var out={all:{},hash:{}};var c=0;var cw='';var ct=1;var gh=''
 		var ss=s.split(' ').sort();var len=ss.length;
 		while((c<len)&&(ss[c].trim()=='')){c++}
 		while(c<len){gh=ss[c].trim();if(cw!=gh){if(cw!=''){if(cw.length>2){out.all[cw.replace('#','')]={v:cw.replace('#',''),c:ct}};if(cw[0]=='#'){out.hash[cw.replace('#','')]={v:cw.replace('#',''),c:ct};}}cw=gh;ct=1;}else{ct++}c++}
 		out.all[cw]={v:cw,c:ct};return out;},
-	_relevantText:function(o){var s=JSON.stringify(o);
+	_relevantText:function(o){var s=JSON.stringify(o);s=s.replace(/\\n/g,' ');
 		s=s.replace(/,"([^"]*)":/g,'');s=s.replace(/{"([^"]*)":/g,'');
 		s=s.replace(/","/g,' ');s=s.replace(/""/g,' ');s=s.replace(/"/g,' ');
 		s=s.replace(/<.*\/>/g,' ');s=s.replace(/(<([^>]+)>)/ig,'');s=s.replace(/<link .*>/g,' ');
-		s=s.replace(/ |{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
+		s=s.replace(/{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:|-/g,' ');
 		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');
 		return s.toLowerCase()},	
 	reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
