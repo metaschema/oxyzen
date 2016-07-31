@@ -88,11 +88,11 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 			for(v in IDX.all){_this.db('/'+f$.oxyprefix+'Wndex/'+v+'/'+k).remove();}
 			for(v in IDX.hash){_this.db('/'+f$.oxyprefix+'Hndex/'+v+'/'+k).remove();}
 			_this.db('/'+f$.oxyprefix+'invdex/'+k).remove();}
-			IDX=this._indexAllandHashedWords(RT);var j; 
-			for(j in IDX.all){if(IDX.all[j].v!=''){this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[j].v+'/'+k).set({ct:IDX.all[j].c});}}
-			for(j in IDX.hash){if(IDX.hash[j].v!=''){this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[j].v+'/'+k).set({ct:IDX.hash[j].c});}}
-			if(o[f]){this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}
-			this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);
+			IDX=_this._indexAllandHashedWords(RT);var j; 
+			for(j in IDX.all){if(IDX.all[j].v!=''){_this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[j].v+'/'+k).set({ct:IDX.all[j].c});}}
+			for(j in IDX.hash){if(IDX.hash[j].v!=''){_this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[j].v+'/'+k).set({ct:IDX.hash[j].c});}}
+			if(o[f]){_this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}
+			_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);
 	});},
 	_indexAllandHashedWords:function(s){var out={all:{},hash:{}};var c=0;var cw='';var ct=1;var gh=''
 		var ss=s.split(' ').sort();var len=ss.length;
