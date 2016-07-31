@@ -1,27 +1,9 @@
 //OXYGEN for firebase by Hideki Yamamoto
 /*TODO URGENT!!!!!!
-	-Add index for _subcollections 	
-	-Add index only for title words* - use for autocomplete	
-	-Actually perform  Z=Y-X  during the indexing to remove old entries. 
-	-CLEAN INDEXES ON DOCUMENT REMOVAL
+	-Use doctitles dedicated Ndex for autocompletes
+	-[PERFORMANCES/QUERYS PEEDUP]Actually perform  Z=Y-X  during the indexing to remove old entries. 
+	-[NEW FUNCTION] -Add index for _subcollections 	
 */
-/*
-
-gapi.auth2.init({
-                client_id: "626552702529-imtebemspl1853e0dqj1n1maq841234r.apps.googleusercontent.com"
-            }).then(function(auth2) {
-                auth2.isSignedIn.listen(onSignIn);
-                var button = document.querySelector('#signInButton');
-                button.addEventListener('click', function() {
-                  auth2.signIn();
-                    
-                });
-                window.user = gapi.auth2.getAuthInstance().currentUser.get();
-          console.log(user.hg.access_token)
-
-
-*/
-
 
 f$={oxyprefix:'oxy_',
 inoe:function(v){if(!v)return true;if(typeof v!='string')return true;if(v.length==0)return true;return false;},
@@ -60,16 +42,18 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	var nkey=otype+'-'+x;this._doindex(doc,nkey,this.docnamefield);doc.$key=nkey;return doc;},
 	del:function(key){var _this=this;var doend=function(){_this.db('/'+f$.oxyprefix+'log_'+key.replace('-','/')).remove();_this.db('/'+f$.oxyprefix+'Nndex/'+key).remove();_this.db('/'+f$.oxyprefix+'ver_'+key.replace('-','/')).remove();_this.db('/'+key.replace('-','/')).remove();
 		_this.db('/'+f$.oxyprefix+'invdex/'+key).once('value',function(snap){var IDX=snap.val();var v;console.log(IDX);
-				var ln=IDX.all.length;for(v=0;v<ln;v++){_this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[v]+'/'+key).remove();}
-				var ln=IDX.hash.length;for(v=0;v<ln;v++){_this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[v]+'/'+key).remove();}
-				/*TODO CLEAN WINDEX*/
+				for(v in IDX.all){_this.db('/'+f$.oxyprefix+'Wndex/'+v+'/'+key).remove();}
+				for(v in IDX.hash){_this.db('/'+f$.oxyprefix+'Hndex/'+v+'/'+key).remove();}
+				_this.db('/'+f$.oxyprefix+'invdex/'+key).remove();
 	});};
 		this.getone(key,function(d){for(var k in d.rels){_this.db(k.replace('-','/')+'/rels/'+key).remove();
 			_this._add(f$.oxyprefix+'log',k,{text:'Unlinked from '+d[_this.docnamefield]+'['+key+'] because it\'s getting deleted.'});
 		}doend();});},
-	set:function(doc,log){var k=doc.$key;this._doindex(doc,k,this.docnamefield);var _this=this;delete doc.$key;if(!log){log='Object Modified'}
+	set:function(doc,log){var _this=this;var k=doc.$key;
+	_this._doindex(doc,k,this.docnamefield);delete doc.$key;if(!log){log='Object Modified'}
 			this.getone(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
-			_this.db(k.replace('-','/')).set(doc);_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});},
+			_this.db(k.replace('-','/')).set(doc);
+			_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});},
 	/*COLLECTIONS end*//*RELATIONS start*/
 	link:function(k1,k2,json){if(!json){json={role:'default'}}if(f$.inoe(k1)||(f$.inoe(k2))){console.log('only valid keys')}else{
 		var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
@@ -90,51 +74,39 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 			_this.db(kk[k].replace('-','/-')+'/rels/'+k1).remove();_this._add(f$.oxyprefix+'log',kk[k],{text:'Unlinked with '+dd[_this.docnamefield]+'['+k1+']'});
 	});}});},/*RELATIONS end*//*WORD INDEX START*/
 	find:function(s,next,_collection){var _this=this;var popped=[];
-	 s=s.replace(/ |{|}|\||<|>|\\|!|"|ㄍ$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|坑院@|\.|,|;|:/g,' ');
+		s=s.replace(/ |{|}|\||<|>|\\|!|"|ㄍ$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|坑院@|\.|,|;|:/g,' ');
   s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');s=s.toLowerCase();
 		var uninext=function(d){if(!popped[d.$key]){popped[d.$key]=true;next(d);}};var step;
 		if(_collection){step=function(d){if(d.key.indexOf(_collection)==0){_this.getone(d.key,uninext);}}}
 		else{step=function(d){_this.getone(d.key,uninext);}}
 	 var xx=s.split(' ');var xlen=xx.length;for(var x=0;x<xlen;x++){xx[x]=xx[x].trim();if(xx[x].length>2){
-		var tref=_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/keys');tref.off('child_added',step);tref.off('child_changed',step);tref.on('child_added',step);
+		var tref=_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/');tref.off('child_added',step);tref.off('child_changed',step);tref.on('child_added',step);
 		 tref.on('child_changed',step);
 		}}},
-	
-	_doindex:function(o,k,f){var RT=this._relevantText(o);var _this=this;var j;
-	 var IDX=this._indexAllandHashedWords(RT);
-		/* TODO URGENT : REMOVE OLD INDEX INFO ON REINDEX
-		this.db('/'+f$.oxyprefix+'Wndex_inv/'+k).once('value',function(data){var yy=data.val();if(yy){var zz=[];
-		//TODO:PERFORM Z=Y-X
-		var zlen=zz.length;for(var z=0;z<zlen;z++){_this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[x].v+'/keys/'+zz[z]).remove();}
-		}_this.db('/'+f$.oxyprefix+'Wndex_inv/'+k).set(IDX.all);});
-		
-		this.db('/'+f$.oxyprefix+'Hndex_inv/'+k).once('value',function(data){var yy=data.val();if(yy){var zz=[];
-		//TODO:PERFORM Z=Y-X
-		var zlen=zz.length;for(var z=0;z<zlen;z++){_this.db('/'+f$.oxyprefix+'Wndex/'+IDX.hash[x].v+'/keys/'+zz[z]).remove();}
-		}_this.db('/'+f$.oxyprefix+'Hndex_inv/'+k).set(IDX.hash);});
-		*/
-		for(j in IDX.all){if(IDX.all[j].v!=''){this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[j].v+'/'+k).set({ct:IDX.all[j].c});}}
-		for(j in IDX.hash){if(IDX.hash[j].v!=''){this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[j].v+'/'+k).set({ct:IDX.hash[j].c});}}
-		if(o[f]){this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}
-		this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);},
-	_relevantText:function(o){var s=JSON.stringify(o);
-		s=s.replace(/,"([^"]*)":/g,'');s=s.replace(/{"([^"]*)":/g,'');
-		s=s.replace(/","/g,' ');s=s.replace(/""/g,' ');s=s.replace(/"/g,' ');
-		s=s.replace(/<.*\/>/g,' ');
-		s=s.replace(/(<([^>]+)>)/ig,'');
-		s=s.replace(/<link .*>/g,' ');
-		s=s.replace(/ |{|}|\||<|>|\\|!|"|ㄍ$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|坑院@|\.|,|;|:/g,' ');
-		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');
-		return s.toLowerCase()},	
+	_doindex:function(o,k,f){var RT=this._relevantText(o);var _this=this;
+		_this.db('/'+f$.oxyprefix+'invdex/'+k).once('value',function(snap){var IDX=snap.val();var v;console.log(IDX);
+			for(v in IDX.all){_this.db('/'+f$.oxyprefix+'Wndex/'+v+'/'+k).remove();}
+			for(v in IDX.hash){_this.db('/'+f$.oxyprefix+'Hndex/'+v+'/'+k).remove();}
+			_this.db('/'+f$.oxyprefix+'invdex/'+k).remove();
+			var IDX=this._indexAllandHashedWords(RT);var j;	 
+			for(j in IDX.all){if(IDX.all[j].v!=''){this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[j].v+'/'+k).set({ct:IDX.all[j].c});}}
+			for(j in IDX.hash){if(IDX.hash[j].v!=''){this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[j].v+'/'+k).set({ct:IDX.hash[j].c});}}
+			if(o[f]){this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}
+			this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);
+	});},
 	_indexAllandHashedWords:function(s){var out={all:{},hash:{}};var c=0;var cw='';var ct=1;var gh=''
 		var ss=s.split(' ').sort();var len=ss.length;
 		while((c<len)&&(ss[c].trim()=='')){c++}
 		while(c<len){gh=ss[c].trim();if(cw!=gh){if(cw!=''){if(cw.length>2){out.all[cw.replace('#','')]={v:cw.replace('#',''),c:ct}};if(cw[0]=='#'){out.hash[cw.replace('#','')]={v:cw.replace('#',''),c:ct};}}cw=gh;ct=1;}else{ct++}c++}
-	 out.all[cw]={v:cw,c:ct};return out;
-	},
-	reindexcollection:function(collname){var _this=this;
-				this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});
-	},
+		out.all[cw]={v:cw,c:ct};return out;},
+	_relevantText:function(o){var s=JSON.stringify(o);
+		s=s.replace(/,"([^"]*)":/g,'');s=s.replace(/{"([^"]*)":/g,'');
+		s=s.replace(/","/g,' ');s=s.replace(/""/g,' ');s=s.replace(/"/g,' ');
+		s=s.replace(/<.*\/>/g,' ');s=s.replace(/(<([^>]+)>)/ig,'');s=s.replace(/<link .*>/g,' ');
+		s=s.replace(/ |{|}|\||<|>|\\|!|"|ㄍ$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|坑院@|\.|,|;|:/g,' ');
+		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');
+		return s.toLowerCase()},	
+	reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
 	
 		/*------------------------------------------------------------------------------------------------WORD INDEX END*/	
 	},
