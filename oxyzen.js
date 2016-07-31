@@ -5,7 +5,7 @@
 	-[NEW FUNCTION] -Add index for _subcollections 	
 */
 
-f$={oxyprefix:'oxy_',
+f$={oxyprefix:'OZ/',
 inoe:function(v){if(!v)return true;if(typeof v!='string')return true;if(v.length==0)return true;return false;},
 login:function(provider,method){if(!method){method='redirect'}
 	if (!firebase.auth().currentUser){var provider;
@@ -50,8 +50,8 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 			_this._add(f$.oxyprefix+'log',k,{text:'Unlinked from '+d[_this.docnamefield]+'['+key+'] because it\'s getting deleted.'});
 		}doend();});},
 	set:function(doc,log){var _this=this;var k=doc.$key;
-	_this._doindex(doc,k,this.docnamefield);delete doc.$key;if(!log){log='Object Modified'}
-			this.getone(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
+	 this._doindex(doc,k,this.docnamefield);delete doc.$key;if(!log){log='Object Modified'}
+		this.getone(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 			_this.db(k.replace('-','/')).set(doc);
 			_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});},
 	/*COLLECTIONS end*//*RELATIONS start*/
@@ -84,15 +84,20 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 		 tref.on('child_changed',step);
 		}}},
 	_doindex:function(o,k,f){var RT=this._relevantText(o);var _this=this;
-		_this.db('/'+f$.oxyprefix+'invdex/'+k).once('value',function(snap){var IDX=snap.val();if(IDX){var v;
-			for(v in IDX.all){_this.db('/'+f$.oxyprefix+'Wndex/'+v+'/'+k).remove();}
-			for(v in IDX.hash){_this.db('/'+f$.oxyprefix+'Hndex/'+v+'/'+k).remove();}
-			_this.db('/'+f$.oxyprefix+'invdex/'+k).remove();}
 			IDX=_this._indexAllandHashedWords(RT);var j; 
+		_this.db('/'+f$.oxyprefix+'invdex/'+k).once('value',function(snap){var OIDX=snap.val();if(OIDX){
+			for(j in IDX.all){if(IDX.all[j].v!=''){if(!OIDX.all[j]){_this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[j].v+'/'+k).set({ct:IDX.all[j].c});}else{OIDX.all[j].kkk=true}}}
+			for(j in IDX.hash){if(IDX.hash[j].v!=''){if(!OIDX.hash[j]){_this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[j].v+'/'+k).set({ct:IDX.hash[j].c});}else{OIDX.hash[j].kkk=true}}}
+			for(j in OIDX.all){if((!IDX.all[j])||(!IDX.all[j].kkk)){_this.db('/'+f$.oxyprefix+'Wndex/'+OIDX.all[j].v+'/'+k).remove();}}
+			for(j in OIDX.hash){if((!IDX.hash[j])||(!IDX.hash[j].kkk)){_this.db('/'+f$.oxyprefix+'Wndex/'+OIDX.hash[j].v+'/'+k).remove();}}
+			if(o[f]){_this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}
+			_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);			
+		}
+			else{
 			for(j in IDX.all){if(IDX.all[j].v!=''){_this.db('/'+f$.oxyprefix+'Wndex/'+IDX.all[j].v+'/'+k).set({ct:IDX.all[j].c});}}
 			for(j in IDX.hash){if(IDX.hash[j].v!=''){_this.db('/'+f$.oxyprefix+'Hndex/'+IDX.hash[j].v+'/'+k).set({ct:IDX.hash[j].c});}}
 			if(o[f]){_this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}
-			_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);
+			_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);}
 	});},
 	_indexAllandHashedWords:function(s){var out={all:{},hash:{}};var c=0;var cw='';var ct=1;var gh=''
 		var ss=s.split(' ').sort();var len=ss.length;
