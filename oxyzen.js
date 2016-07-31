@@ -39,16 +39,15 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	getone:function(key,next){this.db(key.replace('-','/')).once('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}});},
  getall:function(col,next){this.db('/'+col).on('child_added',function(d){var v=d.val();v.$key=col+d.key;next(v)})},
 	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
-	var nkey=otype+'-'+x;this._doindex(doc,nkey,this.docnamefield);doc.$key=nkey;return doc;},
-	del:function(key){var _this=this;var doend=function(){_this.db('/'+f$.oxyprefix+'log_'+key.replace('-','/')).remove();_this.db('/'+f$.oxyprefix+'Nndex/'+key).remove();_this.db('/'+f$.oxyprefix+'ver_'+key.replace('-','/')).remove();_this.db('/'+key.replace('-','/')).remove();
-		_this.db('/'+f$.oxyprefix+'invdex/'+key).once('value',function(snap){var IDX=snap.val();var v;
-				for(v in IDX.all){_this.db('/'+f$.oxyprefix+'Wndex/'+v+'/'+key).remove();}
-				for(v in IDX.hash){_this.db('/'+f$.oxyprefix+'Hndex/'+v+'/'+key).remove();}
-				_this.db('/'+f$.oxyprefix+'invdex/'+key).remove();
-	});};
+		var nkey=otype+'-'+x;this._doindex(doc,nkey,this.docnamefield);doc.$key=nkey;return doc;},
+	del:function(key){var _this=this;var doend=function(){_this.db('/'+f$.oxyprefix+'log_'+key.replace('-','/')).remove();
+		_this.db('/'+f$.oxyprefix+'Nndex/'+key).remove();_this.db('/'+f$.oxyprefix+'ver_'+key.replace('-','/')).remove();_this.db('/'+key.replace('-','/')).remove();
+			_this.db('/'+f$.oxyprefix+'invdex/'+key).once('value',function(snap){var IDX=snap.val();var v;
+				_this.db('/'+f$.oxyprefix+'invdex/'+key).remove();for(v in IDX.all){_this.db('/'+f$.oxyprefix+'Wndex/'+v+'/'+key).remove();}for(v in IDX.hash){_this.db('/'+f$.oxyprefix+'Hndex/'+v+'/'+key).remove();}
+		});};
 		this.getone(key,function(d){for(var k in d.rels){_this.db(k.replace('-','/')+'/rels/'+key).remove();
 			_this._add(f$.oxyprefix+'log',k,{text:'Unlinked from '+d[_this.docnamefield]+'['+key+'] because it\'s getting deleted.'});
-		}doend();});},
+	}doend();});},
 	set:function(doc,log){var _this=this;var k=doc.$key;
 	 this._doindex(doc,k,this.docnamefield);delete doc.$key;if(!log){log='Object Modified'}
 		this.getone(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
@@ -61,7 +60,7 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 			j2.n=d[_this.docnamefield];_this.db(k2.replace('-','/')+'/rels/'+k1).set(j2);_this._add(f$.oxyprefix+'log',k2,{text:'Linked with '+d[_this.docnamefield]+'['+k1+']'});
 	});});}},
 	unlink:function(k1,k2){if(f$.inoe(k1)||(f$.inoe(k2))){console.log('only valid keys')}else{
-var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
+		var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 			_this.db(k1.replace('-','/')+'/rels/'+k2).remove();_this._add(f$.oxyprefix+'log',k1,{text:'Unlinked from '+dd[_this.docnamefield]+'['+k2+']'});
 			_this.db(k2.replace('-','/')+'/rels/'+k1).remove();_this._add(f$.oxyprefix+'log',k2,{text:'Unlinked from '+d[_this.docnamefield]+'['+k1+']'});
 	});});}},	
@@ -72,7 +71,9 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 	unlinkmany:function(k1,kk){var _this=this;this.getone(k1,function(dd){for(var k=0;k<kk.length;k++){this.getone(kk[k],function(ddd){
 			_this.db(k1.replace('-','/')+'/rels/'+kk[k]).remove();_this._add(f$.oxyprefix+'log',k1,{text:'Unlinked with '+ddd[_this.docnamefield]+'['+kk[k]+']'});
 			_this.db(kk[k].replace('-','/')+'/rels/'+k1).remove();_this._add(f$.oxyprefix+'log',kk[k],{text:'Unlinked with '+dd[_this.docnamefield]+'['+k1+']'});
-	});}});},/*RELATIONS end*//*WORD INDEX START*/
+	});}});},/*RELATIONS end*/
+	/* ---------------------------------------------------------------------------------------------- INDEXES start ---*/
+ reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
 	find:function(s,next,_collection){var _this=this;var popped=[];
 		s=s.replace(/ |{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
   s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');s=s.toLowerCase();
@@ -80,23 +81,18 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 		if(_collection){step=function(d){if(d.key.indexOf(_collection)==0){_this.getone(d.key,uninext);}}}
 		else{step=function(d){_this.getone(d.key,uninext);}}
 	 var xx=s.split(' ');var xlen=xx.length;for(var x=0;x<xlen;x++){xx[x]=xx[x].trim();if(xx[x].length>2){
-		var tref=_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/');tref.off('child_added',step);tref.off('child_changed',step);tref.on('child_added',step);
-		 tref.on('child_changed',step);
-		}}},
-	_doindex:function(o,k,f){var RT=this._relevantText(o);var _this=this;
-			var IDX=this._indexAllandHashedWords(RT);var j; 
-		_this.db('/'+f$.oxyprefix+'invdex/'+k).once('value',function(snap){var OIDX=snap.val();
-		if(OIDX){var flag=false;if(!OIDX.hash){OIDX.hash={}}if(!OIDX.all){OIDX.all={}}
+		var tref=_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/');tref.off('child_added',step);tref.off('child_changed',step);tref.on('child_added',step);tref.on('child_changed',step);
+		}}},		
+	_doindex:function(o,k,f){var _this=this;var j;var RT=this._relevantText(o);var IDX=this._indexAllandHashedWords(RT); 
+		this.db('/'+f$.oxyprefix+'invdex/'+k).once('value',function(snap){var OIDX=snap.val();
+		if(OIDX){/*INDEX UPDATE*/var flag=false;if(!OIDX.hash){OIDX.hash={}}if(!OIDX.all){OIDX.all={}}
 			for(j in IDX.all){if(j!=''){if(!OIDX.all[j]){_this.db('/'+f$.oxyprefix+'Wndex/'+j+'/'+k).set({ct:IDX.all[j]});}else{OIDX.all[j]={kkk:true}}}}
 			for(j in IDX.hash){if(j!=''){if(!OIDX.hash[j]){_this.db('/'+f$.oxyprefix+'Hndex/'+j+'/'+k).set({ct:IDX.hash[j]});}else{OIDX.hash[j]={kkk:true}}}}
 			for(j in OIDX.all){if(j!=''){flag=false;if(!IDX.all[j]){flag=true;}else if(!OIDX.all[j].kkk){flag=true;}if(flag){_this.db('/'+f$.oxyprefix+'Wndex/'+j+'/'+k).remove();}}}
 			for(j in OIDX.hash){if(j!=''){flag=false;if(!IDX.hash[j]){flag=true}else if(!OIDX.hash[j].kkk){flag=true}if(flag){_this.db('/'+f$.oxyprefix+'Hndex/'+j+'/'+k).remove();}}}
-		}else{
-			for(j in IDX.all){if(j!=''){_this.db('/'+f$.oxyprefix+'Wndex/'+j+'/'+k).set({ct:IDX.all[j]});}}
-			for(j in IDX.hash){if(j!=''){_this.db('/'+f$.oxyprefix+'Hndex/'+j+'/'+k).set({ct:IDX.hash[j]});}}
-		}
-			if(o[f]){_this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}
-			_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);
+		}else{/*INDEX ONLY*/for(j in IDX.all){if(j!=''){_this.db('/'+f$.oxyprefix+'Wndex/'+j+'/'+k).set({ct:IDX.all[j]});}}
+			for(j in IDX.hash){if(j!=''){_this.db('/'+f$.oxyprefix+'Hndex/'+j+'/'+k).set({ct:IDX.hash[j]});}}}
+			if(o[f]){_this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);
 	});},
 	_indexAllandHashedWords:function(s){var out={all:{},hash:{}};var c=0;var cw='';var ct=1;var gh=''
 		var ss=s.split(' ').sort();var len=ss.length;
@@ -109,9 +105,8 @@ var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){
 		s=s.replace(/<.*\/>/g,' ');s=s.replace(/(<([^>]+)>)/ig,'');s=s.replace(/<link .*>/g,' ');
 		s=s.replace(/{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:|-/g,' ');
 		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');
-		return s.toLowerCase()},	
-	reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
-	
+		return s.toLowerCase()},
+		/* ---------------------------------------------------------------------------------------------- INDEXES end ---*/
 		/*------------------------------------------------------------------------------------------------WORD INDEX END*/	
 	},
 	storage:{
