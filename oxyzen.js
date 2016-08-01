@@ -5,7 +5,7 @@
 	-[NEW FUNCTION] -Add index for _subcollections 	
 */
 
-f$={oxyprefix:'OZ/',
+f$={dbnamespace:'OZ',oxyprefix:'OZ/',
 inoe:function(v){if(!v)return true;if(typeof v!='string')return true;if(v.length==0)return true;return false;},
 login:function(provider,method){if(!method){method='redirect'}
 	if (!firebase.auth().currentUser){var provider;
@@ -41,7 +41,7 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
 		var nkey=otype+'-'+x;this._doindex(doc,nkey,this.docnamefield);doc.$key=nkey;return doc;},
 	del:function(key){var _this=this;var doend=function(){_this.db('/'+f$.oxyprefix+'log_'+key.replace('-','/')).remove();
-		_this.db('/'+f$.oxyprefix+'Nndex/'+key).remove();_this.db('/'+f$.oxyprefix+'ver_'+key.replace('-','/')).remove();_this.db('/'+key.replace('-','/')).remove();
+		_this.db('/'+f$.oxyprefix+'ver_'+key.replace('-','/')).remove();_this.db('/'+key.replace('-','/')).remove();
 			_this.db('/'+f$.oxyprefix+'invdex/'+key).once('value',function(snap){var IDX=snap.val();var v;
 				_this.db('/'+f$.oxyprefix+'invdex/'+key).remove();for(v in IDX.all){_this.db('/'+f$.oxyprefix+'Wndex/'+v+'/'+key).remove();}for(v in IDX.hash){_this.db('/'+f$.oxyprefix+'Hndex/'+v+'/'+key).remove();}
 		});};
@@ -74,15 +74,19 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	});}});},/*RELATIONS end*/
 	/* ---------------------------------------------------------------------------------------------- INDEXES start ---*/
  reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
-	find:function(s,next,_collection){var _this=this;var popped=[];
-		s=s.replace(/ |{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
+	find:function(s,next,nextrem,_collection){var _this=this;var popped=[];
+		s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
   s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');s=s.toLowerCase();
 		var uninext=function(d){if(!popped[d.$key]){popped[d.$key]=true;next(d);}};var step;
 		if(_collection){step=function(d){if(d.key.indexOf(_collection)==0){_this.getone(d.key,uninext);}}}
 		else{step=function(d){_this.getone(d.key,uninext);}}
-	 var xx=s.split(' ');var xlen=xx.length;for(var x=0;x<xlen;x++){xx[x]=xx[x].trim();if(xx[x].length>2){
-		var tref=_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/');tref.off('child_added',step);tref.off('child_changed',step);tref.on('child_added',step);tref.on('child_changed',step);
-		}}},		
+	 var xx=s.split(' ');var xlen=xx.length;for(var x=0;x<xlen;x++){xx[x]=xx[x].trim();if(xx[x].length>2){var tref=null;
+			if(xx[x][0]=='#'){/*search in hashed index*/
+		tref=_this.db('/'+f$.oxyprefix+'Hndex/'+xx[x].substr(1)+'/');tref.off('child_added',step);tref.off('child_changed',step);
+		tref.on('child_added',step);tref.on('child_changed',step);tref.on('child_removed',steprem);		
+			}else{/*search in all words index index*/
+		tref=_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/');tref.off('child_added',step);tref.off('child_changed',step);tref.on('child_added',step);tref.on('child_changed',step);
+		}}}},		
 	_doindex:function(o,k,f){var _this=this;var j;var RT=this._relevantText(o);var IDX=this._indexAllandHashedWords(RT); 
 		this.db('/'+f$.oxyprefix+'invdex/'+k).once('value',function(snap){var OIDX=snap.val();
 		if(OIDX){/*INDEX UPDATE*/var flag=false;if(!OIDX.hash){OIDX.hash={}}if(!OIDX.all){OIDX.all={}}
@@ -92,7 +96,7 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 			for(j in OIDX.hash){if(j!=''){flag=false;if(!IDX.hash[j]){flag=true}else if(!OIDX.hash[j].kkk){flag=true}if(flag){_this.db('/'+f$.oxyprefix+'Hndex/'+j+'/'+k).remove();}}}
 		}else{/*INDEX ONLY*/for(j in IDX.all){if(j!=''){_this.db('/'+f$.oxyprefix+'Wndex/'+j+'/'+k).set({ct:IDX.all[j]});}}
 			for(j in IDX.hash){if(j!=''){_this.db('/'+f$.oxyprefix+'Hndex/'+j+'/'+k).set({ct:IDX.hash[j]});}}}
-			if(o[f]){_this.db('/'+f$.oxyprefix+'Nndex/'+k).set({n:o[f]});}_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);
+			_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);
 	});},
 	_indexAllandHashedWords:function(s){var out={all:{},hash:{}};var c=0;var cw='';var ct=1;var gh=''
 		var ss=s.split(' ').sort();var len=ss.length;
