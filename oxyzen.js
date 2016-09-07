@@ -73,7 +73,8 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 			_this.db(kk[k].replace('-','/')+'/rels/'+k1).remove();_this._add(f$.oxyprefix+'log',kk[k],{text:'Unlinked with '+dd[_this.docnamefield]+'['+k1+']'});
 	});}});},/*RELATIONS end*/
 	/* ---------------------------------------------------------------------------------------------- INDEXES start ---*/
- reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
+ clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref('OZ/'+snap.key).remove()})},
+	reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
 	find:function(s,next,nextrem,_collection){var _this=this;var popped=[];
 		s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
   s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');s=s.toLowerCase();
