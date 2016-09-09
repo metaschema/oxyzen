@@ -1,8 +1,7 @@
 //OXYGEN for firebase by Hideki Yamamoto
 /*TODO URGENT!!!!!!
 	-Use doctitles dedicated Ndex for autocompletes
-	-[PERFORMANCES/QUERYS PEEDUP]Actually perform  Z=Y-X  during the indexing to remove old entries. 
-	-[NEW FUNCTION] -Add index for _subcollections 	
+		-[NEW FUNCTION] -Add index for _subcollections 	
 */
 
 f$={dbnamespace:'OZ',oxyprefix:'OZ/',
@@ -125,16 +124,15 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 		list:function(path,next){
 			
 		},
-		add:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded',true);});},
+		add:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded',true);next(d);});},
+		set:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded');next(d);});},
 		get:function(path,next){
 			
 		},		
 		del:function(path,next){
 			
 		},
-		set:function(path,next){
-			
-		},
+		
 		ren:function(path,next){
 			
 		}
