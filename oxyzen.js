@@ -121,11 +121,11 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	/*
 	file{fullpath:'',name:'',size:'',modified:''}
 	*/
-	fs:{fs:firebase.storage.ref(),
+	fs:{fs:function(k){return firebase.storage.ref().child(k)},
 		list:function(path,next){
 			
 		},
-		add:function(file,next){firebase.storage().ref().child('OZ/'+file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='files-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded',true);});},
+		add:function(file,next){this.fs('OZ/'+file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='files-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded',true);});},
 		get:function(path,next){
 			
 		},		
