@@ -48,11 +48,14 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 		this.getone(key,function(d){for(var k in d.rels){_this.db(k.replace('-','/')+'/rels/'+key).remove();
 			_this._add(f$.oxyprefix+'log',k,{text:'Unlinked from '+d[_this.docnamefield]+'['+key+'] because it\'s getting deleted.'});
 	}doend();});},
-	set:function(doc,log){var _this=this;var k=doc.$key;
+	set:function(doc,log,_first){var _this=this;var k=doc.$key;
 	 this._doindex(doc,k,this.docnamefield);delete doc.$key;if(!log){log='Object Modified'}
+		if(_first){
+			_this.db(k.replace('-','/')).set(doc);this._add(f$.oxyprefix+'log',k,{text:"Object Created"});
+		}else{
 		this.getone(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 			_this.db(k.replace('-','/')).set(doc);
-			_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});},
+		_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
 	/*COLLECTIONS end*//*RELATIONS start*/
 	link:function(k1,k2,json){console.log('kok2');if(!json){json={role:'default'}}if(f$.inoe(k1)||(f$.inoe(k2))){console.log('only valid keys')}else{
 		var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){var j2=json;
@@ -112,19 +115,20 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');
 		return s.toLowerCase()},
 		/* ---------------------------------------------------------------------------------------------- INDEXES end ---*/
-		/*------------------------------------------------------------------------------------------------WORD INDEX END*/	
+		/*----------------------------------------------------------------------------------------------- WORD INDEX END */	
 	},
-	storage:{
+	/*------------------------------------------------------------------------------------------------- STORAGE START */	
+	/*
+	file{fullpath:'',name:'',size:'',modified:''}
+	*/
+	fs:{fs:firebase.storage.ref(),
 		list:function(path,next){
 			
 		},
+		add:function(file,next){firebase.storage().ref().child('OZ/'+file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='files-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded',true);});},
 		get:function(path,next){
 			
-		},
-		add:function(path,next){
-			//upload then insert
-			var doc=f$.db.set();
-		},
+		},		
 		del:function(path,next){
 			
 		},
