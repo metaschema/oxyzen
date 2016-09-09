@@ -121,7 +121,7 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	/*
 	file{fullpath:'',name:'',size:'',modified:''}
 	*/
-	fs:{fs:function(k){return firebase.storage.ref().child(k)},
+	fs:{fs:function(k){return firebase.storage().ref().child(k)},
 		list:function(path,next){
 			
 		},
