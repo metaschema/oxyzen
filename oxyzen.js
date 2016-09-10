@@ -31,8 +31,8 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	_del:function(stype,dkey,key){this.db(stype+'_'+dkey.replace('-','/-')+'/'+key).remove();},
 	_get:function(stype,dkey,next){this.db(stype+'_'+dkey.replace('-','/-')).on('child_added',function(data){var v=data.val();v.$subkey=data.key;next(v);});},
 	_getone:function(stype,dkey,key,next){this.db(stype+'_'+dkey.replace('-','/-')+'/'+key).once('value',function(data){var v=data.val();v.$subkey=data.key;next(v);});},
-	/* -------------------------------------------------------------------------------------- SUBCOLLECTION end ---*/
-	/* --------------------------------------------------------------------------------------- COLLECTION start ---*/
+/* -------------------------------------------------------------------------------------- SUBCOLLECTION end ---*/
+/* --------------------------------------------------------------------------------------- COLLECTION start ---*/
 	getone:function(key,next){this.db(key.replace('-','/')).once('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}});},
  getall:function(col,next){this.db('/'+col).on('child_added',function(d){var v=d.val();v.$key=col+d.key;next(v)})},
 	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
@@ -51,7 +51,8 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 		else{this.getone(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 			_this.db(k.replace('-','/')).set(doc);
 		_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
-	/*COLLECTIONS end*//*RELATIONS start*/
+/* -------------------------------------------------------------------------------------------------- COLLECTION END */
+/* ------------------------------------------------------------------------------------------------- RELATIONS START */
 	link:function(k1,k2,json){console.log('kok2');if(!json){json={role:'default'}}if(f$.inoe(k1)||(f$.inoe(k2))){console.log('only valid keys')}else{
 		var _this=this;this.getone(k1,function(d){_this.getone(k2,function(dd){var j2=json;
 			json.n=dd[_this.docnamefield];_this.db(k1.replace('-','/')+'/rels/'+k2).set(json);_this._add(f$.oxyprefix+'log',k1,{text:'Linked with '+dd[_this.docnamefield]+'['+k2+']'});
@@ -75,7 +76,7 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
 	find:function(s,next,nextrem,_collection){var _this=this;var popped=[];
 		s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
-  s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');s=s.toLowerCase();
+		s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');s=s.toLowerCase();
 		var uninext=function(d){if(!popped[d.$key]){popped[d.$key]=true;next(d);}};var step;
 		if(_collection){step=function(d){if(d.key.indexOf(_collection)==0){_this.getone(d.key,uninext);}}}
 		else{step=function(d){_this.getone(d.key,uninext);}}
@@ -97,19 +98,15 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 			for(j in IDX.hash){if(j!=''){_this.db('/'+f$.oxyprefix+'Hndex/'+j+'/'+k).set({ct:IDX.hash[j]});}}}
 			_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);
 	});},
-	_indexAllandHashedWords:function(s){var out={all:{},hash:{}};var c=0;var cw='';var ct=1;var gh=''
-		var ss=s.split(' ').sort();var len=ss.length;
-		while((c<len)&&(ss[c].trim()=='')){c++}
+	_indexAllandHashedWords:function(s){var out={all:{},hash:{}};var c=0;var cw='';var ct=1;var gh=''var ss=s.split(' ').sort();var len=ss.length;while((c<len)&&(ss[c].trim()=='')){c++}
 		while(c<len){gh=ss[c].trim();if(cw!=gh){if(cw!=''){if(cw.length>2){out.all[cw.replace('#','')]=ct};if(cw[0]=='#'){out.hash[cw.replace('#','')]=ct;}}cw=gh;ct=1;}else{ct++}c++}
 		out.all[cw]={v:cw,c:ct};return out;},
-	_relevantText:function(o){var s=JSON.stringify(o);s=s.replace(/\\n/g,' ');
-		s=s.replace(/,"([^"]*)":/g,'');s=s.replace(/{"([^"]*)":/g,'');
+	_relevantText:function(o){var s=JSON.stringify(o);s=s.replace(/\\n/g,' ');s=s.replace(/,"([^"]*)":/g,'');s=s.replace(/{"([^"]*)":/g,'');
 		s=s.replace(/","/g,' ');s=s.replace(/""/g,' ');s=s.replace(/"/g,' ');
 		s=s.replace(/<.*\/>/g,' ');s=s.replace(/(<([^>]+)>)/ig,'');s=s.replace(/<link .*>/g,' ');
 		s=s.replace(/{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:|-/g,' ');
-		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');
-		return s.toLowerCase()},},
-	/* ---------------------------------------------------------------------------------------------- INDEXES end ---*/
+		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');return s.toLowerCase()},},
+	/* ------------------------------------------------------------------------------------------------- INDEXES end */
 	/* ----------------------------------------------------------------------------------------------- STORAGE START */	
 	fs:{fs:function(k){return firebase.storage().ref().child(k)},
 		list:function(path,next){
