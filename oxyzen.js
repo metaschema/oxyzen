@@ -32,7 +32,7 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	_get:function(stype,dkey,next){this.db(stype+'_'+dkey.replace('-','/-')).on('child_added',function(data){var v=data.val();v.$subkey=data.key;next(v);});},
 	_getone:function(stype,dkey,key,next){this.db(stype+'_'+dkey.replace('-','/-')+'/'+key).once('value',function(data){var v=data.val();v.$subkey=data.key;next(v);});},
 /* SUBCOLLECTION END ------------------------------------------------------------------------------ COLLECTION START */
-	getone:function(key,next){this.db(key.replace('-','/')).once('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}});},
+	getone:function(key,next,nextrem){this.db(key.replace('-','/')).once('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}else{nextrem({key:key,val:function(){return false}})}});},
 	getall:function(col,next){this.db('/'+col).on('child_added',function(d){var v=d.val();v.$key=col+d.key;next(v)})},
 	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}
 		var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
@@ -81,7 +81,7 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 				tref=_this.db('/'+f$.oxyprefix+'Hndex/'+xx[x].substr(1)+'/');tref.off('child_added',step);tref.off('child_changed',step);
 				tref.on('child_added',step);tref.on('child_changed',step);tref.on('child_removed',steprem);		
 			}else{/*search in all words index index*/
-				tref=_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/');tref.off('child_added',step);tref.off('child_changed',step);tref.off('child_removed',nextrem);tref.on('child_added',step);tref.on('child_changed',step);tref.on('child_removed',nextrem);}}}},		
+				tref=_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/');tref.off('child_added',step);tref.off('child_changed',step);tref.on('child_added',step);tref.on('child_changed',step);}}}},		
 	_doindex:function(o,k,f){var _this=this;var j;var RT=this._relevantText(o);var IDX=this._indexAllandHashedWords(RT); 
 		this.db('/'+f$.oxyprefix+'invdex/'+k).once('value',function(snap){var OIDX=snap.val();
 		if(OIDX){/*INDEX UPDATE*/var flag=false;if(!OIDX.hash){OIDX.hash={}}if(!OIDX.all){OIDX.all={}}
