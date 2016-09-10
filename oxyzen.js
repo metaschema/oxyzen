@@ -102,12 +102,12 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');return s.toLowerCase()},},
 	/* ------------------------------------------------------------------------------------------------- INDEXES end */
 	/* ----------------------------------------------------------------------------------------------- STORAGE START */	
-	fs:{fs:function(k){return firebase.storage().ref().child(k)},
+	fs:{tagparent:'tag--KRKRoP7M9JVhp9Toz8m',fs:function(k){return firebase.storage().ref().child(k)},
 		list:function(path,next){
 			
 		},
-		add:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');delete d.bucket;delete d.name;delete d.metageneration;delete d.generation;f$.db.set(d,'File uploaded',true);if(next){next(d);}});},
-		set:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');delete d.bucket;delete d.name;delete d.metageneration;delete d.generation;f$.db.set(d,'File uploaded');if(next){next(d);}});},
+		add:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');d.parent=f$.fs.tagparent;delete d.bucket;delete d.name;delete d.metageneration;delete d.generation;f$.db.set(d,'File uploaded',true);if(next){next(d);}});},
+		set:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');d.parent=f$.fs.tagparent;delete d.bucket;delete d.name;delete d.metageneration;delete d.generation;f$.db.set(d,'File uploaded');if(next){next(d);}});},
 		del:function(path,next){
 			
 		},
