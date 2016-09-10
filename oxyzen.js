@@ -81,7 +81,7 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 				tref=_this.db('/'+f$.oxyprefix+'Hndex/'+xx[x].substr(1)+'/');tref.off('child_added',step);tref.off('child_changed',step);
 				tref.on('child_added',step);tref.on('child_changed',step);tref.on('child_removed',steprem);		
 			}else{/*search in all words index index*/
-				tref=_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/');tref.off('child_added',step);tref.off('child_changed',step);tref.on('child_added',step);tref.on('child_changed',step);}}}},		
+				tref=_this.db('/'+f$.oxyprefix+'Wndex/'+xx[x]+'/');tref.off('child_added',step);tref.off('child_changed',step);tref.off('child_removed',nextrem);tref.on('child_added',step);tref.on('child_changed',step);tref.on('child_removed',nextrem);}}}},		
 	_doindex:function(o,k,f){var _this=this;var j;var RT=this._relevantText(o);var IDX=this._indexAllandHashedWords(RT); 
 		this.db('/'+f$.oxyprefix+'invdex/'+k).once('value',function(snap){var OIDX=snap.val();
 		if(OIDX){/*INDEX UPDATE*/var flag=false;if(!OIDX.hash){OIDX.hash={}}if(!OIDX.all){OIDX.all={}}
