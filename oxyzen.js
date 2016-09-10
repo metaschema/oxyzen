@@ -3,7 +3,6 @@
 	-Use doctitles dedicated Ndex for autocompletes
 		-[NEW FUNCTION] -Add index for _subcollections 	
 */
-
 f$={dbnamespace:'OZ',oxyprefix:'OZ/',
 inoe:function(v){if(!v)return true;if(typeof v!='string')return true;if(v.length==0)return true;return false;},
 login:function(provider,method){if(!method){method='redirect'}
@@ -19,8 +18,7 @@ initAuth:function(nextToken){if(!nextToken){nextToken=function(r){var i=0;}}fire
  if(result.credential){f$.user.token = result.credential.accessToken;nextToken(result);}else{  nextToken(false);}
   }).catch(function(error) {if (error.code === 'auth/account-exists-with-different-credential') {
 			alert('You have already signed up with a different auth provider for that email.');
-   // If you are using multiple auth providers on your app you should handle linking
-   // the user's accounts here.
+   // TODO: merge multiple user accounts here.
 }else{console.error(error);}});},
  /* ----------------------------------------------------------------------------------------------------------- */
 	/* ------------------------------------------------------------------- FIREBASE DATABASE NAMESPACE - start --- */
@@ -49,10 +47,8 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	}doend();});},
 	set:function(doc,log,_first){var _this=this;var k=doc.$key;
 	 this._doindex(doc,k,this.docnamefield);delete doc.$key;if(!log){log='Object Modified'}
-		if(_first){
-			_this.db(k.replace('-','/')).set(doc);this._add(f$.oxyprefix+'log',k,{text:"Object Created"});
-		}else{
-		this.getone(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
+		if(_first){_this.db(k.replace('-','/')).set(doc);this._add(f$.oxyprefix+'log',k,{text:"Object Created"});}
+		else{this.getone(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 			_this.db(k.replace('-','/')).set(doc);
 		_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
 	/*COLLECTIONS end*//*RELATIONS start*/
@@ -112,29 +108,17 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 		s=s.replace(/<.*\/>/g,' ');s=s.replace(/(<([^>]+)>)/ig,'');s=s.replace(/<link .*>/g,' ');
 		s=s.replace(/{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:|-/g,' ');
 		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');
-		return s.toLowerCase()},
-		/* ---------------------------------------------------------------------------------------------- INDEXES end ---*/
-		/*----------------------------------------------------------------------------------------------- WORD INDEX END */	
-	},
-	/*------------------------------------------------------------------------------------------------- STORAGE START */	
-	/*
-	file{fullpath:'',name:'',size:'',modified:''}
-	*/
+		return s.toLowerCase()},},
+	/* ---------------------------------------------------------------------------------------------- INDEXES end ---*/
+	/* ----------------------------------------------------------------------------------------------- STORAGE START */	
 	fs:{fs:function(k){return firebase.storage().ref().child(k)},
 		list:function(path,next){
 			
 		},
 		add:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded',true);next(d);});},
 		set:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded');next(d);});},
-		get:function(path,next){
-			
-		},		
 		del:function(path,next){
 			
 		},
-		
-		ren:function(path,next){
-			
-		}
 	}
   };
