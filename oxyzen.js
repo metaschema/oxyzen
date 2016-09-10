@@ -105,8 +105,8 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 		list:function(path,next){
 			
 		},
-		add:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded',true);next(d);});},
-		set:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded');next(d);});},
+		add:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded',true);if(next){next(d);}});},
+		set:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');f$.db.set(d,'File uploaded');if(next){next(d);}});},
 		del:function(path,next){
 			
 		},
