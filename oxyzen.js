@@ -71,7 +71,8 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
  clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref(f$.oxyprefix+snap.key).remove()})},
 	reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
 	find:function(s,next,nextrem,_collection){
-		if(s.indexOf('parent:')==0){var x=firebase.database();var k=s.replace('parent:','');var cn;	
+		if(s.indexOf('key:')==0){this.getone(s.replace('key:',''),next,nextrem);}
+		else if(s.indexOf('parent:')==0){var x=firebase.database();var k=s.replace('parent:','');var cn;	
 			var fn=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;next(d)}}
 			var fn2=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;nextrem(d)}}
 			for(var c=0;c<app.dbCollections.length;c++){cn=app.dbCollections[c];
