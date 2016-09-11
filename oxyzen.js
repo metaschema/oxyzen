@@ -32,7 +32,7 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 	_get:function(stype,dkey,next){this.db(stype+'_'+dkey.replace('-','/-')).on('child_added',function(data){var v=data.val();v.$subkey=data.key;next(v);});},
 	_getone:function(stype,dkey,key,next){this.db(stype+'_'+dkey.replace('-','/-')+'/'+key).once('value',function(data){var v=data.val();v.$subkey=data.key;next(v);});},
 /* SUBCOLLECTION END ------------------------------------------------------------------------------ COLLECTION START */
-	getone:function(key,next,nextrem){this.db(key.replace('-','/')).on('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}else{nextrem(key)}});},
+	getone:function(key,next,nextrem){this.db(key.replace('-','/')).on('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}else{if(nextrem){nextrem(key)}}});},
 	getall:function(col,next){this.db('/'+col).on('child_added',function(d){var v=d.val();v.$key=col+d.key;next(v)})},
 	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}
 		var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
