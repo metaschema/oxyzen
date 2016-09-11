@@ -70,18 +70,18 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 /* RELATIONS END ------------------------------------------------------------------------------------- INDEXES START */
  clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref(f$.oxyprefix+snap.key).remove()})},
 	reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
-	find:function(s,next,nextrem,_collection){
+	find:function(s,next,nextrem,_collections){if(!_collections){_collections=app.dbCollections}
 		if(s.indexOf('key:')==0){this.getone(s.replace('key:',''),next,nextrem);}
 		else if(s.indexOf('rel:')==0){var cn;	
 			var fn=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;next(d)}}
 			var fn2=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;nextrem(d)}}
-			for(var c=0;c<app.dbCollections.length;c++){cn=app.dbCollections[c];
+			for(var c=0;c<_collections.length;c++){cn=_collections[c];
 				var tr=firebase.database().ref(cn).orderByChild('rels/'+s.replace('rel:','')+'/r').startAt('0').endAt('z');tr.off('child_added');tr.off('child_changed');
 				tr.on('child_added',fn(cn));tr.on('child_changed',fn(cn));tr.on('child_removed',fn2);
 		}}else if(s.indexOf('parent:')==0){var k=s.replace('parent:','');var cn;	
 			var fn=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;next(d)}}
 			var fn2=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;nextrem(d)}}
-			for(var c=0;c<app.dbCollections.length;c++){cn=app.dbCollections[c];
+			for(var c=0;c<_collections.length;c++){cn=_collections[c];
 				var tr=firebase.database().ref(cn).orderByChild("parent").startAt(k).endAt(k);tr.off('child_added');tr.off('child_changed');
 				tr.on('child_added',fn(cn));tr.on('child_changed',fn(cn));tr.on('child_removed',fn2);
 		}}else{var _this=this;var popped=[];
