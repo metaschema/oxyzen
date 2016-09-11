@@ -3,7 +3,7 @@
 	-Use doctitles dedicated Ndex for autocompletes
 		-[NEW FUNCTION] -Add index for _subcollections 	
 */
-f$={dbnamespace:'OZ',oxyprefix:'OXY/',
+f$={oxyprefix:'OXY/',
 inoe:function(v){if(!v)return true;if(typeof v!='string')return true;if(v.length==0)return true;return false;},
 login:function(provider,method){if(!method){method='redirect'}
 	if (!firebase.auth().currentUser){var provider;
