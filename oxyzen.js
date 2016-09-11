@@ -60,11 +60,11 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 			_this.db(k1.replace('-','/')+'/rels/'+k2).remove();_this._add(f$.oxyprefix+'log',k1,{text:'Unlinked from '+dd[_this.docnamefield]+'['+k2+']'});
 			_this.db(k2.replace('-','/')+'/rels/'+k1).remove();_this._add(f$.oxyprefix+'log',k2,{text:'Unlinked from '+d[_this.docnamefield]+'['+k1+']'});
 	});});}},	
-	linkmany:function(k1,kk,json){var _this=this;if(!json){json={r:'default'}}if(!json.r){json.r='default'}this.getone(k1,function(dd){for(var k=0;k<kk.length;k++){_this.getone(kk[k],function(ddd){
+	linkmany:function(k1,kk,json){var _this=this;if(!json){json={r:'default'}}if(!json.r){json.r='default'}this.getonce(k1,function(dd){for(var k=0;k<kk.length;k++){_this.getonce(kk[k],function(ddd){
 			_this.db(k1.replace('-','/')+'/rels/'+kk[k]).set(json);_this._add(f$.oxyprefix+'log',k1,{text:'Linked with '+ddd[_this.docnamefield]+'['+kk[k]+']'});
 			_this.db(kk[k].replace('-','/')+'/rels/'+k1).set(json);_this._add(f$.oxyprefix+'log',kk[k],{text:'Linked with '+dd[_this.docnamefield]+'['+k1+']'});
 	});}});},
-	unlinkmany:function(k1,kk){var _this=this;this.getonce(k1,function(dd){for(var k=0;k<kk.length;k++){this.getone(kk[k],function(ddd){
+	unlinkmany:function(k1,kk){var _this=this;this.getonce(k1,function(dd){for(var k=0;k<kk.length;k++){this.getonce(kk[k],function(ddd){
 			_this.db(k1.replace('-','/')+'/rels/'+kk[k]).remove();_this._add(f$.oxyprefix+'log',k1,{text:'Unlinked with '+ddd[_this.docnamefield]+'['+kk[k]+']'});
 			_this.db(kk[k].replace('-','/')+'/rels/'+k1).remove();_this._add(f$.oxyprefix+'log',kk[k],{text:'Unlinked with '+dd[_this.docnamefield]+'['+k1+']'});
 	});}});},
