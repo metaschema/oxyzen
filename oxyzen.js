@@ -34,7 +34,11 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 /* SUBCOLLECTION END ------------------------------------------------------------------------------ COLLECTION START */
   getonce:function(key,next,nextrem){this.db(key.replace('-','/')).once('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}else{if(nextrem){nextrem(key)}}});},
 	getone:function(key,next,nextrem){this.db(key.replace('-','/')).on('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}else{if(nextrem){nextrem(key)}}});},
-	getall:function(col,next){this.db('/'+col).on('child_added',function(d){var v=d.val();v.$key=col+d.key;next(v)})},
+	getall:function(col,next,nextrem){var x=this.db('/'+col);x.off('child_added');x.off('child_changed');x.off('child_removed');
+	x.on('child_added',function(d){var v=d.val();v.$key=col+d.key;next(v)});
+	x.on('child_changed',function(d){var v=d.val();v.$key=col+d.key;next(v)});
+	x.on('child_removed',function(snap){var k=col+'+'+snap.key;nextrem(k)});	
+	},
 	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}
 		var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
 		var nkey=otype+'-'+x;this._doindex(doc,nkey,this.docnamefield);doc.$key=nkey;return doc;},
@@ -72,7 +76,8 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
  clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref(f$.oxyprefix+snap.key).remove()})},
 	reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
 	find:function(s,next,nextrem,_collections){if(!_collections){_collections=app.dbCollections}
-		if(s.indexOf('key:')==0){this.getone(s.replace('key:',''),next,nextrem);}
+		if(s=='all'){for(var c=0;c<_collections.length;c++){this.getall(_collections[c],next,nextrem)}}
+		else if(s.indexOf('key:')==0){this.getone(s.replace('key:',''),next,nextrem);}
 		else if(s.indexOf('rel:')==0){var cn;	
 			var fn=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;next(d)}}
 			var fn2=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;nextrem(d)}}
