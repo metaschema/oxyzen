@@ -93,9 +93,8 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 		}}else{var _this=this;var popped=[];
 			s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
 		s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');s=s.toLowerCase();
-		var uninext=function(d){if(!popped[d.$key]){popped[d.$key]=true;next(d);}};var step;
-		if(_collection){step=function(d){if(d.key.indexOf(_collection)==0){_this.getone(d.key,uninext,nextrem);}}}
-		else{step=function(d){_this.getone(d.key,uninext,nextrem);}}
+		var uninext=function(d){if(!popped[d.$key]){popped[d.$key]=true;next(d);}};
+		var step=function(d){_this.getone(d.key,uninext,nextrem);}
 		var xx=s.split(' ');var xlen=xx.length;for(var x=0;x<xlen;x++){xx[x]=xx[x].trim();if(xx[x].length>2){var tref=null;
 			if(xx[x][0]=='#'){/*search in hashed index*/
 				tref=_this.db('/'+f$.oxyprefix+'Hndex/'+xx[x].substr(1)+'/');tref.off('child_added',step);tref.off('child_changed',step);
