@@ -1,4 +1,4 @@
-//OXYGEN for firebase by Hideki Yamamoto
+//OXYGEN for firebase by Hideki Yamamoto & Gioele Cerati
 /*TODO URGENT!!!!!!
 	-Use doctitles dedicated Ndex for autocompletes
 		-[NEW FUNCTION] -Add index for _subcollections 	
@@ -22,7 +22,7 @@ initAuth:function(nextToken){if(!nextToken){nextToken=function(r){var i=0;}}fire
 }else{console.error(error);}});},
 /* ----------------------------------------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------- FIREBASE DATABASE NAMESPACE - START */
-db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)},
+db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.database().ref(ref)},
 	start:function(key,event,next){this.db(key.replace('-','/-')).on(event,function(d){var v=d.val();if(v){v.$key=key.split('-')[0]+d.key;next(v);}});},
 	end:function(key,event){this.db(key.replace('-','/-')).off(event);},
 /* --------------------------------------------------------------------------------------------- SUBCOLLECTION START */
@@ -75,7 +75,7 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 /* RELATIONS END ------------------------------------------------------------------------------------- INDEXES START */
  clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref(f$.oxyprefix+snap.key).remove()})},
 	reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
-	find:function(s,next,nextrem,_collections){if(!_collections){_collections=app.dbCollections}
+	find:function(s,next,nextrem,_collections){if(!_collections){_collections=this.collections}
 		if(s=='all'){for(var c=0;c<_collections.length;c++){this.getall(_collections[c],next,nextrem)}}
 		else if(s.indexOf('key:')==0){this.getone(s.replace('key:',''),next,nextrem);}
 		else if(s.indexOf('rel:')==0){var cn;	
@@ -126,4 +126,10 @@ db:{docnamefield:"doctitle",db:function(ref){return firebase.database().ref(ref)
 		set:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');d.parent=f$.fs.tagparent;delete d.bucket;d.doctitle=d.name;delete d.name;delete d.metageneration;delete d.generation;f$.db.set(d,'File uploaded');if(next){next(d);}});},
 		del:function(key){f$.db.del(key);this.fs(key.substr(key.indexOf('-')+1).replace('*','.')).delete();},
 	}
+	
+	/* ------------------------------------------------------------------------------------------------- INDEXES end */
+	/* -------------------------------------------------------------------------------------------------- INIT START */	
+	initialscan:function(){this.db.collections=[];firebase.database().ref('/').on('child_added',f$._scandb);},
+	_scandb:function(d){var k=d.key;if(!(k.indexOf(f$.oxyprefix)==0)){fthisdb.collections[f$.db.collections.length]=d.key;}},
   };
+	document.onload=function(){f$.initialscan()};
