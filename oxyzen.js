@@ -82,13 +82,14 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 			var fn=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;next(d)}}
 			var fn2=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;nextrem(d)}}
 			for(var c=0;c<_collections.length;c++){cn=_collections[c];
-				var tr=firebase.database().ref(cn).orderByChild('rels/'+s.replace('rel:','')+'/r').startAt('0').endAt('z');tr.off('child_added');tr.off('child_changed');
+				var tr=firebase.database().ref(cn).orderByChild('rels/'+s.replace('rel:','')+'/r').startAt('0').endAt('z');
+				tr.off('child_added');tr.off('child_changed');tr.off('child_removed');
 				tr.on('child_added',fn(cn));tr.on('child_changed',fn(cn));tr.on('child_removed',fn2);
 		}}else if(s.indexOf('parent:')==0){var k=s.replace('parent:','');var cn;	
 			var fn=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;next(d)}}
 			var fn2=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;nextrem(d)}}
 			for(var c=0;c<_collections.length;c++){cn=_collections[c];
-				var tr=firebase.database().ref(cn).orderByChild("parent").startAt(k).endAt(k);tr.off('child_added');tr.off('child_changed');
+				var tr=firebase.database().ref(cn).orderByChild("parent").startAt(k).endAt(k);tr.off('child_added');tr.off('child_changed');tr.off('child_removed');
 				tr.on('child_added',fn(cn));tr.on('child_changed',fn(cn));tr.on('child_removed',fn2);
 		}}else{var _this=this;var popped=[];
 			s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
@@ -130,6 +131,6 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 	/* ------------------------------------------------------------------------------------------------- INDEXES end */
 	/* -------------------------------------------------------------------------------------------------- INIT START */	
 	initialscan:function(){this.db.collections=[];firebase.database().ref('/').on('child_added',this._scandb);},
-	_scandb:function(d){var k=d.key;if(!(k.indexOf(f$.oxyprefix)==0)){fthisdb.collections[f$.db.collections.length]=d.key;}},
+	_scandb:function(d){var k=d.key;if(!(k.indexOf(f$.oxyprefix)==0)){this.db.collections[f$.db.collections.length]=d.key;}},
   };
 	document.onload=function(){f$.initialscan()};
