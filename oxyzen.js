@@ -131,6 +131,6 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 	/* ------------------------------------------------------------------------------------------------- INDEXES end */
 	/* -------------------------------------------------------------------------------------------------- INIT START */	
 	initialscan:function(){this.db.collections=[];firebase.database().ref('/').on('child_added',this._scandb);},
-	_scandb:function(d){var k=d.key;if(!(k.indexOf(f$.oxyprefix)==0)){this.db.collections[f$.db.collections.length]=d.key;}},
+	_scandb:function(d){var k=d.key;if(!(k.indexOf(f$.oxyprefix)==0)){f$.db.collections[f$.db.collections.length]=d.key;}},
   };
 	document.onload=function(){f$.initialscan()};
