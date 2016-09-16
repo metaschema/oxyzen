@@ -53,7 +53,7 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 		if(_first){_this.db(k.replace('-','/')).set(doc);this._add(f$.oxyprefix+'log',k,{text:"Object Created"});}
 		else{this.getonce(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 			_this.db(k.replace('-','/')).set(doc);_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
-	update:function(doc,log,_first){var _this=this;var k=doc.$key;this._doindex(doc,k,this.docnamefield);delete doc.$key;if(!log){log='Object Modified'}
+	update:function(doc,log,_first){var _this=this;var k=doc.$key;/*this._doindex(doc,k,this.docnamefield);*/delete doc.$key;if(!log){log='Object Modified'}
 		if(_first){_this.db(k.replace('-','/')).update(doc);this._add(f$.oxyprefix+'log',k,{text:"Object Created"});}
 		else{this.getonce(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 			_this.db(k.replace('-','/')).update(doc);_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
