@@ -53,6 +53,10 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 		if(_first){_this.db(k.replace('-','/')).set(doc);this._add(f$.oxyprefix+'log',k,{text:"Object Created"});}
 		else{this.getonce(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 			_this.db(k.replace('-','/')).set(doc);_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
+	update:function(doc,log,_first){var _this=this;var k=doc.$key;this._doindex(doc,k,this.docnamefield);delete doc.$key;if(!log){log='Object Modified'}
+		if(_first){_this.db(k.replace('-','/')).update(doc);this._add(f$.oxyprefix+'log',k,{text:"Object Created"});}
+		else{this.getonce(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
+			_this.db(k.replace('-','/')).update(doc);_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
 /* COLLECTION END ---------------------------------------------------------------------------------- RELATIONS START */
 	setparent:function(k,pk,_pn){var _this=this;
 		if(!_pn){this.db(pk.replace('-','/')+'/'+f$.docnamefield).once('value',function(snap){
@@ -121,7 +125,7 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 		out.all[cw]={v:cw,c:ct};return out;},
 	_relevantText:function(o){var s=JSON.stringify(o);s=s.replace(/\\n/g,' ');s=s.replace(/,"([^"]*)":/g,'');s=s.replace(/{"([^"]*)":/g,'');
 		s=s.replace(/","/g,' ');s=s.replace(/""/g,' ');s=s.replace(/"/g,' ');
-		s=s.replace(/<.*\/>/g,' ');s=s.replace(/(<([^>]+)>)/ig,'');s=s.replace(/<link .*>/g,' ');
+		s=s.replace(/<([^>]+)\/>/g,' ');s=s.replace(/(<([^>]+)>)/ig,'');s=s.replace(/<link .*>/g,' ');
 		s=s.replace(/{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:|-/g,' ');
 		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');return s.toLowerCase()},},
 	/* ------------------------------------------------------------------------------------------------- INDEXES end */
