@@ -39,7 +39,7 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 	x.on('child_changed',function(d){var v=d.val();v.$key=col+d.key;next(v)});
 	x.on('child_removed',function(snap){var k=col+'+'+snap.key;nextrem(k)});	
 	},
-	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}
+	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}if(!doc.parent){doc.parent='tag-root';doc.ptitle='root'}
 		var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
 		var nkey=otype+'-'+x;this._doindex(doc,nkey,this.docnamefield);doc.$key=nkey;return doc;},
 	del:function(key){var _this=this;var doend=function(){_this.db('/'+f$.oxyprefix+'log_'+key.replace('-','/')).remove();
