@@ -127,8 +127,8 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 	/* ------------------------------------------------------------------------------------------------- INDEXES end */
 	/* ----------------------------------------------------------------------------------------------- STORAGE START */	
 	fs:{tagparent:'tag--KRKRoP7M9JVhp9Toz8m',fs:function(k){return firebase.storage().ref().child(k)},
-		add:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');d.parent=f$.fs.tagparent;delete d.bucket;d.doctitle=d.name;delete d.name;delete d.metageneration;delete d.generation;f$.db.set(d,'File uploaded',true);if(next){next(d);}});},
-		set:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');d.parent=f$.fs.tagparent;delete d.bucket;d.doctitle=d.name;delete d.name;delete d.metageneration;delete d.generation;f$.db.set(d,'File uploaded');if(next){next(d);}});},
+		add:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');d.parent=f$.fs.tagparent;d.ptitle='UPLOADS';delete d.bucket;d.doctitle=d.name;delete d.name;delete d.metageneration;delete d.generation;f$.db.set(d,'File uploaded',true);if(next){next(d);}});},
+		set:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');d.parent=f$.fs.tagparent;d.parent='UPLOADS';delete d.bucket;d.doctitle=d.name;delete d.name;delete d.metageneration;delete d.generation;f$.db.set(d,'File uploaded');if(next){next(d);}});},
 		del:function(key){f$.db.del(key);this.fs(key.substr(key.indexOf('-')+1).replace('*','.')).delete();},
 	},	
 	/* ------------------------------------------------------------------------------------------------- STORAGE end */
