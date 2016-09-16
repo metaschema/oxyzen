@@ -54,9 +54,9 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 		else{this.getonce(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 			_this.db(k.replace('-','/')).set(doc);_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
 /* COLLECTION END ---------------------------------------------------------------------------------- RELATIONS START */
-	setparent:function(k,pk,_pn){
+	setparent:function(k,pk,_pn){var _this=this;
 		if(_pn){this.db(pk.replace('-','/')+'/'+f$.docnamefield).once('value',function(snap){
-			var v=snap.val();this.db(k.replace('-','/').update({parent:pk,ptitle:v}));})}
+			var v=snap.val();_this.db(k.replace('-','/')).update({parent:pk,ptitle:v});})}
 		else{this.db(k.replace('-','/')).update({parent:pk,ptitle:_pn})}},
 	link:function(k1,k2,json){console.log('kok2');if(!json){json={r:'default'}}if(!json.r){json.r='default'}if(f$.inoe(k1)||(f$.inoe(k2))){console.log('only valid keys')}else{
 		var _this=this;this.getonce(k1,function(d){_this.getonce(k2,function(dd){var j2=json;
