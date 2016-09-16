@@ -88,8 +88,8 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 		}}else if(s.indexOf('parent:')==0){var k=s.replace('parent:','');var cn;	
 			var fn=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;next(d)}}
 			var fn2=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;nextrem(d)}}
-			for(var c=0;c<_collections.length;c++){cn=_collections[c];
-				var tr=firebase.database().ref(cn).orderByChild("parent").startAt(k).endAt(k);tr.off('child_added');tr.off('child_changed');tr.off('child_removed');
+			for(var c=0;c<_collections.length;c++){cn=_collections[c];var rk=k;if(cn=='tag'){rk=rk.replace('tag-','')}
+				var tr=firebase.database().ref(cn).orderByChild("parent").startAt(rk).endAt(rk);tr.off('child_added');tr.off('child_changed');tr.off('child_removed');
 				tr.on('child_added',fn(cn));tr.on('child_changed',fn(cn));tr.on('child_removed',fn2);
 		}}else{var _this=this;var popped=[];
 			s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
