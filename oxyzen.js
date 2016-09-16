@@ -57,7 +57,7 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 	setparent:function(k,pk,_pn){
 		if(_pn){this.db(pk.replace('-','/')+'/'+f$.docnamefield).once('value',function(snap){
 			var v=snap.val();this.db(k.replace('-','/').update({parent:pk,ptitle:v}));})}
-		else{this.db(k.replace('-','/').update({parent:pk,ptitle:_pn}))}},
+		else{this.db(k.replace('-','/')).update({parent:pk,ptitle:_pn})}},
 	link:function(k1,k2,json){console.log('kok2');if(!json){json={r:'default'}}if(!json.r){json.r='default'}if(f$.inoe(k1)||(f$.inoe(k2))){console.log('only valid keys')}else{
 		var _this=this;this.getonce(k1,function(d){_this.getonce(k2,function(dd){var j2=json;
 			json.n=dd[_this.docnamefield];_this.db(k1.replace('-','/')+'/rels/'+k2).set(json);_this._add(f$.oxyprefix+'log',k1,{text:'Linked with '+dd[_this.docnamefield]+'['+k2+']'});
@@ -89,11 +89,11 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 				var tr=firebase.database().ref(cn).orderByChild('rels/'+s.replace('rel:','')+'/r').startAt('0').endAt('z');
 				tr.off('child_added');tr.off('child_changed');tr.off('child_removed');
 				tr.on('child_added',fn(cn));tr.on('child_changed',fn(cn));tr.on('child_removed',fn2);
-		}}else if(s.indexOf('parent:')==0){var k=s.replace('parent:','');var cn;	
+		}}else if(s.indexOf('parent:')==0){var k=s.replace('parent:','');var cn;var colname="parent";
 			var fn=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;next(d)}}
 			var fn2=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;nextrem(d)}}
 			for(var c=0;c<_collections.length;c++){cn=_collections[c];
-				var tr=firebase.database().ref(cn).orderByChild("parent").startAt(k).endAt(k);tr.off('child_added');tr.off('child_changed');tr.off('child_removed');
+				var tr=firebase.database().ref(cn).orderByChild(colname).startAt(k).endAt(k);tr.off('child_added');tr.off('child_changed');tr.off('child_removed');
 				tr.on('child_added',fn(cn));tr.on('child_changed',fn(cn));tr.on('child_removed',fn2);
 		}}else{var _this=this;var popped=[];
 			s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
