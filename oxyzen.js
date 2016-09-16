@@ -54,6 +54,10 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 		else{this.getonce(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 			_this.db(k.replace('-','/')).set(doc);_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
 /* COLLECTION END ---------------------------------------------------------------------------------- RELATIONS START */
+	setparent:function(k,pk,_pn){
+		if(_pn){this.db(pk.replace('-','/')+'/'+f$.docnamefield).once('value',function(snap){
+			var v=snap.val();this.db(k.replace('-','/').update({parent:pk,ptitle:v}));})}
+		else{this.db(k.replace('-','/').update({parent:pk,ptitle:_pn}))}},
 	link:function(k1,k2,json){console.log('kok2');if(!json){json={r:'default'}}if(!json.r){json.r='default'}if(f$.inoe(k1)||(f$.inoe(k2))){console.log('only valid keys')}else{
 		var _this=this;this.getonce(k1,function(d){_this.getonce(k2,function(dd){var j2=json;
 			json.n=dd[_this.docnamefield];_this.db(k1.replace('-','/')+'/rels/'+k2).set(json);_this._add(f$.oxyprefix+'log',k1,{text:'Linked with '+dd[_this.docnamefield]+'['+k2+']'});
@@ -126,9 +130,8 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 		add:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');d.parent=f$.fs.tagparent;delete d.bucket;d.doctitle=d.name;delete d.name;delete d.metageneration;delete d.generation;f$.db.set(d,'File uploaded',true);if(next){next(d);}});},
 		set:function(file,next){this.fs(file.name).put(file).then(function(snap){var d=snap.metadata;for(var k in d){if(!d[k]){delete d[k]}}d.$key='file-'+d.fullPath.replace('.','*');d.parent=f$.fs.tagparent;delete d.bucket;d.doctitle=d.name;delete d.name;delete d.metageneration;delete d.generation;f$.db.set(d,'File uploaded');if(next){next(d);}});},
 		del:function(key){f$.db.del(key);this.fs(key.substr(key.indexOf('-')+1).replace('*','.')).delete();},
-	},
-	
-	/* ------------------------------------------------------------------------------------------------- INDEXES end */
+	},	
+	/* ------------------------------------------------------------------------------------------------- STORAGE end */
 	/* -------------------------------------------------------------------------------------------------- INIT START */	
 	initialscan:function(){this.db.collections=[];firebase.database().ref('/').on('child_added',this._scandb);},
 	_scandb:function(d){var k=d.key;if(!(k.indexOf(f$.oxyprefix)==0)){f$.db.collections[f$.db.collections.length]=d.key;}},
