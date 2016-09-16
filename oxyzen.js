@@ -22,7 +22,7 @@ initAuth:function(nextToken){if(!nextToken){nextToken=function(r){var i=0;}}fire
 }else{console.error(error);}});},
 /* ----------------------------------------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------- FIREBASE DATABASE NAMESPACE - START */
-db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.database().ref(ref)},
+db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:function(ref){return firebase.database().ref(ref)},
 	start:function(key,event,next){this.db(key.replace('-','/-')).on(event,function(d){var v=d.val();if(v){v.$key=key.split('-')[0]+d.key;next(v);}});},
 	end:function(key,event){this.db(key.replace('-','/-')).off(event);},
 /* --------------------------------------------------------------------------------------------- SUBCOLLECTION START */
@@ -133,7 +133,3 @@ db:{docnamefield:"doctitle",collections:[],db:function(ref){return firebase.data
 	},	
 	/* ------------------------------------------------------------------------------------------------- STORAGE end */
 	/* -------------------------------------------------------------------------------------------------- INIT START */	
-	initialscan:function(){this.db.collections=[];firebase.database().ref('/').on('child_added',this._scandb);},
-	_scandb:function(d){var k=d.key;if(!(k.indexOf(f$.oxyprefix)==0)){f$.db.collections[f$.db.collections.length]=d.key;}},
-  };
-	document.onload=function(){f$.initialscan()};
