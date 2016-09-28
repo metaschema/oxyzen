@@ -82,7 +82,12 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 	});}});},
 /* RELATIONS END ------------------------------------------------------------------------------------- INDEXES START */
  clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref(f$.oxyprefix+snap.key).remove()})},
-	reindexcollection:function(collname){var _this=this;this.db('/'+collname).on("child_added",function(d){_this._doindex(d.val(),collname+'-'+d.key,'doctitle');console.log('reindexed '+d.key);});},
+	reindexcollection:function(collname,_tstep){if(!_tstep){_tstep=100}var _this=this;this.db('/'+collname).once("value",function(snap){
+		var docs=snap.val();var ct=0;var d ='';
+		for(d in docs){ct++;var v=docs[d];var k=d;console.log(ct+' reindexed '+d);
+			//setTimeout(function(){_this._doindex(v,collname+'-'+k,'doctitle');console.log('reindexed '+k);},_tstep*ct);
+	  }});
+	},
 	find:function(s,next,nextrem,_collections){if(!_collections){_collections=this.collections}
 		if(s=='all'){for(var c=0;c<_collections.length;c++){this.getall(_collections[c],next,nextrem)}}
 		else if(s.indexOf('key:')==0){this.getone(s.replace('key:',''),next,nextrem);}
