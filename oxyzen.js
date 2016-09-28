@@ -81,13 +81,15 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 			_this.db(kk[k].replace('-','/')+'/rels/'+k1).remove();_this._add(f$.oxyprefix+'log',kk[k],{text:'Unlinked with '+dd[_this.docnamefield]+'['+k1+']'});
 	});}});},
 /* RELATIONS END ------------------------------------------------------------------------------------- INDEXES START */
- clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref(f$.oxyprefix+snap.key).remove()})},
-	reindexcollection:function(collname,_tstep){if(!_tstep){_tstep=100}var _this=this;this.db('/'+collname).once("value",function(snap){
-		var docs=snap.val();var ct=0;var d ='';var tot=Object.keys(docs).length;
+	clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref(f$.oxyprefix+snap.key).remove()})},
+	reindexcollection:function(collname,stepjsfn,endjsfn,_tstep){if(!_tstep){_tstep=100}var _this=this;this.db('/'+collname).once("value",function(snap){
+		var docs=snap.val();var ct=0;var d ='';var tot=Object.keys(docs).length;var s;if(!stepjsfn){stepjsfn='f$.db._reindexlog'}if(!endjsfn){endjsfn='f$.db._reindexlog'}
 		for(d in docs){ct++;
-			setTimeout("f$.db._doindex("+JSON.stringify(docs[d])+",'"+collname+"-"+d+"','doctitle');console.log('reindexed "+d+" - "+ct+"/"+tot+"');",_tstep*ct);
-	  }});
-	},
+			s=stepjsfn+"("+ct+","+tot+");f$.db._doindex("+JSON.stringify(docs[d])+",'"+collname+"-"+d+"','doctitle');";
+			if(ct==tot){s+=endjsfn+"("+ct+","+tot+");"}
+			setTimeout(s,_tstep*ct);
+	  }});},
+	_reindexlog:function(c,t){console.log('Reindexed '+c+'/'+t)},
 	find:function(s,next,nextrem,_collections){if(!_collections){_collections=this.collections}
 		if(s=='all'){for(var c=0;c<_collections.length;c++){this.getall(_collections[c],next,nextrem)}}
 		else if(s.indexOf('key:')==0){this.getone(s.replace('key:',''),next,nextrem);}
