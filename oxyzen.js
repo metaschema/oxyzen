@@ -82,10 +82,10 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 	});}});},
 /* RELATIONS END ------------------------------------------------------------------------------------- INDEXES START */
 	clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref(f$.oxyprefix+snap.key).remove()})},
-	reindexcollections:function(colls){window.LOCDX={Wndex:{},Hndex:{},invdex:{},done:[]};LOCDX.colls=colls;this._loop_reindexcollections();},
-	_loop_reindexcollections:function(){if(LOCDX.done.length<LOCDX.colls.length){
-		this._reindexcollection(LOCDX.colls[LOCDX.done.length],false,function(cn,c,t){LOCDX.done[LOCDX.done.length]=cn;
-				console.log('FINESHED INDEXING '+LOCDX.done[LOCDX.done.length-1]);f$.db._loop_reindexcollections();});
+	reindexcollections:function(colls,stepfn){window.LOCDX={Wndex:{},Hndex:{},invdex:{},done:[]};LOCDX.colls=colls;this._loop_reindexcollections(stepfn);},
+	_loop_reindexcollections:function(stepfn){if(LOCDX.done.length<LOCDX.colls.length){
+		this._reindexcollection(LOCDX.colls[LOCDX.done.length],stepfn,function(cn,c,t){LOCDX.done[LOCDX.done.length]=cn;
+				console.log('FINESHED INDEXING '+LOCDX.done[LOCDX.done.length-1]);f$.db._loop_reindexcollections(stepfn);});
 		}else{console.log('FINESHED INDEXING ALL');this._endreindex();}},
 	_reindexcollection:function(collname,stepfn,endfn){var _this=this;this.db('/'+collname).once("value",function(snap){
 		var docs=snap.val();var ct=0;var d ='';var tot=Object.keys(docs).length;var s;if(!stepfn){stepfn=_this._reindexlog}if(!endfn){endfn=_this._endreindexlog}
