@@ -118,7 +118,7 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 		}}else{var _this=this;var popped=[];var xx=s.split(' ');var xlen=xx.length;
 			s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
 			s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');s=s.toLowerCase();
-		var uninext=function(d){if(!popped[d.$key]){popped[d.$key]=1;}else{popped[d.$key]++}if(popped[d.$key]>=xlen){d.hits=popped[d.$key];next(d);}};
+		var uninext=function(d){if(!popped[d.$key]){popped[d.$key]=1;}else{popped[d.$key]++}if(popped[d.$key]>=xlen){next(d);}};
 		var step=function(d){_this.getone(d.key,uninext,nextrem);}
 		for(var x=0;x<xlen;x++){xx[x]=xx[x].trim();if(xx[x].length>2){var tref=null;
 			if(xx[x][0]=='#'){/*search in hashed index*/
