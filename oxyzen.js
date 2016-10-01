@@ -82,14 +82,23 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 	});}});},
 /* RELATIONS END ------------------------------------------------------------------------------------- INDEXES START */
 	clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref(f$.oxyprefix+snap.key).remove()})},
-	reindexcollection:function(collname,stepjsfn,endjsfn,_tstep){if(!_tstep){_tstep=100}var _this=this;this.db('/'+collname).once("value",function(snap){
-		var docs=snap.val();var ct=0;var d ='';var tot=Object.keys(docs).length;var s;if(!stepjsfn){stepjsfn='f$.db._reindexlog'}if(!endjsfn){endjsfn='f$.db._reindexlog'}
-		for(d in docs){ct++;
-			s=stepjsfn+"("+ct+","+tot+");f$.db._doindex("+JSON.stringify(docs[d])+",'"+collname+"-"+d+"','doctitle');";
-			if(ct==tot){s+=endjsfn+"("+ct+","+tot+");"}
-			setTimeout(s,_tstep*ct);
-	  }});},
-	_reindexlog:function(c,t){console.log('Reindexed '+c+'/'+t)},
+	reindexcollections:function(colls){window.LOCDX={Wndex:{},Hndex:{},invdex:{},done:[]};LOCDX.colls=colls;this._loop_reindexcollections();},
+	_loop_reindexcollections:function(){if(LOCDX.done.length<LOCDX.colls.length){
+		this._reindexcollection(LOCDX.colls[LOCDX.done.length],false,function(cn,c,t){LOCDX.done[LOCDX.done.length]=cn;
+				console.log('FINESHED INDEXING '+LOCDX.done[LOCDX.done.length-1]);f$.db._loop_reindexcollections();});
+		}else{console.log('FINESHED INDEXING ALL');this._endreindex();}},
+	_reindexcollection:function(collname,stepfn,endfn){var _this=this;this.db('/'+collname).once("value",function(snap){
+		var docs=snap.val();var ct=0;var d ='';var tot=Object.keys(docs).length;var s;if(!stepfn){stepfn=_this._reindexlog}if(!endfn){endfn=_this._endreindexlog}
+		for(d in docs){ct++;stepfn(collname,ct,tot);
+			f$.db._doindex2(docs[d],collname+"-"+d,'doctitle');			
+	  }endfn(collname,ct,tot);});},
+	_endreindex:function(){delete LOCDX.done;delete LOCDX.colls;LOCDX.donotindex={};LOCDX.Hdonotindex={};
+		var w='';var W='';var n;var k;
+		for(w in LOCDX.Wndex){n=0;W=LOCDX.Wndex[w];for(k in W){n++}if(n>550){delete LOCDX.Wndex[w];LOCDX.donotindex[w]=n}}
+		for(w in LOCDX.Hndex){n=0;W=LOCDX.Hndex[w];for(k in W){n++}if(n>550){delete LOCDX.Hndex[w];LOCDX.Hdonotindex[w]=n}}
+	  var url = 'data:text/json;charset=utf8,' + encodeURIComponent(JSON.stringify(LOCDX));
+    window.open(url, '_blank');window.focus();},
+	_reindexlog:function(cn,c,t){console.log('Reindexed '+cn+' '+c+'/'+t)},_endreindexlog:function(c,t){console.log('FINISHED REINDEXING '+cn+' '+c+'/'+t)},
 	find:function(s,next,nextrem,_collections){if(!_collections){_collections=this.collections}
 		if(s=='all'){for(var c=0;c<_collections.length;c++){this.getall(_collections[c],next,nextrem)}}
 		else if(s.indexOf('key:')==0){this.getone(s.replace('key:',''),next,nextrem);}
@@ -127,6 +136,11 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 		}else{/*INDEX ONLY*/for(j in IDX.all){if(j!=''){_this.db('/'+f$.oxyprefix+'Wndex/'+j+'/'+k).set({ct:IDX.all[j]});}}
 			for(j in IDX.hash){if(j!=''){_this.db('/'+f$.oxyprefix+'Hndex/'+j+'/'+k).set({ct:IDX.hash[j]});}}}
 			_this.db('/'+f$.oxyprefix+'invdex/'+k).set(IDX);});},
+	_doindex2:function(o,k,f){var _this=this;var j;var RT=this._relevantText(o);var IDX=this._indexAllandHashedWords(RT); 
+		for(j in IDX.all){if(j!=''){if(!LOCDX.Wndex[j]){LOCDX.Wndex[j]={};}LOCDX.Wndex[j][k]={ct:IDX.all[j]};}}
+		var has=false; for(j in IDX.hash){if(j!=''){has=true;if(!LOCDX.Hndex[j]){LOCDX.Hndex[j]={};}LOCDX.Hndex[j][k]={ct:IDX.hash[j]};}}
+		if(!has){delete IDX.hash}
+		LOCDX.invdex[k]=IDX;},
 	_indexAllandHashedWords:function(s){var out={all:{},hash:{}};var c=0;var cw='';var ct=1;var gh='';var ss=s.split(' ').sort();var len=ss.length;while((c<len)&&(ss[c].trim()=='')){c++}
 		while(c<len){gh=ss[c].trim();if(cw!=gh){if(cw!=''){if(cw.length>2){out.all[cw.replace('#','')]=ct};if(cw[0]=='#'){out.hash[cw.replace('#','')]=ct;}}cw=gh;ct=1;}else{ct++}c++}
 		out.all[cw]={v:cw,c:ct};return out;},
