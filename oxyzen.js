@@ -98,9 +98,6 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 		for(d in docs){ct++;stepfn(collname,ct,tot);
 			f$.db._doindex2(docs[d],collname+"-"+d,'doctitle');			
 	  }endfn(collname,ct,tot);});},
-	_endreindex:function(){
-	  var url = 'data:text/json;charset=utf8,' + encodeURIComponent(JSON.stringify(LOCDX));
-    window.open(url, '_blank');window.focus();},
 	_reindexlog:function(cn,c,t){console.log('Reindexed '+cn+' '+c+'/'+t)},_endreindexlog:function(c,t){console.log('FINISHED REINDEXING '+cn+' '+c+'/'+t)},
 	find:function(s,next,nextrem,_collections){if(!_collections){_collections=this.collections}
 		if(s=='all'){for(var c=0;c<_collections.length;c++){this.getall(_collections[c],next,nextrem)}}
