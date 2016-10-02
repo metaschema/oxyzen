@@ -83,19 +83,22 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 /* RELATIONS END ------------------------------------------------------------------------------------- INDEXES START */
 	clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref(f$.oxyprefix+snap.key).remove()})},
 	reindexcollections:function(colls,stepfn){window.LOCDX={Wndex:{},Hndex:{},invdex:{},done:[]};LOCDX.colls=colls;this._loop_reindexcollections(stepfn);},
-	_loop_reindexcollections:function(stepfn){if(LOCDX.done.length<LOCDX.colls.length){
+	_loop_reindexcollections:function(stepfn,endfn){if(LOCDX.done.length<LOCDX.colls.length){
 		this._reindexcollection(LOCDX.colls[LOCDX.done.length],stepfn,function(cn,c,t){LOCDX.done[LOCDX.done.length]=cn;
 				console.log('FINESHED INDEXING '+LOCDX.done[LOCDX.done.length-1]);f$.db._loop_reindexcollections(stepfn);});
-		}else{console.log('FINESHED INDEXING ALL');this._endreindex();}},
+		}else{console.log('FINESHED INDEXING ALL');
+		delete LOCDX.done;delete LOCDX.colls;LOCDX.donotindex={};LOCDX.Hdonotindex={};
+		var w='';var W='';var n;var k;
+		for(w in LOCDX.Wndex){n=0;W=LOCDX.Wndex[w];for(k in W){n++}if(n>550){delete LOCDX.Wndex[w];LOCDX.donotindex[w]=n}}
+		for(w in LOCDX.Hndex){n=0;W=LOCDX.Hndex[w];for(k in W){n++}if(n>550){delete LOCDX.Hndex[w];LOCDX.Hdonotindex[w]=n}}
+		endfn(LOCDX);
+		}},
 	_reindexcollection:function(collname,stepfn,endfn){var _this=this;this.db('/'+collname).once("value",function(snap){
 		var docs=snap.val();var ct=0;var d ='';var tot=Object.keys(docs).length;var s;if(!stepfn){stepfn=_this._reindexlog}if(!endfn){endfn=_this._endreindexlog}
 		for(d in docs){ct++;stepfn(collname,ct,tot);
 			f$.db._doindex2(docs[d],collname+"-"+d,'doctitle');			
 	  }endfn(collname,ct,tot);});},
-	_endreindex:function(){delete LOCDX.done;delete LOCDX.colls;LOCDX.donotindex={};LOCDX.Hdonotindex={};
-		var w='';var W='';var n;var k;
-		for(w in LOCDX.Wndex){n=0;W=LOCDX.Wndex[w];for(k in W){n++}if(n>550){delete LOCDX.Wndex[w];LOCDX.donotindex[w]=n}}
-		for(w in LOCDX.Hndex){n=0;W=LOCDX.Hndex[w];for(k in W){n++}if(n>550){delete LOCDX.Hndex[w];LOCDX.Hdonotindex[w]=n}}
+	_endreindex:function(){
 	  var url = 'data:text/json;charset=utf8,' + encodeURIComponent(JSON.stringify(LOCDX));
     window.open(url, '_blank');window.focus();},
 	_reindexlog:function(cn,c,t){console.log('Reindexed '+cn+' '+c+'/'+t)},_endreindexlog:function(c,t){console.log('FINISHED REINDEXING '+cn+' '+c+'/'+t)},
