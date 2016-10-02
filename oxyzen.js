@@ -145,7 +145,7 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 		if(!has){delete IDX.hash}
 		LOCDX.invdex[k]=IDX;},
 	_indexAllandHashedWords:function(s){var out={all:{},hash:{}};var c=0;var cw='';var ct=1;var gh='';var ss=s.split(' ').sort();var len=ss.length;while((c<len)&&(ss[c].trim()=='')){c++}
-		while(c<len){gh=ss[c].trim();if(cw!=gh){if(cw!=''){if(cw.length>2){out.all[cw.replace('#','')]=ct};if(cw[0]=='#'){out.hash[cw.replace('#','')]=ct;}}cw=gh;ct=1;}else{ct++}c++}
+		while(c<len){gh=ss[c].trim();if(cw!=gh){if(cw!=''){if(cw.length>2){out.all[cw.replace('#','')]=ct};if(cw!='#'){if(cw[0]=='#'){out.hash[cw.replace('#','')]=ct;}}}cw=gh;ct=1;}else{ct++}c++}
 		out.all[cw]={v:cw,c:ct};return out;},
 	_relevantText:function(o){var s=JSON.stringify(o);s=s.replace(/\\n/g,' ');s=s.replace(/,"([^"]*)":/g,'');s=s.replace(/{"([^"]*)":/g,'');
 		s=s.replace(/","/g,' ');s=s.replace(/""/g,' ');s=s.replace(/"/g,' ');
