@@ -9,12 +9,14 @@ In json's dbs the structure is pretty much free, however,  except for special oc
 Most of the projects for the micro and the small business could be covered by a bunch of collections, given firebase's integrated login.
 I figured, if i was to use a document collections structure for a project I could as well benefit from the know factors of the data structure.
 
-This project allows for easy administration of such a database, and on use it adds recursive treeeness for all the documents in any collection, and n to n relations with metadata, plus a searchable textual index, plus a subcollection utility, and using the same subcollection utility a log of the documents changes is implemented, as well as a version memory for document.
+This project allows for easy administration of such a database, and on use it adds recursive treeeness for all the documents in any collection, and n to n relations with metadata, plus a searchable textual index, plus a subcollection utility, and using the same subcollection utility a log of the documents changes is implemented, as well as a versioning for documents.
 
-I know the answer on the forum about this suggests the use of elastic search via the use of some other server, but i found micro and small projects could not benefit from such an aggravation in the complexity of the structure - and manteinance.
+I know the answer on the forum about textual searches suggests the use of elastic search via the use of some other server, but I found micro and small projects could not benefit from such an aggravation in the complexity of the structure - and manteinance.
 Especially when this experimental indexing function works so well.
 I plan to greatly improove the ways of the current indexing, but still, after testin with a db of about 100000 interinked documents in 5 collections, I found our indexing functions, holding, and the overall output performance seems much greater than pure .net xml web services against beefed mysql server. Of course with small limitations; limitations that i find great to ensure our apps have a linear time of execution.
-But I guess a function for returning the keys would not break that, instead, could greatly improove the performances in many scenarios.
+
+:-D - 
+But I guess a way for returning childs keys only would not break that, instead, could greatly improove the performances in many scenarios where the dev might end preferring getting everything.
 
 # how it works
 -1 Ugly but coeherently manageable _key attribut is added to documents during runtime (not stored in the db),  in the format collectionname-documentkey - this enables for example replations to ony require one attribute to reference any document in any collection, or enabled any document in any collection to be the parent of any other.
