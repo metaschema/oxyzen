@@ -15,8 +15,9 @@ I know the answer on the forum about this suggests the use of elastic search via
 Especially when this experimental indexing function works so well.
 I plan to greatly improove the ways of the current indexing, but still, after testin with a db of about 100000 interinked documents in 5 collections, I found our indexing functions, holding, and the overall output performance seems much greater than pure .net xml web services against beefed mysql server. Of course with small limitations; limitations that i find great to ensure our apps have a linear time of execution.
 But I guess a function for returning the keys would not break that, instead, could greatly improove the performances in many scenarios.
+
 # how it works
--1 Ugly but coeherently manageable _key attribut is added to documents during runtime (not stored in the db),  is the format collectionname-documentkey - this enables for example replations to ony require one attribute to reference any document in any collection, or enabled any document in any collection to be the parent of any other.
+-1 Ugly but coeherently manageable _key attribut is added to documents during runtime (not stored in the db),  in the format collectionname-documentkey - this enables for example replations to ony require one attribute to reference any document in any collection, or enabled any document in any collection to be the parent of any other.
 
 -2 A reindex function hepl starts with an already existing db, it creates a local JSON file that the use have to upload in the database via the firebase console, to enable the use of the index.
 
