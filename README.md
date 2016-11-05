@@ -20,7 +20,7 @@ But I guess a function for returning the keys would not break that, instead, cou
 
 -2 A reindex function hepl starts with an already existing db, it creates a local JSON file that the use have to upload in the database via the firebase console, to enable the use of the index.
 
--3 Inserts and Updates functions provided in the librearies should always be used, as they mantain the index coherent with data during such operations, for example removing the words index reference that are being removed from a document content, automaticaly on update.
+-3 Inserts and Updates functions provided in the library should always be used, as they mantain the index coherent with data during such operations, for example removing the words index reference that are being removed from a document content, automaticaly on update.
 
 -4 The oneliners link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities.
 
