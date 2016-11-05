@@ -1,4 +1,16 @@
 # Oxyzen
+
+This project is a javascript library meant to use with firebase in web applications. It enables some handy feat, with extreme ease of use:
+
+Recursive treeeness for all the documents in any collection.N<->N relations with metadata.
+Searchable textual index.
+Hashwords index.
+Titles index (todo).
+A subcollection utility.
+Using the same subcollection utility a log of the documents changes is implemented, as well as a versioning for documents.
+In conjunction with metaschema app, it allows for easy administration of such a database and the feats..
+
+
 Basic library test form  
 https://cdn.rawgit.com/metaschema/oxyzen/master/index.html 
 
@@ -9,8 +21,6 @@ In json's dbs the structure is pretty much free, however,  except for special oc
 
 Most of the projects for the micro and the small business could be covered by a bunch of collections, given firebase's integrated login.
 I figured, if i was to use a document collections structure for a project I could as well benefit from the know factors of the data structure.
-
-This project allows for easy administration of such a database, and on use it adds recursive treeeness for all the documents in any collection, and n to n relations with metadata, plus a searchable textual index, plus a subcollection utility, and using the same subcollection utility a log of the documents changes is implemented, as well as a versioning for documents.
 
 I know the answer on the forum about textual searches suggests the use of elastic search via the use of some other server, but I found micro and small projects could not benefit from such an aggravation in the complexity of the structure - and manteinance.
 Especially when this experimental indexing function works so well.
