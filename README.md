@@ -33,8 +33,11 @@ But I guess a function for returning the keys would not break that, instead, cou
 
 # usage / refs draft
 -1 Have a firebase project with some data that follows the collections of documents structure.
+
 -2 In a webpage with the firebase script and connected to that db, use 
+
 f$.db.reindexcollections:function(colls,stepfn,endfn), where colls is an array with strings containing the names of the collections you want to reindex, at the end this will give you a JSON data you can download locally and upload in the /_OXY node of your firebase database.
+
 -3 
 
 
