@@ -30,7 +30,7 @@ I plan to greatly improove the ways of the current indexing, but still, after te
 :-D - 
 But I guess a way for returning childs keys only would not break that, instead, could greatly improove the performances in many scenarios where the dev might end preferring getting everything.
 
-# how it works
+# How it works
 
 - Ugly but coeherently manageable _key attribut is added to documents during runtime (not stored in the db),  in the format collectionname-documentkey - this enables for example replations to ony require one attribute to reference any document in any collection, or enabled any document in any collection to be the parent of any other.
 - A reindex function help starts with an already existing db, it creates a local JSON file that the use have to upload in the database via the firebase console, to enable the use of the index.
@@ -40,7 +40,7 @@ But I guess a way for returning childs keys only would not break that, instead, 
 - The oneliner find function should be used to find documents using on of the following: free words, rel:_key, parent:_key, key:_key
 - ...
 
-# usage / refs draft
+# Usage / refs draft
 -1 Have a firebase project with some data that follows the collections of documents structure.
 
 -2 In a webpage with the firebase script and connected to that db, use 
