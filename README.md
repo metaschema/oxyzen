@@ -19,7 +19,7 @@ But I guess a function for returning the keys would not break that, instead, cou
 # how it works
 -1 Ugly but coeherently manageable _key attribut is added to documents during runtime (not stored in the db),  in the format collectionname-documentkey - this enables for example replations to ony require one attribute to reference any document in any collection, or enabled any document in any collection to be the parent of any other.
 
--2 A reindex function hepl starts with an already existing db, it creates a local JSON file that the use have to upload in the database via the firebase console, to enable the use of the index.
+-2 A reindex function help starts with an already existing db, it creates a local JSON file that the use have to upload in the database via the firebase console, to enable the use of the index.
 
 -3 Inserts and Updates functions provided in the library should always be used, as they mantain the index coherent with data during such operations, for example removing the words index reference that are being removed from a document content, automaticaly on update.
 
