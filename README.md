@@ -1,8 +1,9 @@
-# oxyzen
--Basic library test form
+# Oxyzen
+Basic library test form  
 https://cdn.rawgit.com/metaschema/oxyzen/master/index.html 
 
--And our fully featured gui, metaschema < link here >
+And our fully featured gui, metaschema  
+https://cdn.rawgit.com/metaschema/metaschema/master/app.html
 
 In json's dbs the structure is pretty much free, however,  except for special occasions, I' ve seen the "document collection concept" been preferable, scalable and reusable, sharable also.
 
