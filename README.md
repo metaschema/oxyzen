@@ -17,11 +17,17 @@ I plan to greatly improove the ways of the current indexing, but still, after te
 But I guess a function for returning the keys would not break that, instead, could greatly improove the performances in many scenarios.
 # how it works
 -1 Ugly but coeherently manageable _key attribut is added to documents during runtime (not stored in the db),  is the format collectionname-documentkey - this enables for example replations to ony require one attribute to reference any document in any collection, or enabled any document in any collection to be the parent of any other.
+
 -2 A reindex function hepl starts with an already existing db, it creates a local JSON file that the use have to upload in the database via the firebase console, to enable the use of the index.
+
 -3 Inserts and Updates functions provided in the librearies should always be used, as they mantain the index coherent with data during such operations, for example removing the words index reference that are being removed from a document content, automaticaly on update.
+
 -4 The oneliners link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities.
+
 -5 The oneliner setparent function should be use to make use of the recursive tree functionalities among documents
+
 -6 The oneliner find function should be used to find documents using on of the following: free words, rel:_key, parent:_key, key:_key
+
 -7 ...
 # refs draft
 
