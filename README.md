@@ -3,11 +3,12 @@
 This project is a javascript library meant to use with firebase in web applications. It enables some handy feat, with extreme ease of use:
 
 Recursive treeeness for all the documents in any collection.N<->N relations with metadata:
-1 - Searchable textual index.
-2 - Hashwords index.
-3 - Titles index (todo).
-4 - A subcollection utility.
-5 - Using the same subcollection utility a log of the documents changes is implemented, as well as a versioning for documents.
+
+- Searchable textual index.
+- Hashwords index.
+- Titles index (todo).
+- A subcollection utility.
+- Using the same subcollection utility a log of the documents changes is implemented, as well as a versioning for documents.
 
 In conjunction with metaschema app, it allows for easy administration of such a database and the feats..
 
