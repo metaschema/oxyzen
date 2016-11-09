@@ -42,7 +42,7 @@
 				setTimeout('app._load_user()',1000);
    		},_load_user:function(){
    			var scr=gid('codesnippet').value;
-				scr=scr.replace('<script src="https:\/\/www.gstatic.com\/firebasejs\/live\/3.0\/firebase.js"><\/script>','');
+				scr=scr.replace('<script src=".*"><\/script>','');
 				scr=scr.replace('<script>','');scr=scr.replace('<\/script>','');
 				eval(scr);
 				setTimeout('app.init()',500);},
