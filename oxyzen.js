@@ -8,7 +8,7 @@ inoe:function(v){if(!v)return true;if(typeof v!='string')return true;if(v.length
 login:function(provider,method){if(!method){method='redirect'}provider=provider.toLowerCase();
 	if (!firebase.auth().currentUser){var provider;
 		if(provider=='twitter'){provider=new firebase.auth.TwitterAuthProvider();}
-		else if(provider=='google'){provider=new firebase.auth.GoogleAuthProvider();		
+		else if(provider=='google'){provider=new firebase.auth.GoogleAuthProvider();console.log('glogin');		
 		provider.addScope('https://www.googleapis.com/auth/devstorage.full_control');}
 		else if(provider=='github'){provider=new firebase.auth.GithubAuthProvider();provider.addScope('repo');}
 		else if(provider=='facebook'){provider=new firebase.auth.FacebookAuthProvider();provider.addScope('user_likes');}
