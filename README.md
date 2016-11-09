@@ -7,8 +7,8 @@ I figured, if i was to use a document collections structure for a project I coul
 
 Given your db follows or can follow a "collectionS of documentS structure", this project is a javascript library meant to use with firebase in web applications. It enables some handy feat, with extreme ease of use:
 
-Recursive treeeness for all the documents in any collection.N<->N relations with metadata:
-
+- Recursive treeeness for all the documents in any collection, by adding the property parent in the format "collname-dockey" in the documents
+- N<->N relations with metadata,easy querizable, by adding a rel property that have childs in the format  "collname-dockey"
 - Searchable textual index.
 - Hashwords index.
 - Titles index (todo).
