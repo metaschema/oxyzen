@@ -1,5 +1,10 @@
 # Oxyzen
 
+In json's dbs the structure is pretty much free, however,  except for special occasions, I' ve seen the "document collection concept" been preferable, scalable and reusable, sharable also.
+
+Most of the projects for the micro and the small business could be covered by a bunch of collections, given firebase's integrated login.
+I figured, if i was to use a document collections structure for a project I could as well benefit from the know factors of the data structure.
+
 This project is a javascript library meant to use with firebase in web applications. It enables some handy feat, with extreme ease of use:
 
 Recursive treeeness for all the documents in any collection.N<->N relations with metadata:
@@ -17,11 +22,6 @@ https://cdn.rawgit.com/metaschema/oxyzen/master/index.html
 
 And our fully featured gui, metaschema  
 https://cdn.rawgit.com/metaschema/metaschema/master/app.html
-
-In json's dbs the structure is pretty much free, however,  except for special occasions, I' ve seen the "document collection concept" been preferable, scalable and reusable, sharable also.
-
-Most of the projects for the micro and the small business could be covered by a bunch of collections, given firebase's integrated login.
-I figured, if i was to use a document collections structure for a project I could as well benefit from the know factors of the data structure.
 
 I know the answer on the forum about textual searches suggests the use of elastic search via the use of some other server, but I found micro and small projects could not benefit from such an aggravation in the complexity of the structure - and manteinance.
 Especially when this experimental indexing function works so well.
