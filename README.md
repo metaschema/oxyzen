@@ -5,7 +5,7 @@ In json's dbs the structure is pretty much free, however,  except for special oc
 Most of the projects for the micro and the small business could be covered by a bunch of collections, given firebase's integrated login.
 I figured, if i was to use a document collections structure for a project I could as well benefit from the know factors of the data structure.
 
-Given, your db follows or can follow a "collectionS of documentS structure", this project is a javascript library meant to use with firebase in web applications. It enables some handy feat, with extreme ease of use:
+Given your db follows or can follow a "collectionS of documentS structure", this project is a javascript library meant to use with firebase in web applications. It enables some handy feat, with extreme ease of use:
 
 Recursive treeeness for all the documents in any collection.N<->N relations with metadata:
 
