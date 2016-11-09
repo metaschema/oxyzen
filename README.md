@@ -30,7 +30,7 @@ I plan to greatly improove the ways of the current indexing, but still, after te
 
 :-D - 
 But I guess a way for returning childs keys only would not break that, instead, could greatly improove the performances in many scenarios where the dev might end preferring getting everything.
-Update- At firebase devcon in berlin i have been pointet to make direct use of REST api, passing in an undocumented parameter shallow=true 
+Update- At firebase devcon in berlin i have been pointet to make direct use of REST api, passing in an undocumented (in google, but documented in the old firebase website) parameter shallow=true 
 
 
 
