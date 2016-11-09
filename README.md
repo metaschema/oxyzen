@@ -25,10 +25,14 @@ https://cdn.rawgit.com/metaschema/metaschema/master/app.html
 
 I know the answer on the forum about textual searches suggests the use of elastic search via the use of some other server, but I found micro and small projects could not benefit from such an aggravation in the complexity of the structure - and manteinance.
 Especially when this experimental indexing function works so well.
+I have been to firebase devcon in berlin and I specifically asked, they said it's fine to do it. :-)
 I plan to greatly improove the ways of the current indexing, but still, after testin with a db of about 100000 interinked documents in 5 collections, I found our indexing functions, holding, and the overall output performance seems much greater than pure .net xml web services against beefed mysql server. Of course with small limitations; limitations that i find great to ensure our apps have a linear time of execution.
 
 :-D - 
 But I guess a way for returning childs keys only would not break that, instead, could greatly improove the performances in many scenarios where the dev might end preferring getting everything.
+Update- At firebase devcon in berlin i have been pointet to make direct use of REST api, passing in an undocumented parameter shallow=true 
+
+
 
 # How it works
 
