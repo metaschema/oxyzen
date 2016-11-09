@@ -5,7 +5,7 @@
 */
 f$={oxyprefix:'OXY/',
 inoe:function(v){if(!v)return true;if(typeof v!='string')return true;if(v.length==0)return true;return false;},
-login:function(provider,method){if(!method){method='redirect'}
+login:function(provider,method){if(!method){method='redirect'}provider=provider.toLowerCase();
 	if (!firebase.auth().currentUser){var provider;
 		if(provider=='twitter'){provider=new firebase.auth.TwitterAuthProvider();}
 		else if(provider=='google'){provider=new firebase.auth.GoogleAuthProvider();		
@@ -116,7 +116,7 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 				var tr=firebase.database().ref(cn).orderByChild(colname).startAt(k).endAt(k);tr.off('child_added');tr.off('child_changed');tr.off('child_removed');
 				tr.on('child_added',fn(cn));tr.on('child_changed',fn(cn));tr.on('child_removed',fn2);
 		}}else{var _this=this;var popped=[];var xx=s.split(' ');var xlen=xx.length;
-			s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
+			s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|Â£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|Â§|Â°|@|\.|,|;|:/g,' ');
 			s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');s=s.toLowerCase();
 		var uninext=function(d){if(!popped[d.$key]){popped[d.$key]=1;}else{popped[d.$key]++}if(popped[d.$key]>=xlen){next(d);}};
 		var step=function(d){_this.getone(d.key,uninext,nextrem);}
@@ -147,7 +147,7 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 	_relevantText:function(o){var s=JSON.stringify(o);s=s.replace(/\\n/g,' ');s=s.replace(/,"([^"]*)":/g,'');s=s.replace(/{"([^"]*)":/g,'');
 		s=s.replace(/","/g,' ');s=s.replace(/""/g,' ');s=s.replace(/"/g,' ');
 		s=s.replace(/<([^>]+)\/>/g,' ');s=s.replace(/(<([^>]+)>)/ig,'');s=s.replace(/<link .*>/g,' ');
-		s=s.replace(/{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:|-/g,' ');
+		s=s.replace(/{|}|\||<|>|\\|!|"|Â£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|Â§|Â°|@|\.|,|;|:|-/g,' ');
 		s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');return s.toLowerCase()},},
 	/* ------------------------------------------------------------------------------------------------- INDEXES end */
 	/* ----------------------------------------------------------------------------------------------- STORAGE START */	
