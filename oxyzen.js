@@ -26,7 +26,7 @@ db:{docnamefield:"doctitle",collections:['tag','generic','file'],db:function(ref
     scan:function(next){f$.db.afterscan=next;
 	var scanurl='https://www-metaschema-io.firebaseio.com/.json?shallow=true&callback=f$.db._scanloaded';
 	var ascr=document.createElement('script');ascr.src=scanurl;ascr.setAttribute('type','text/javascript');
-	document.getEementsByTagName('head')[0].appendChild(ascr);
+	document.getElementsByTagName('head')[0].appendChild(ascr);
     },
     _scanloaded:function(scandata){var c;f$.db.collections=[];for(c in scandata){if(c!=f$.oxyprefix.replace('/','')){if(scandata[c]===true){f$.db.collections[f$.db.collections.length]=c}}}f$.db.afterscan(f$.db.collections)},
     start:function(key,event,next){this.db(key.replace('-','/-')).on(event,function(d){var v=d.val();if(v){v.$key=key.split('-')[0]+d.key;next(v);}});},
