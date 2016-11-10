@@ -134,12 +134,7 @@ nonewUI:function(key){
 		f$.db.set(PARSEDJSON); <input type="button" value="run" onclick="app.save_clicked()"/><br/>		
 		f$.db.del('<input id="deldockey" type="text" placeholder="testdata-XSQWSQ...." />'); <input type="button" id="delete-butt" value="run" onclick="f$.db.del(gid('deldockey').value)"/><br/>
 		<div id="collectiondiv"><input id="collection" type="text" value="testdata" placeholder="testdata" /> - collection name </div>
-		<input id="dockey" type="text" readonly="readonly" value="new doc" />
-		<input onclick="app.prenewUI()" id="newdoc-butt" disabled="disabled" type="button" value="make new JSON doc" /><br/>
 		<textarea id="details" placeholder="document json..."></textarea><br/>		
-		<input type="button" id="seelog" value="see log" onclick="app.seelog_clicked()" disabled="disabled"/>
-		<input type="button" id="seever" value="see log" onclick="app.seever_clicked()" disabled="disabled"/>
-		<div id="subcollections"> </div>
         </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Link / Unlink documents</div><div class="hidden hiditem">
 		<div class="_heading _4">Description of link and unlink functionality</div><br>
@@ -149,7 +144,12 @@ nonewUI:function(key){
 		<input type="button" id="link-butt" value="Link" onclick="f$.db.link(gid('doclink1').value,gid('doclink2').value,JSON.parse(gid('relationj').value))"/>
 		<input type="button" id="unlink-butt" value="Unlink" onclick="f$.db.unlink(gid('doclink1').value,gid('doclink2').value)"/>
         </div></div>	
+	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Subcollection utils</div><div class="hidden hiditem">
+		<input type="button" id="seelog" value="see log" onclick="app.seelog_clicked()" disabled="disabled"/>
+		<input type="button" id="seever" value="see log" onclick="app.seever_clicked()" disabled="disabled"/>
+		<div id="subcollections"> </div>
+	</div></div><br>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Storage utils</div><div class="hidden hiditem">
-		<div class="_heading _4">Description of storage utils</div><br>
+		f$.fs.add...<br/>
 	</div></div><br>
 </div></div></body>
