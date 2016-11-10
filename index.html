@@ -41,10 +41,11 @@ _load_user:function(){var scr=gid('codesnippet').value;
 	scr=scr.replace('<script>','');scr=scr.replace('<\/script>','');
 	eval(scr);setTimeout('app.init()',500);},
 getcollection:function(e){gid('results').innerHTML='';var cn=e.previousElementSibling.childNodes;for(var icn=0;icn<cn.length;icn++){
-        if(cn[icn].checked==true){
-            var col=cn[icn].value;f$.db.getall(col,app._search);
-        }else{}
-    }},
+        if(cn[icn].checked==true){var col=cn[icn].value;f$.db.getall(col,app._search);}
+	else{alert('No collection selected')}
+}},
+/* --------------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------- RELEVANT CODE FOR AN EXAMPLE APPLICATION */
             openUtility(e){
                 var it=document.getElementsByClassName('hiditem');
                 for(var ii=0;ii<it.length;ii++){
@@ -52,7 +53,6 @@ getcollection:function(e){gid('results').innerHTML='';var cn=e.previousElementSi
                 }                
                 e.nextElementSibling.classList.toggle('hidden')
             },
-			/*--------------------------------RELEVANT CODE FOR AN EXAMPLE APPLICATION*/
 			 init:function(){
 					f$.initAuth(function(authorized){console.log(authorized)});
 				 firebase.auth().onAuthStateChanged(function(user){
