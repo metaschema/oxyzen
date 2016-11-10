@@ -34,11 +34,20 @@ Reindexing features help starting with an already existing db :
 
 The indexes are searched using the find function as follows
 
-- f$.db.find(exp) - exp can be free text rel:_key  parent:_key, key:_key
+- f$.db.find(exp) - 
 
+The indexes are mantained by pushing and updating and deleting documents in the db using oxyzen functions, insted of directly using the firebase apis.
 
-- add and set functions provided in the library should always be used, as they mantain the index coherent with data during such operations, for example removing the words index reference that are being removed from a document content, automaticaly on update.
-- The oneliners link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities.
-- The oneliner setparent function should be use to make use of the recursive tree functionalities among documents
+- f$.db.add(collname,doc)
+- f$.db.set(doc,,)
+- f$.db.del
 
-- ...
+# Recursive treeness and N <-> N relations.
+The oneliners setparent, link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities, searches in relations are provided by the same find function already mentioned for text searches.
+
+- f$.db.setparent(k1,k2,json)
+- f$.db.link(k1,k2,json)
+- f$.db.unlink(k1,k2,json)
+- f$.db.linkmany(k1,keys,json)
+- f$.db.unlinkmany(k1,keys,json)
+
