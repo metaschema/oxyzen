@@ -13,8 +13,8 @@
 		.testitem{border-bottom:dashed 1px black}
 		input[type=text]{width:250px}
 		textarea{width:50%}
-        	.hidden{display:none;}
-  	</style>
+    .hidden{display:none;}
+  </style>
 	<!--firebase-oxygen library-->
 	<script src="./oxyzen.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
@@ -79,8 +79,7 @@ newdoc_clicked:function(){
 	var e=gid('dockey');
 	var J=JSON.parse(gid('details').value);
 	if(e.value=='new doc'){app.nonewUI(f$.db.add(gid('collection').value,J));}
-	else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},
-					
+	else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},					
 prenewUI:function(){
 	gid('newdoc-butt').setAttribute('disabled','disabled');				
 	gid('seelog').setAttribute('disabled','disabled');gid('seever').setAttribute('disabled','disabled');
@@ -124,30 +123,32 @@ nonewUI:function(key){
 		 Todo : collections of documents ....
 	 </div></div><br />
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">References</div><div class="hidden hiditem">
-		 scan
-		_add
-		_get
-		_set
-		_del
-		_getone
-		getonce
-		getall
-		getone
-		add
-		del
-		set
-		update
-		setparent
-		link
-		unink
-		linkmany
-		unlinkmany
-		clearmetaschema
-		reindexcollections
-		find
-		fs.add
-		fs set
-		fs del
+		note : attribute / variable _key is always in the format "collname-dockey"<br/>
+		 f$.db.scan(nextfn)<br/>
+		 f$.db.clearmetaschema()<br/>
+		 f$.db.reindexcollections(colls,stepfn,endfn)<br/>
+		
+		f$.db.getonce(_key,next,nextrem)<br/>
+		f$.db.getall<br/>
+		f$.db.getone<br/>
+		f$.db.add<br/>
+		f$.db.del(_key)<br/>
+		f$.db.set<br/>
+		f$.db.update<br/>
+		f$.db.setparent<br/>
+		f$.db.link<br/>
+		f$.db.unlink<br/>
+		linkmany<br/>
+		unlinkmany<br/>
+		find(oxyzensearchexp) <br/>
+		f$.db._add<br/>
+		f$.db._set<br/>
+		f$.db._del		<br/>
+		f$.db._get<br/>
+		f$.db._getone<br/>
+		fs.add<br/>
+		fs set<br/>
+		fs del<br/>
 	 </div></div><br />
 	 <div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Reindex db</div><div class="hidden hiditem">
 	 <div class="_heading _4">Select the collections in your database that you want to index</div><br>
@@ -158,7 +159,10 @@ nonewUI:function(key){
         </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query existing documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of query functionality</div><br>
-		<div class="info">This demo is days old - if you don't know what to do, search for apple then banana, then apple banana</div>
+		<div class="info">This demo is days old - if you don't know what to do, search for apple then banana, then apple banana.<br/>
+		Searching for parent:_key (in the format "collname-doctitle") will search for documents having parent attribute equal to that provided.<br/>
+		Searching for rel:_key (in the format "collname-doctitle") will search for documents having a rel attribute child equal to that provided.<br/>
+		Searching for key:_key (in the format "collname-doctitle") is a shortcut for f$.db.getone(_key).<br/></div>
 		<div><span id="scanned2"> </span><input type="button" value="Get collection childs" onclick="app.getcollection(this)" /></div>
   <form onsubmit="var v=app.search(this.firstChild.value);return false;"><input type="text" placeholder="search..." /><input type="submit" value="search"/></form>
 		<div id="results"> </div>
