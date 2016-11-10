@@ -68,7 +68,7 @@ getcollection:function(e){gid('results').innerHTML='';var cn=e.previousElementSi
 	else{alert('No collection selected')}
 }},
 search:function(exp,_collection){gid('results').innerHTML='';f$.db.find(exp,app._search,_collection);},
-_search:function(d){if(d.$key.indexOf("root") >= 0){}else{var s='<input onclick="app.open(\''+d.$key+'\');" type="button" value="'['+d.$key+']" />';gid('results').innerHTML+=s;}},
+_search:function(d){if(d.$key.indexOf("root") >= 0){}else{var s='<input onclick="app.open(\''+d.$key+'\');" type="button" value="['+d.$key+']" />';gid('results').innerHTML+=s;}},
 open:function($key){f$.db.getone($key,app._open);},
  _open:function(d){app.nonewUI(d.$key);gid('details').value=JSON.stringify(d);},
 								seelog_clicked:function(){
