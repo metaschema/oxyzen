@@ -56,11 +56,12 @@ init:function(){
 login:function(provider){f$.login(provider);},
 logout:function(provider){f$.logout();},
 scandb:function(){gid('scanned1').innerHTML='';gid('scanned2').innerHTML='';f$.db.scan(app._scandb);},
-_scandb:function(d){var k=d.key;if(!(k.indexOf(f$.oxyprefix)==0)){
+_scandb:function(cls){for(var x=0;x<cls.length;x++){var d={key:cls[x]};
+	var k=d.key;if(!(k.indexOf(f$.oxyprefix)==0)){
 	var s='<input type="checkbox" value="" />'+d.key;
 	gid('scanned1').innerHTML+=s;
 	s='<input type="radio" name="collections" value="'+d.key+'" />'+d.key;
-	gid('scanned2').innerHTML+=s;}},
+	gid('scanned2').innerHTML+=s;}}},
 
 getcollection:function(e){gid('results').innerHTML='';var cn=e.previousElementSibling.childNodes;for(var icn=0;icn<cn.length;icn++){
         if(cn[icn].checked==true){var col=cn[icn].value;f$.db.getall(col,app._search);}
@@ -131,8 +132,8 @@ open:function($key){f$.db.getone($key,app._open);},
 	 <div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Reindex db</div><div class="hidden hiditem">
 	 <div class="_heading _4">Select the collections in your database that you want to index</div><br>
 		<div id="scanned1"> </div>
-		<!--<input type="button" id="rescan" value="destroy index" onclick="app.scandb()" />
-		<input type="button" id="rescan" value="rebuild index" onclick="app.scandb()" />			-->
+		<input type="button" id="rescan" value="destroy index  / f$.db.clearmetaschema();" onclick="f$.db.clearmetaschema();" />
+		<!--<input type="button" id="rescan" value="rebuild index" onclick="app.scandb()" />			-->
         </div></div><br>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query existing documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of query functionality</div><br>
