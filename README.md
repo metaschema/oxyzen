@@ -1,5 +1,7 @@
 # Oxyzen
 
+Basic library test form. https://cdn.rawgit.com/metaschema/oxyzen/master/index.html
+
 In json's dbs the structure is pretty much free, however,  except for special occasions, I' ve seen the "document collection concept" being a favourite, scalable and reusable, sharable also, talking with people, and finally it's most similar to that of tables and records, from sql.
 
 Many, many, many projects could be covered by a bunch of collections, given firebase's integrated login.
@@ -14,14 +16,7 @@ Given your db follows or can follow a "collectionS of documentS structure", this
 - Using the above subcollection utility, a documents changes log AND a versioning subcollection are automagically integrated.
 - Cool trick: storage uploads are also stored as documents in a collections, so every other functionality listed above, also applies for storage uploads, most handful to handle directly like listing of files, missing in native storage api.
 
-Basic library test form.
-
-https://cdn.rawgit.com/metaschema/oxyzen/master/index.html - WORKING - some feat miss their example.
-
-And our fully featured gui, metaschema, the best way to use oxyzen.
-
-https://cdn.rawgit.com/metaschema/metaschema/master/app.html - WORK IN PROGRESS!!!!!
-
+We also have our fully featured gui, https://github.com/metaschema/metaschema, the best way to use oxyzen.
 
 # How it works
 Beyond ugly but 100% coeherently managed, _key attribute is added to documents during runtime (not stored in the db), in the format collectionname-documentkey - this enables for relations to only require one attribute to reference any document in any collection.
