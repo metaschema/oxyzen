@@ -158,6 +158,8 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 	},	
 	/* ------------------------------------------------------------------------------------------------- STORAGE end */
 	/* -------------------------------------------------------------------------------------------------- INIT START */	
-	initialscan:function(){this.db.collections=[];firebase.database().ref('/').on('child_added',this._scandb);},
-	_scandb:function(d){var k=d.key;if(!(k.indexOf(f$.oxyprefix)==0)){f$.db.collections[f$.db.collections.length]=d.key;}},
+	scandb:function(){
+		var scanurl='https://www-metaschema-io.firebaseio.com/.json?shallow=true&callback=f$._collectionsloaded';
+	},
+	_collectionsloaded:function(scandata){var c;f$.db.collections=[];for(c in scandata){if(c!=f$.oxyprefix){if(scandata[c]===true){f$.db.collections[f$.db.collections.length]=c}}}},
   };
