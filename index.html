@@ -89,7 +89,7 @@ nonewUI:function(key){
 };
 </script></head><body>
 <div id="start" class="step"><br>
-    <img src="img/oxygen_logo.png" style="height: 4em;position: relative; top: -14px;"/><h1 style="display:inline;vertical-align:top;">xyzen demo</h1><br /><br /><br />
+    <img src="img/oxygen_logo.png" style="height: 4em;position: relative; top: -14px;left:12px;"/><h1 style="display:inline;vertical-align:top;">xyzen demo</h1><br /><br /><br />
 <div class="_heading _3">Simple tests for <a href="#">oxyzen library</a>. Connect to our demo <a href="https://firebase.google.com/" target="_blank" style="color:#ffa611" target="_blank">Firebase</a> database or try oxyzen on your Firebase database.</div>
 <br/><div class="_heading _4">(This demo is completely static - will work with http://localhost)</div><br/>
 <div class="_heading _4">(If it's, the first time you login, you will see this page twice and will have to paste your code snippe twice, this is normal and expected result of the login redirect.)</div><br/>
@@ -112,7 +112,7 @@ nonewUI:function(key){
 	</div>
 	<div id="oxygenconsole" style="display:none">
 		<input type="button" onclick="app.logout()" value="LOGOFF" style="float:right;">
-		<img src="img/oxygen_logo.png" style="height: 4em;position: relative; top: -14px;"/><h1 style="display:inline;vertical-align:top;">xyzen demo</h1><br /><br />
+		<img src="img/oxygen_logo.png" style="height: 4em;position: relative; top: -14px;left:12px;"/><h1 style="display:inline;vertical-align:top;">xyzen demo</h1><br /><br />
 		<div class="_heading _4">This page is a test form for the oxyzen js library for firebase, <a target="_blank" href="https://github.com/metaschema/oxyzen">code and references are here</a></div><br />
 <div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Reindex db</div><div class="hidden hiditem">
 	<br /><code>f$.db.clearmetaschema();</code><input type="button" value="run" onclick="f$.db.clearmetaschema();" /><br />
@@ -130,10 +130,10 @@ nonewUI:function(key){
 	*key,(in the format "collname-doctitle")</div><div id="results"> </div>
 </div></div>
 <div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)" id="openerdiv">Add - Edit - Delete documents</div><div class="hidden hiditem">
-	<br /><code>f$.db.add('<input id="collection" type="text" value="testdata" placeholder="testdata" />',PARSEDJSON);</code> <input type="button" value="run" onclick="app.save_clicked()"/><br/>
-	<code>f$.db.set(PARSEDJSON);</code> <input type="button" value="run" onclick="app.save_clicked()"/><br/>		
+	<textarea id="details" placeholder="document json..."></textarea><br/>
+	<br /><code>f$.db.set(PARSEDJSON);</code> <input type="button" value="run" onclick="app.save_clicked()"/><br/>
+	<code>f$.db.add('<input id="collection" type="text" value="testdata" placeholder="testdata" />',PARSEDJSON);</code> <input type="button" value="run" onclick="app.save_clicked()"/><br/>
 	<code>f$.db.del('<input id="deldockey" type="text" placeholder="testdata-XSQWSQ...." />');</code> <input type="button" id="delete-butt" value="run" onclick="f$.db.del(gid('deldockey').value)"/><br/>
-	<textarea id="details" placeholder="document json..."></textarea>
 </div></div>
 <div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Link / Unlink documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of link and unlink functionality</div><br>
