@@ -119,32 +119,6 @@ nonewUI:function(key){
 		<input type="button" onclick="app.logout()" value="LOGOFF" style="float:right;">
 		<h1><img src="img/oxygen_logo.png" style="height: 4em;"/>xyzen</h1>
 		This page is a test form for the oxyzen js library for firebase, <a target="_blank" href="https://github.com/metaschema/oxyzen">code and references are here</a>
-	 <div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Intro</div><div class="hidden hiditem">
-		 Todo : collections of documents ....
-	 </div></div><br />
-	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">References</div><div class="hidden hiditem">
-		note : attribute / variable key is ALWAYS in the format "collname-dockey", paramenters leading with _ are optional, the others are mandatory<br/>
-		f$.db.getonce(key,next,nextrem) - gets one document using oxyzen key format using once ovent, and adds the standardized key in the output document <br/>
-		f$.db.getall(col,next,nextrem)<br/>
-		f$.db.getone(key,next,nextrem)<br/>
-		f$.db.add(collname,doc)<br/>
-		f$.db.del(key)<br/>
-		f$.db.set(doc,log,_first,_skipreindex)<br/>
-		f$.db.setparent(key,p_key,_pname) - if no pname is provided it is automatically get, use _pname to fast things up if you already have to parent name in the context.<br/>
-		f$.db.link(key1,key2,json) - creates corresponding childs in the rel property of the two documents.<br/>
-		f$.db.unlink(key1,key2) - removes corresponding childs in the rel property of the two documents.<br/>
-		linkmany(key,keys,json) - creates corresponding childs in the rel property of the list of documents and the related document.<br/>
-		unlinkmany(key,keys,json) - removes corresponding childs in the rel property of the list of documents and the related document<br/>
-		find(oxyzensearchexp) - some text or special prefixs, specifically key:colname-dockey, rel:colname-dockey, parent:colname-dockey<br/>
-		f$.db._add<br/>
-		f$.db._set<br/>
-		f$.db._del		<br/>
-		f$.db._get<br/>
-		f$.db._getone<br/>
-		fs.add<br/>
-		fs set<br/>
-		fs del<br/>
-	 </div></div><br />
 	 <div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Reindex db</div><div class="hidden hiditem">
 	 <div class="_heading _4">Select the collections in your database that you want to index</div><br>
 		<div id="scanned1"> </div>
