@@ -121,14 +121,13 @@ nonewUI:function(key){
 	 f$.db.reindexcollections([<span id="scanned1">_colls</span>],_stepfn,endfn)<input type="button" value="run" onclick="f$.db.reindexcollections(false,false,function(O){console.log(O);firebase.database().ref(f$.oxyprefix).set(O)})" />
         </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query documents</div><div class="hidden hiditem">
-	<div class="_heading _4">Description of query functionality</div><br>
 		<div>f$.db.getall(<span id="scanned2"> </span>,function(doc){...render doc button...})<input type="button" value="run" onclick="app.getcollection(this)" /></div>
 		f$.db.find('<input id="sexp" type="text" placeholder="search..." onchange="app.search(gid('sexp').value);"/>',function(doc){...render doc button...},function(doc){...destroy doc button...});<input type="button" value="run" onclick="app.search(gid('sexp').value);" /><br/>
 		<div class="info">Try searching for apple then banana, then apple banana.<br/>
-		Searching for parent:_key (in the format "collname-doctitle") will search for documents having parent attribute equal to that provided.<br/>
-		Searching for rel:_key (in the format "collname-doctitle") will search for documents having a rel attribute child equal to that provided.<br/>
-		Searching for key:_key (in the format "collname-doctitle") is a shortcut for f$.db.getone(_key).<br/></div>
-  		<div id="results"> </div>
+		Searching for parent:key will search for documents having parent attribute equal to that provided.*<br/>
+		Searching for rel:key will search for documents having a rel attribute child equal to that provided.*<br/>
+		Searching for key:key is a shortcut for f$.db.getone(key).*<br/>
+		*key,(in the format "collname-doctitle")</div><div id="results"> </div>
 	</div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)" id="openerdiv">Edit documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Basically the add and set functions are used as one liners to instert/update document, automagically keeping the index up to date.</div><br>
@@ -141,12 +140,12 @@ nonewUI:function(key){
 		<input type="button" id="seelog" value="see log" onclick="app.seelog_clicked()" disabled="disabled"/>
 		<input type="button" id="seever" value="see log" onclick="app.seever_clicked()" disabled="disabled"/>
 		<div id="subcollections"> </div>
-        </div></div><br>
+        </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Delete documents</div><div class="hidden hiditem">
 		<div class="_heading _4">Description of delete funcionality</div><br>
 		key:<input id="deldockey" type="text" placeholder="testdata-XSQWSQ...." />
 		<input type="button" id="delete-butt" value="remove" onclick="f$.db.del(gid('deldockey').value)"/>
-        </div></div><br>
+        </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Link / Unlink documents</div><div class="hidden hiditem">
 		<div class="_heading _4">Description of link and unlink functionality</div><br>
 		key:<input id="doclink1" type="text" placeholder="testdata-XSQWSQ...." />
