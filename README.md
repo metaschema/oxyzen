@@ -22,8 +22,7 @@ https://cdn.rawgit.com/metaschema/metaschema/master/app.html
 
 
 # How it works
-
-- Beyond ugly but 100% coeherently managed, _key attribute is added to documents during runtime (not stored in the db), in the format collectionname-documentkey - this enables for replations to only require one attribute to reference any document in any collection.
+Beyond ugly but 100% coeherently managed, _key attribute is added to documents during runtime (not stored in the db), in the format collectionname-documentkey - this enables for replations to only require one attribute to reference any document in any collection.
 
 # Recursive treeness and N <-> N relations + relations query.
 The oneliners setparent, link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities.
