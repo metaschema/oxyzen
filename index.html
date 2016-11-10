@@ -123,7 +123,7 @@ nonewUI:function(key){
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of query functionality</div><br>
 		<div>f$.db.getall(<span id="scanned2"> </span>,function(doc){...render doc button...})<input type="button" value="run" onclick="app.getcollection(this)" /></div>
-		<form onsubmit="var v=app.search(this.firstChild.value);return false;">f$.db.find('<input type="text" placeholder="search..." />',function(doc){...render doc button...},function(doc){...destroy doc button...});<input type="submit" value="run"/></form>
+		<form onsubmit="var v=app.search(gid('sexp').value);return false;">f$.db.find('<input id="sexp" type="text" placeholder="search..." />',function(doc){...render doc button...},function(doc){...destroy doc button...});<input type="submit" value="run"/></form>
 		<div class="info">Try searching for apple then banana, then apple banana.<br/>
 		Searching for parent:_key (in the format "collname-doctitle") will search for documents having parent attribute equal to that provided.<br/>
 		Searching for rel:_key (in the format "collname-doctitle") will search for documents having a rel attribute child equal to that provided.<br/>
