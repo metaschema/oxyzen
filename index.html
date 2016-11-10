@@ -142,19 +142,20 @@ nonewUI:function(key){
 		<input type="button" id="seever" value="see log" onclick="app.seever_clicked()" disabled="disabled"/>
 		<div id="subcollections"> </div>
         </div></div><br>
-	<div class="testitem">
-		<div class="_heading _2" onclick="app.openUtility(this)">Delete documents</div><div class="hidden hiditem">
+	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Delete documents</div><div class="hidden hiditem">
 		<div class="_heading _4">Description of delete funcionality</div><br>
 		key:<input id="deldockey" type="text" placeholder="testdata-XSQWSQ...." />
 		<input type="button" id="delete-butt" value="remove" onclick="f$.db.del(gid('deldockey').value)"/>
         </div></div><br>
-	<div class="testitem">
-		<div class="_heading _2" onclick="app.openUtility(this)">Link / Unlink documents</div><div class="hidden hiditem">
+	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Link / Unlink documents</div><div class="hidden hiditem">
 		<div class="_heading _4">Description of link and unlink functionality</div><br>
 		key:<input id="doclink1" type="text" placeholder="testdata-XSQWSQ...." />
 		key:<input id="doclink2" type="text" placeholder="testdata-HKETDF...." /><br/>
 		<textarea id="relationj" placeholder="Some optional json data for the relation...">{"role":"default"}</textarea><br/>
 		<input type="button" id="link-butt" value="Link" onclick="f$.db.link(gid('doclink1').value,gid('doclink2').value,JSON.parse(gid('relationj').value))"/>
 		<input type="button" id="unlink-butt" value="Unlink" onclick="f$.db.unlink(gid('doclink1').value,gid('doclink2').value)"/>
-        </div></div>
+        </div></div>	
+	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Storage utils</div><div class="hidden hiditem">
+		<div class="_heading _4">Description of storage utils</div><br>
+	</div></div><br>
 </div></div></body>
