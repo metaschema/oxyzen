@@ -75,17 +75,8 @@ newdoc_clicked:function(){var e=gid('dockey');
 	var J=JSON.parse(gid('details').value);
 	if(e.value=='new doc'){app.nonewUI(f$.db.add(gid('collection').value,J));}
 	else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},					
-prenewUI:function(){
-	gid('newdoc-butt').setAttribute('disabled','disabled');				
-	gid('seelog').setAttribute('disabled','disabled');gid('seever').setAttribute('disabled','disabled');
-	gid('collectiondiv').style.display='';
-	gid('details').value='';
-	gid('dockey').value='new doc';},
-nonewUI:function(key){
-	gid('newdoc-butt').removeAttribute('disabled');					
-	gid('seelog').removeAttribute('disabled');gid('seever').removeAttribute('disabled');
-	gid('collectiondiv').style.display='none';
-	gid('dockey').value=key;},				
+prenewUI:function(){},
+nonewUI:function(key){		},				
 };
 </script></head><body>
 <div id="start" class="step"><br>
