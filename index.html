@@ -134,7 +134,7 @@ open:function($key){f$.db.getone($key,app._open);},
 		<div id="scanned1"> </div>
 		<input type="button" value="destroy index  / f$.db.clearmetaschema();" onclick="f$.db.clearmetaschema();" />
 		<input type="button" id="rescan" value="rescan / db f$.db.scan(nextfn)" onclick="app.scandb()" />
-		<input type="button" value="reindex / f$.db.reindexcollections()" onclick="f$.db.reindexcollections()" />
+		<input type="button" value="reindex / f$.db.reindexcollections()" onclick="console.log(O);f$.db.reindexcollections(function(O){firebase.database.ref(f$.oxyprefix).set(O)})" />
         </div></div><br>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query existing documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of query functionality</div><br>
