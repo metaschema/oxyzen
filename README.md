@@ -53,6 +53,7 @@ The oneliners setparent, link, linkmany, unlink and unlinkmany functions should 
 - f$.db.unlink(k1,k2,json)
 - f$.db.linkmany(k1,keys,json)
 - f$.db.unlinkmany(k1,keys,json)
+
 Searches in relations are provided by the same find function already mentioned for text searches.
 
 - f$.db.find(exp,...) - exp in the format parent:collname-dockey OR rel:collname-dockey OR  key:collname-dockey
