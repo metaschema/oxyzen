@@ -80,6 +80,11 @@ open:function($key){f$.db.getone($key,app._open);},
 				save_clicked:function(){
 					var e=gid('dockey');
 					var J=JSON.parse(gid('details').value);
+					if(e.value=='new doc'){app.nonewUI(f$.db.set(gid('collection').value,J));}
+					else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},
+				newdoc_clicked:function(){
+					var e=gid('dockey');
+					var J=JSON.parse(gid('details').value);
 					if(e.value=='new doc'){app.nonewUI(f$.db.add(gid('collection').value,J));}
 					else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},
 					
