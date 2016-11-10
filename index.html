@@ -124,9 +124,6 @@ nonewUI:function(key){
 	 </div></div><br />
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">References</div><div class="hidden hiditem">
 		note : attribute / variable key is ALWAYS in the format "collname-dockey", paramenters leading with _ are optional, the others are mandatory<br/>
-		 f$.db.scan(nextfn)<br/>
-		 f$.db.clearmetaschema()<br/>
-		 f$.db.reindexcollections(_colls,_stepfn,endfn)<br/>		
 		f$.db.getonce(key,next,nextrem) - gets one document using oxyzen key format using once ovent, and adds the standardized key in the output document <br/>
 		f$.db.getall(col,next,nextrem)<br/>
 		f$.db.getone(key,next,nextrem)<br/>
@@ -154,6 +151,10 @@ nonewUI:function(key){
 		<input type="button" value="destroy index  / f$.db.clearmetaschema();" onclick="f$.db.clearmetaschema();" />
 		<input type="button" id="rescan" value="rescan / db f$.db.scan(nextfn)" onclick="app.scandb()" />
 		<input type="button" value="reindex / f$.db.reindexcollections()" onclick="f$.db.reindexcollections(false,false,function(O){console.log(O);firebase.database().ref(f$.oxyprefix).set(O)})" />
+		<br/>
+		 f$.db.scan(nextfn)<br/>
+		 f$.db.clearmetaschema()<br/>
+		 f$.db.reindexcollections(_colls,_stepfn,endfn)<br/>	
         </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query existing documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of query functionality</div><br>
