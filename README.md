@@ -24,10 +24,21 @@ https://cdn.rawgit.com/metaschema/metaschema/master/app.html
 # How it works
 
 - Ugly but coeherently manageable _key attribut is added to documents during runtime (not stored in the db),  in the format collectionname-documentkey - this enables for example replations to ony require one attribute to reference any document in any collection, or enabled any document in any collection to be the parent of any other.
+
 # Indexing and searching
-- A reindex function help starts with an already existing db, it creates a local JSON file that the use have to upload in the database via the firebase console, to enable the use of the index.
+Reindexing features help starting with an already existing db :
+ 
+- f$.db.clearmetaschema() - explicitely deletes any data used by the oxyzen library.
+- f$.db.scan(nextfn) - using lightweight shallow query via REST, gets a list of the collections present in the database.
+- f$.db.reindexcollections(_colls,stepfn,endfn) - reindexes specified collections, if colls is set to false, all scanned collections are reindexed.
+
+The indexes are searched using the find function as follows
+
+- f$.db.find(exp) - exp can be free text rel:_key  parent:_key, key:_key
+
+
 - add and set functions provided in the library should always be used, as they mantain the index coherent with data during such operations, for example removing the words index reference that are being removed from a document content, automaticaly on update.
 - The oneliners link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities.
 - The oneliner setparent function should be use to make use of the recursive tree functionalities among documents
-- The oneliner find function should be used to find documents using on of the following: free words, rel:_key, parent:_key, key:_key
+
 - ...
