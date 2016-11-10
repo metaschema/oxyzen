@@ -71,8 +71,7 @@ save_clicked:function(){var e=gid('dockey');
 	var J=JSON.parse(gid('details').value);
 	if(e.value=='new doc'){app.nonewUI(f$.db.set(gid('collection').value,J));}
 	else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},
-newdoc_clicked:function(){
-	var e=gid('dockey');
+newdoc_clicked:function(){var e=gid('dockey');
 	var J=JSON.parse(gid('details').value);
 	if(e.value=='new doc'){app.nonewUI(f$.db.add(gid('collection').value,J));}
 	else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},					
@@ -118,7 +117,7 @@ nonewUI:function(key){
 		This page is a test form for the oxyzen js library for firebase, <a target="_blank" href="https://github.com/metaschema/oxyzen">code and references are here</a>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Reindex db</div><div class="hidden hiditem">
 	 f$.db.clearmetaschema() <input type="button" value="run" onclick="f$.db.clearmetaschema();" /><br />
-	 f$.db.scan(function(collections){...render list...}) <input type="button" id="rescan" value="run" onclick="app.scandb()" /><br/>
+	 f$.db.scan(function(collections){...update below list...}) <input type="button" id="rescan" value="run" onclick="app.scandb()" /><br/>
 	 <div id="scanned1"> </div>
 	 f$.db.reindexcollections(<span id="cselection">_colls</span>,_stepfn,endfn)<input type="button" value="run" onclick="f$.db.reindexcollections(false,false,function(O){console.log(O);firebase.database().ref(f$.oxyprefix).set(O)})" />
         </div></div><br/>
