@@ -132,8 +132,9 @@ open:function($key){f$.db.getone($key,app._open);},
 	 <div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Reindex db</div><div class="hidden hiditem">
 	 <div class="_heading _4">Select the collections in your database that you want to index</div><br>
 		<div id="scanned1"> </div>
-		<input type="button" id="rescan" value="destroy index  / f$.db.clearmetaschema();" onclick="f$.db.clearmetaschema();" />
-		<!--<input type="button" id="rescan" value="rebuild index" onclick="app.scandb()" />			-->
+		<input type="button" value="destroy index  / f$.db.clearmetaschema();" onclick="f$.db.clearmetaschema();" />
+		<input type="button" id="rescan" value="rescan / db f$.db.scan(nextfn)" onclick="app.scandb()" />
+		<input type="button" value="reindex / f$.db.reindexcollections()" onclick="f$.db.reindexcollections()" />
         </div></div><br>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query existing documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of query functionality</div><br>
