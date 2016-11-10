@@ -42,22 +42,17 @@ _load_user:function(){var scr=gid('codesnippet').value;
 	eval(scr);setTimeout('app.init()',500);},
 /* --------------------------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------- RELEVANT CODE FOR AN EXAMPLE APPLICATION */
-openUtility(e){
-                var it=document.getElementsByClassName('hiditem');
-                for(var ii=0;ii<it.length;ii++){
-                    it[ii].classList.add('hidden')
-                }                
-                e.nextElementSibling.classList.toggle('hidden')
-            },
+openUtility(e){var it=document.getElementsByClassName('hiditem');
+	for(var ii=0;ii<it.length;ii++){it[ii].classList.add('hidden')}                
+	e.nextElementSibling.classList.toggle('hidden')},
 init:function(){
-		f$.initAuth(function(authorized){console.log(authorized)});
- firebase.auth().onAuthStateChanged(function(user){
-					gid('prelogindiv').style.display='none';
-						if(user){gid('oxygenconsole').style.display='';gid('logindiv').style.display='none';console.log('log in');
-						setTimeout('app.scandb()',500);}
-						else{gid('oxygenconsole').style.display='none';gid('logindiv').style.display='';console.log('log off');}
-					});
-				},
+	f$.initAuth(function(authorized){console.log(authorized)});
+ 	firebase.auth().onAuthStateChanged(function(user){
+		gid('prelogindiv').style.display='none';
+		if(user){gid('oxygenconsole').style.display='';gid('logindiv').style.display='none';
+			 console.log('log in');setTimeout('app.scandb()',500);}
+		else{gid('oxygenconsole').style.display='none';gid('logindiv').style.display='';console.log('log off');}
+	});},
 login:function(provider){f$.login(provider);},
 logout:function(provider){f$.logout();},
 scandb:function(){gid('scanned1').innerHTML='';gid('scanned2').innerHTML='';f$.db.scan(app._scandb);},
