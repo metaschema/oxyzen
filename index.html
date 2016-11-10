@@ -69,7 +69,7 @@ getcollection:function(e){gid('results').innerHTML='';var cn=e.previousElementSi
 }},
 search:function(exp,_collection){gid('results').innerHTML='';f$.db.find(exp,app._search,_collection);},
 _search:function(d){if(d.$key.indexOf("root") >= 0){}else{var s='<input onclick="app.open(\''+d.$key+'\');" type="button" value="['+d.$key+']" />';gid('results').innerHTML+=s;}},
-open:function($key){f$.db.getone($key,app._open);},
+open:function($key){f$.db.getone($key,app._open);app.openUtility(gid('openerdiv'))},
  _open:function(d){app.nonewUI(d.$key);gid('details').value=JSON.stringify(d);},
 seelog_clicked:function(){gid('subcollections').innerHTML='';var k=gid('dockey').value;},
 seever_clicked:function(){gid('subcollections').innerHTML='';var k=gid('dockey').value;},			
@@ -77,11 +77,11 @@ save_clicked:function(){var e=gid('dockey');
 	var J=JSON.parse(gid('details').value);
 	if(e.value=='new doc'){app.nonewUI(f$.db.set(gid('collection').value,J));}
 	else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},
-				newdoc_clicked:function(){
-					var e=gid('dockey');
-					var J=JSON.parse(gid('details').value);
-					if(e.value=='new doc'){app.nonewUI(f$.db.add(gid('collection').value,J));}
-					else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},
+newdoc_clicked:function(){
+	var e=gid('dockey');
+	var J=JSON.parse(gid('details').value);
+	if(e.value=='new doc'){app.nonewUI(f$.db.add(gid('collection').value,J));}
+	else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},
 					
 prenewUI:function(){
 	gid('newdoc-butt').setAttribute('disabled','disabled');				
@@ -108,7 +108,7 @@ nonewUI:function(key){
   <input type="button" onclick="gid('step1').style.display='';this.parentNode.style.display='none';" value="Connect your Firebase" />
 </div>
 <div id="step1" class="step" style="display:none">
-  <h1>firebase oxygen - load your project - step1</h1>
+  <h1>firebase oxyzen - load your project - step1</h1>
   <form onsubmit="var v=app.load_user();gid('demomode').style.display='';this.parentNode.style.display='none';return false;"><textarea id="codesnippet" placeholder="paste code snippet from your firebase project..."> </textarea><input type="submit" value="load firebase"></form>
   <a href="#" onclick="return false;">how do I get a code snippet?</a>
 </div>
@@ -141,7 +141,7 @@ nonewUI:function(key){
   <form onsubmit="var v=app.search(this.firstChild.value);return false;"><input type="text" placeholder="search..." /><input type="submit" value="search"/></form>
 		<div id="results"> </div>
 	</div></div><br/>
-	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Edit existing documents</div><div class="hidden hiditem">
+	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)" id="openerdiv">Edit existing documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of edit funcionality</div><br>
 		<div class="info">This demo is days old - if you don't know what to do, click new document and add {"desc":"aaa bbb ccc"}, then click new doc again and add {"desc":"aaa bbb ccc ddd"}, then click new doc again and add {"desc":"ddd"}</div>
 		<div id="collectiondiv"><input id="collection" type="text" value="testdata" placeholder="testdata" /> - collection name </div>
