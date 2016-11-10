@@ -122,13 +122,9 @@ nonewUI:function(key){
 		This page is a test form for the oxyzen js library for firebase, <a target="_blank" href="https://github.com/metaschema/oxyzen">code and references are here</a>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Reindex db</div><div class="hidden hiditem">
 	 f$.db.clearmetaschema() <input type="button" value="run" onclick="f$.db.clearmetaschema();" /><br />
-	 f$.db.scan(function(collections){...render list...}) <input type="button" id="rescan" value="run" onclick="app.scandb()" />
-	<div class="_heading _4">Select the collections in your database that you want to index</div>
-		<div id="scanned1"> </div>		
-		<input type="button" value="reindex / f$.db.reindexcollections()" onclick="f$.db.reindexcollections(false,false,function(O){console.log(O);firebase.database().ref(f$.oxyprefix).set(O)})" />
-		<br/>
-		 f$.db.scan(nextfn)<br/>
-		 f$.db.clearmetaschema()<br/>
+	 f$.db.scan(function(collections){...render list...}) <input type="button" id="rescan" value="run" onclick="app.scandb()" /><br/>
+	 <div id="scanned1"> </div>
+	 <input type="button" value="reindex / f$.db.reindexcollections()" onclick="f$.db.reindexcollections(false,false,function(O){console.log(O);firebase.database().ref(f$.oxyprefix).set(O)})" />
 		 f$.db.reindexcollections(_colls,_stepfn,endfn)<br/>	
         </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query documents</div><div class="hidden hiditem">
