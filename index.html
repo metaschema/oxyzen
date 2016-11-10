@@ -130,11 +130,10 @@ nonewUI:function(key){
 		*key,(in the format "collname-doctitle")</div><div id="results"> </div>
 	</div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)" id="openerdiv">Add - Edit - Delete documents</div><div class="hidden hiditem">
-		f$.db.add('COLLNAME',PARSEDJSON); <input type="button" value="run" onclick="app.save_clicked()"/><br/>
+		f$.db.add('<input id="collection" type="text" value="testdata" placeholder="testdata" />',PARSEDJSON); <input type="button" value="run" onclick="app.save_clicked()"/><br/>
 		f$.db.set(PARSEDJSON); <input type="button" value="run" onclick="app.save_clicked()"/><br/>		
 		f$.db.del('<input id="deldockey" type="text" placeholder="testdata-XSQWSQ...." />'); <input type="button" id="delete-butt" value="run" onclick="f$.db.del(gid('deldockey').value)"/><br/>
-		<div id="collectiondiv"><input id="collection" type="text" value="testdata" placeholder="testdata" /> - collection name </div>
-		<textarea id="details" placeholder="document json..."></textarea><br/>		
+		<textarea id="details" placeholder="document json..."></textarea>
         </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Link / Unlink documents</div><div class="hidden hiditem">
 		<div class="_heading _4">Description of link and unlink functionality</div><br>
