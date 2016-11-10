@@ -23,8 +23,12 @@ initAuth:function(nextToken){if(!nextToken){nextToken=function(r){var i=0;}}fire
 /* ----------------------------------------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------- FIREBASE DATABASE NAMESPACE - START */
 db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:function(ref){return firebase.database().ref(ref)},
-	start:function(key,event,next){this.db(key.replace('-','/-')).on(event,function(d){var v=d.val();if(v){v.$key=key.split('-')[0]+d.key;next(v);}});},
-	end:function(key,event){this.db(key.replace('-','/-')).off(event);},
+    scan:function(){
+	var scanurl='https://www-metaschema-io.firebaseio.com/.json?shallow=true&callback=f$.db._scanloaded';
+    },
+    _scanloaded:function(scandata){var c;f$.db.collections=[];for(c in scandata){if(c!=f$.oxyprefix){if(scandata[c]===true){f$.db.collections[f$.db.collections.length]=c}}}},
+    start:function(key,event,next){this.db(key.replace('-','/-')).on(event,function(d){var v=d.val();if(v){v.$key=key.split('-')[0]+d.key;next(v);}});},
+    end:function(key,event){this.db(key.replace('-','/-')).off(event);},
 /* --------------------------------------------------------------------------------------------- SUBCOLLECTION START */
 	_add:function(stype,dkey,json){return this.db(stype+'_'+dkey.replace('-','/-')).push(json).key;},
 	_set:function(stype,dkey,key,json){delete json.subkey;this.db(stype+'_'+dkey.replace('-','/-')+'/'+key).set(json);},
@@ -158,8 +162,5 @@ db:{docnamefield:"doctitle",collections:['tag','products','generic','file'],db:f
 	},	
 	/* ------------------------------------------------------------------------------------------------- STORAGE end */
 	/* -------------------------------------------------------------------------------------------------- INIT START */	
-	scandb:function(){
-		var scanurl='https://www-metaschema-io.firebaseio.com/.json?shallow=true&callback=f$._collectionsloaded';
-	},
-	_collectionsloaded:function(scandata){var c;f$.db.collections=[];for(c in scandata){if(c!=f$.oxyprefix){if(scandata[c]===true){f$.db.collections[f$.db.collections.length]=c}}}},
+
   };
