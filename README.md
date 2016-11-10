@@ -15,10 +15,12 @@ Given your db follows or can follow a "collectionS of documentS structure", this
 - Cool trick: storage uploads are also stored as documents in a collections, so every other functionality listed above, also applies for storage uploads, most handful to handle directly like listing of files, missing in native storage api.
 
 Basic library test form.
-https://cdn.rawgit.com/metaschema/oxyzen/master/index.html 
+
+https://cdn.rawgit.com/metaschema/oxyzen/master/index.html - WORKING - some feat miss their example.
 
 And our fully featured gui, metaschema, the best way to use oxyzen.
-https://cdn.rawgit.com/metaschema/metaschema/master/app.html
+
+https://cdn.rawgit.com/metaschema/metaschema/master/app.html - WORK IN PROGRESS!!!!!
 
 
 # How it works
