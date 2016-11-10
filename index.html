@@ -13,7 +13,7 @@
 		.testitem{border-bottom:dashed 1px black}
 		input[type=text]{width:250px}
 		textarea{width:50%}
-    .hidden{display:none;}
+		.hidden{display:none;}
   </style>
 	<!--firebase-oxygen library-->
 	<script src="./oxyzen.js"></script>
@@ -120,10 +120,11 @@ nonewUI:function(key){
 		<input type="button" onclick="app.logout()" value="LOGOFF" style="float:right;">
 		<img src="img/oxygen_logo.png" style="height: 4em;position: relative; top: -14px;"/><h1 style="display:inline;vertical-align:top;">xyzen demo</h1><br /><br /><br />
 		This page is a test form for the oxyzen js library for firebase, <a target="_blank" href="https://github.com/metaschema/oxyzen">code and references are here</a>
-	 <div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Reindex db</div><div class="hidden hiditem">
-	 <div class="_heading _4">Select the collections in your database that you want to index</div><br>
+	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Reindex db</div><div class="hidden hiditem">
+	 f$.db.clearmetaschema() <input type="button" value="run" onclick="f$.db.clearmetaschema();" />
+	<div class="_heading _4">Select the collections in your database that you want to index</div><br>
 		<div id="scanned1"> </div>
-		<input type="button" value="destroy index  / f$.db.clearmetaschema();" onclick="f$.db.clearmetaschema();" />
+		
 		<input type="button" id="rescan" value="rescan / db f$.db.scan(nextfn)" onclick="app.scandb()" />
 		<input type="button" value="reindex / f$.db.reindexcollections()" onclick="f$.db.reindexcollections(false,false,function(O){console.log(O);firebase.database().ref(f$.oxyprefix).set(O)})" />
 		<br/>
