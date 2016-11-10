@@ -12,7 +12,7 @@ Given your db follows or can follow a "collectionS of documentS structure", this
 - Searchable word text index + Hashwords index + Titles index (latter one is todo).
 - A subcollection utility.
 - Using the same subcollection utility a log of the documents changes is implemented, as well as a versioning for documents.
-- Cool: Storage uploads are also stored as documents in a collections, so every other functionality implemented for documents, can also be used on storage uploads
+- Cool: Storage uploads are also stored as documents in a collections, so every other functionality listed above, also applies for storage uploads.
 
 Basic library test form.
 https://cdn.rawgit.com/metaschema/oxyzen/master/index.html 
