@@ -37,8 +37,8 @@ load_user:function(){
 	document.getElementsByTagName('head')[0].appendChild(e);
 	setTimeout('app._load_user()',1000);},
 _load_user:function(){var scr=gid('codesnippet').value;
-	scr=scr.replace('<script src=".*"><\/script>','');
-	scr=scr.replace('<script>','');scr=scr.replace('<\/script>','');
+	scr=scr.replace('\<script src=".*">\<\/script>','');
+	scr=scr.replace('\<script>','');scr=scr.replace('\<\/script>','');
 	eval(scr);setTimeout('app.init()',500);},
 /* --------------------------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------- RELEVANT CODE FOR AN EXAMPLE APPLICATION */
