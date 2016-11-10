@@ -124,7 +124,7 @@ open:function($key){f$.db.getone($key,app._open);},
 	</div>
 	<div id="oxygenconsole" style="display:none">
 		<input type="button" onclick="app.logout()" value="LOGOFF" style="float:right;">
-		<img src="img/header_img.png" style="height: 4em;"/>
+		<img src="img/header_img.png" style="height: 4em;"/><br/>
 		This page is a test form for the oxyzen js library for firebase, code is <a target="_blank" href="./oxyzen.js">here</a>
 	 <div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Intro</div><div class="hidden hiditem">
 		 Todo : collections of documents ....
@@ -135,14 +135,14 @@ open:function($key){f$.db.getone($key,app._open);},
 		<input type="button" value="destroy index  / f$.db.clearmetaschema();" onclick="f$.db.clearmetaschema();" />
 		<input type="button" id="rescan" value="rescan / db f$.db.scan(nextfn)" onclick="app.scandb()" />
 		<input type="button" value="reindex / f$.db.reindexcollections()" onclick="f$.db.reindexcollections(false,false,function(O){console.log(O);firebase.database().ref(f$.oxyprefix).set(O)})" />
-        </div></div><br>
+        </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query existing documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of query functionality</div><br>
-		<div class="info">This demo is days old - if you don't know what to do, search for aaa then ddd, then aaa ddd</div>
+		<div class="info">This demo is days old - if you don't know what to do, search for apple then banana, then apple banana</div>
 		<div><span id="scanned2"> </span><input type="button" value="Get collection childs" onclick="app.getcollection(this)" /></div>
   <form onsubmit="var v=app.search(this.firstChild.value);return false;"><input type="text" placeholder="search..." /><input type="submit" value="search"/></form>
 		<div id="results"> </div>
-	</div></div><br>
+	</div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Edit existing documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of edit funcionality</div><br>
 		<div class="info">This demo is days old - if you don't know what to do, click new document and add {"desc":"aaa bbb ccc"}, then click new doc again and add {"desc":"aaa bbb ccc ddd"}, then click new doc again and add {"desc":"ddd"}</div>
