@@ -2,7 +2,7 @@
 
 In json's dbs the structure is pretty much free, however,  except for special occasions, I' ve seen the "document collection concept" been preferable, scalable and reusable, sharable also, talking with people.
 
-Most of the projects for the micro and the small business could be covered by a bunch of collections, given firebase's integrated login.
+Many, many, many projects could be covered by a bunch of collections, given firebase's integrated login.
 I figured, if i was to use a document collections structure for a project I could as well benefit from the know factors of the data structure.
 
 Given your db follows or can follow a "collectionS of documentS structure", this project is a javascript library meant to use with firebase in web applications. It enables some handy feat, with extreme ease of use:
@@ -14,12 +14,10 @@ Given your db follows or can follow a "collectionS of documentS structure", this
 - Using the same subcollection utility a log of the documents changes is implemented, as well as a versioning for documents.
 - Cool: Storage uploads are also stored as documents in a collections, so every other functionality implemented for documents, can also be used on storage uploads
 
-In conjunction with metaschema app, it allows for easy administration of such a database and the feats..
-
-Basic library test form  
+Basic library test form.
 https://cdn.rawgit.com/metaschema/oxyzen/master/index.html 
 
-And our fully featured gui, metaschema  
+And our fully featured gui, metaschema, the best way to use oxyzen.
 https://cdn.rawgit.com/metaschema/metaschema/master/app.html
 
 
