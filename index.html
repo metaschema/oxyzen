@@ -32,17 +32,15 @@ _load_demo:function(){var config={apiKey: "AIzaSyDDvfe-yBLOYN4b42FcmZqAbyON_XgQ1
 	messagingSenderId: "322486208484"};
 	firebase.initializeApp(config);setTimeout('app.init()',500);},
 load_user:function(){
-				var e=document.createElement('script');
-				e.setAttribute('src','https://www.gstatic.com/firebasejs/live/3.0/firebase.js');
-				document.getElementsByTagName('head')[0].appendChild(e);
-				setTimeout('app._load_user()',1000);
-   		},_load_user:function(){
-   			var scr=gid('codesnippet').value;
-				scr=scr.replace('<script src=".*"><\/script>','');
-				scr=scr.replace('<script>','');scr=scr.replace('<\/script>','');
-				eval(scr);
-				setTimeout('app.init()',500);},
-            getcollection:function(e){gid('results').innerHTML='';var cn=e.previousElementSibling.childNodes;for(var icn=0;icn<cn.length;icn++){
+	var e=document.createElement('script');
+	e.setAttribute('src','https://www.gstatic.com/firebasejs/3.6.0/firebase.js');
+	document.getElementsByTagName('head')[0].appendChild(e);
+	setTimeout('app._load_user()',1000);},
+_load_user:function(){var scr=gid('codesnippet').value;
+	scr=scr.replace('<script src=".*"><\/script>','');
+	scr=scr.replace('<script>','');scr=scr.replace('<\/script>','');
+	eval(scr);setTimeout('app.init()',500);},
+getcollection:function(e){gid('results').innerHTML='';var cn=e.previousElementSibling.childNodes;for(var icn=0;icn<cn.length;icn++){
         if(cn[icn].checked==true){
             var col=cn[icn].value;f$.db.getall(col,app._search);
         }else{}
