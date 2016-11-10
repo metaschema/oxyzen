@@ -1,6 +1,6 @@
 # Oxyzen
 
-In json's dbs the structure is pretty much free, however,  except for special occasions, I' ve seen the "document collection concept" been preferable, scalable and reusable, sharable also.
+In json's dbs the structure is pretty much free, however,  except for special occasions, I' ve seen the "document collection concept" been preferable, scalable and reusable, sharable also, talking with people.
 
 Most of the projects for the micro and the small business could be covered by a bunch of collections, given firebase's integrated login.
 I figured, if i was to use a document collections structure for a project I could as well benefit from the know factors of the data structure.
@@ -9,11 +9,10 @@ Given your db follows or can follow a "collectionS of documentS structure", this
 
 - Recursive treeeness for all the documents in any collection, by adding the property parent in the format "collname-dockey" in the documents
 - N<->N relations with metadata,easy querizable, by adding a rel property that have childs in the format  "collname-dockey"
-- Searchable textual index.
-- Hashwords index.
-- Titles index (todo).
+- Searchable word text index + Hashwords index + Titles index (latter one is todo).
 - A subcollection utility.
 - Using the same subcollection utility a log of the documents changes is implemented, as well as a versioning for documents.
+- Cool: Storage uploads are also stored as documents in a collections, so every other functionality implemented for documents, can also be used on storage uploads
 
 In conjunction with metaschema app, it allows for easy administration of such a database and the feats..
 
@@ -22,16 +21,6 @@ https://cdn.rawgit.com/metaschema/oxyzen/master/index.html
 
 And our fully featured gui, metaschema  
 https://cdn.rawgit.com/metaschema/metaschema/master/app.html
-
-I know the answer on the forum about textual searches suggests the use of elastic search via the use of some other server, but I found micro and small projects could not benefit from such an aggravation in the complexity of the structure - and manteinance.
-Especially when this experimental indexing function works so well.
-I have been to firebase devcon in berlin and I specifically asked, they said it's fine to do it. :-)
-I plan to greatly improove the ways of the current indexing, but still, after testin with a db of about 100000 interinked documents in 5 collections, I found our indexing functions, holding, and the overall output performance seems much greater than pure .net xml web services against beefed mysql server. Of course with small limitations; limitations that i find great to ensure our apps have a linear time of execution.
-
-:-D - 
-But I guess a way for returning childs keys only would not break that, instead, could greatly improove the performances in many scenarios where the dev might end preferring getting everything.
-Update- At firebase devcon in berlin i have been pointet to make direct use of REST api, passing in an undocumented (in google, but documented in the old firebase website) parameter shallow=true 
-
 
 
 # How it works
