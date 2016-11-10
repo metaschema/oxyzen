@@ -25,7 +25,7 @@ https://cdn.rawgit.com/metaschema/metaschema/master/app.html
 Beyond ugly but 100% coeherently managed, _key attribute is added to documents during runtime (not stored in the db), in the format collectionname-documentkey - this enables for replations to only require one attribute to reference any document in any collection.
 
 # Recursive treeness and N <-> N relations + relations query.
-The oneliners setparent, link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities.
+The oneliners setparent, link, linkmany, unlink and unlinkmany functions should be used to make use of the relations features.
 
 - f$.db.setparent(k1,k2,json)
 - f$.db.link(k1,k2,json)
