@@ -36,11 +36,11 @@ The indexes are searched using the find function as follows
 
 - f$.db.find(exp) - 
 
-The indexes are mantained by pushing and updating and deleting documents in the db using oxyzen functions, insted of directly using the firebase apis.
+The indexes are mantained by pushing and updating and deleting documents in the db using oxyzen functions, insted of directly using the firebase apis, plus a small number of getters are implemented for easy coherency with the _key attribute in collname-dockey format
 
 - f$.db.add(collname,doc)
 - f$.db.set(doc,,)
-- f$.db.del
+- f$.db.del(key)
 
 # Recursive treeness and N <-> N relations.
 The oneliners setparent, link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities, searches in relations are provided by the same find function already mentioned for text searches.
@@ -50,4 +50,19 @@ The oneliners setparent, link, linkmany, unlink and unlinkmany functions should 
 - f$.db.unlink(k1,k2,json)
 - f$.db.linkmany(k1,keys,json)
 - f$.db.unlinkmany(k1,keys,json)
+
+# Subcollections utility
+A small set of functions is provided to easily handle subcollections for documents.
+
+- f$.db._add
+- f$.db._set
+- f$.db._del
+- f$.db._get
+- f$.db._getone
+
+# Storage uploads handling
+Most easily, the oxygen fs.add and set functions can be used to upload files to firebase storage, their metadata is stored in the file collection as documents and therefore inherits all the other functionalities exposed for documents.
+
+- f$.fs.add(...)
+- f$.fs.set(...)
 
