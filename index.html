@@ -156,7 +156,7 @@ nonewUI:function(key){
 		 f$.db.clearmetaschema()<br/>
 		 f$.db.reindexcollections(_colls,_stepfn,endfn)<br/>	
         </div></div><br/>
-	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query existing documents</div><div class="hidden hiditem">
+	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of query functionality</div><br>
 		<div class="info">This demo is days old - if you don't know what to do, search for apple then banana, then apple banana.<br/>
 		Searching for parent:_key (in the format "collname-doctitle") will search for documents having parent attribute equal to that provided.<br/>
@@ -166,8 +166,8 @@ nonewUI:function(key){
   <form onsubmit="var v=app.search(this.firstChild.value);return false;"><input type="text" placeholder="search..." /><input type="submit" value="search"/></form>
 		<div id="results"> </div>
 	</div></div><br/>
-	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)" id="openerdiv">Edit existing documents</div><div class="hidden hiditem">
-	<div class="_heading _4">Description of edit funcionality</div><br>
+	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)" id="openerdiv">Edit documents</div><div class="hidden hiditem">
+	<div class="_heading _4">Basically the add and set functions are used as one liners to instert/update document, automagically keeping the index up to date.</div><br>
 		<div class="info">This demo is days old - if you don't know what to do, click new document and add {"desc":"aaa bbb ccc"}, then click new doc again and add {"desc":"aaa bbb ccc ddd"}, then click new doc again and add {"desc":"ddd"}</div>
 		<div id="collectiondiv"><input id="collection" type="text" value="testdata" placeholder="testdata" /> - collection name </div>
 		<input id="dockey" type="text" readonly="readonly" value="new doc" />
