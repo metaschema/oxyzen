@@ -123,24 +123,22 @@ nonewUI:function(key){
 		 Todo : collections of documents ....
 	 </div></div><br />
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">References</div><div class="hidden hiditem">
-		note : attribute / variable _key is always in the format "collname-dockey"<br/>
+		note : attribute / variable key is ALWAYS in the format "collname-dockey", paramenters leading with _ are optional, the others are mandatory<br/>
 		 f$.db.scan(nextfn)<br/>
 		 f$.db.clearmetaschema()<br/>
-		 f$.db.reindexcollections(colls,stepfn,endfn)<br/>
-		
-		f$.db.getonce(_key,next,nextrem)<br/>
-		f$.db.getall<br/>
-		f$.db.getone<br/>
-		f$.db.add<br/>
-		f$.db.del(_key)<br/>
-		f$.db.set<br/>
-		f$.db.update<br/>
-		f$.db.setparent<br/>
-		f$.db.link<br/>
-		f$.db.unlink<br/>
-		linkmany<br/>
-		unlinkmany<br/>
-		find(oxyzensearchexp) <br/>
+		 f$.db.reindexcollections(_colls,_stepfn,endfn)<br/>		
+		f$.db.getonce(key,next,nextrem) - gets one document using oxyzen key format using once ovent, and adds the standardized key in the output document <br/>
+		f$.db.getall(col,next,nextrem)<br/>
+		f$.db.getone(key,next,nextrem)<br/>
+		f$.db.add(collname,doc)<br/>
+		f$.db.del(key)<br/>
+		f$.db.set(doc,log,_first,_skipreindex)<br/>
+		f$.db.setparent(key,p_key,_pname) - if no pname is provided it is automatically get, use _pname to fast things up if you already have to parent name in the context.<br/>
+		f$.db.link(key1,key2,json) - creates corresponding childs in the rel property of the two documents.<br/>
+		f$.db.unlink(key1,key2) - removes corresponding childs in the rel property of the two documents.<br/>
+		linkmany(key,keys,json) - creates corresponding childs in the rel property of the list of documents and the related document.<br/>
+		unlinkmany(key,keys,json) - removes corresponding childs in the rel property of the list of documents and the related document<br/>
+		find(oxyzensearchexp) - some text or special prefixs, specifically key:colname-dockey, rel:colname-dockey, parent:colname-dockey<br/>
 		f$.db._add<br/>
 		f$.db._set<br/>
 		f$.db._del		<br/>
