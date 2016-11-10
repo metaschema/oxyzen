@@ -62,11 +62,9 @@ _scandb:function(cls){for(var x=0;x<cls.length;x++){var d={key:cls[x]};
 	gid('scanned1').innerHTML+=s;
 	s='<input type="radio" name="collections" value="'+d.key+'" />'+d.key;
 	gid('scanned2').innerHTML+=s;}}},
-
 getcollection:function(e){gid('results').innerHTML='';var cn=e.previousElementSibling.childNodes;for(var icn=0;icn<cn.length;icn++){
         if(cn[icn].checked==true){var col=cn[icn].value;f$.db.getall(col,app._search);}
-	else{alert('No collection selected')}
-}},
+	else{alert('No collection selected')}}},
 search:function(exp,_collection){gid('results').innerHTML='';f$.db.find(exp,app._search,_collection);},
 _search:function(d){if(d.$key.indexOf("root") >= 0){}else{var s='<input onclick="app.open(\''+d.$key+'\');" type="button" value="['+d.$key+']" />';gid('results').innerHTML+=s;}},
 open:function($key){f$.db.getone($key,app._open);app.openUtility(gid('openerdiv'))},
