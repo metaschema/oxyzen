@@ -94,10 +94,8 @@ nonewUI:function(key){
 	gid('seelog').removeAttribute('disabled');gid('seever').removeAttribute('disabled');
 	gid('collectiondiv').style.display='none';
 	gid('dockey').value=key;},				
-			};
-  </script>
-</head><body>
-
+};
+</script></head><body>
 <div id="start" class="step"><br>
     <img src="img/header_img.png" style="height: 4em;"/>
 <div class="_heading _1">DEMO</div><br>
@@ -168,6 +166,4 @@ nonewUI:function(key){
 		<input type="button" id="link-butt" value="Link" onclick="f$.db.link(gid('doclink1').value,gid('doclink2').value,JSON.parse(gid('relationj').value))"/>
 		<input type="button" id="unlink-butt" value="Unlink" onclick="f$.db.unlink(gid('doclink1').value,gid('doclink2').value)"/>
         </div></div>
-		</div>
-</div>
-</body>
+</div></div></body>
