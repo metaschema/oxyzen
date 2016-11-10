@@ -23,12 +23,11 @@ initAuth:function(nextToken){if(!nextToken){nextToken=function(r){var i=0;}}fire
 /* ----------------------------------------------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------- FIREBASE DATABASE NAMESPACE - START */
 db:{docnamefield:"doctitle",collections:['tag','generic','file'],db:function(ref){return firebase.database().ref(ref)},
-    scan:function(next){f$.db.afterscan=next;
-	var scanurl='https://www-metaschema-io.firebaseio.com/.json?shallow=true&callback=f$.db._scanloaded';
-	var ascr=document.createElement('script');ascr.src=scanurl;ascr.setAttribute('type','text/javascript');
-	document.getElementsByTagName('head')[0].appendChild(ascr);
-    },
-    _scanloaded:function(scandata){var c;f$.db.collections=[];for(c in scandata){if(c!=f$.oxyprefix.replace('/','')){if(scandata[c]===true){f$.db.collections[f$.db.collections.length]=c}}}f$.db.afterscan(f$.db.collections)},
+	scan:function(next){f$.db.afterscan=next;
+		var scanurl='https://www-metaschema-io.firebaseio.com/.json?shallow=true&callback=f$.db._scanloaded';
+		var ascr=document.createElement('script');ascr.src=scanurl;ascr.setAttribute('type','text/javascript');
+		document.getElementsByTagName('head')[0].appendChild(ascr);},
+	_scanloaded:function(scandata){var c;f$.db.collections=[];for(c in scandata){if(c!=f$.oxyprefix.replace('/','')){if(scandata[c]===true){f$.db.collections[f$.db.collections.length]=c}}}f$.db.afterscan(f$.db.collections)},
     start:function(key,event,next){this.db(key.replace('-','/-')).on(event,function(d){var v=d.val();if(v){v.$key=key.split('-')[0]+d.key;next(v);}});},
     end:function(key,event){this.db(key.replace('-','/-')).off(event);},
 /* --------------------------------------------------------------------------------------------- SUBCOLLECTION START */
@@ -38,13 +37,12 @@ db:{docnamefield:"doctitle",collections:['tag','generic','file'],db:function(ref
     _get:function(stype,dkey,next){this.db(stype+'_'+dkey.replace('-','/-')).on('child_added',function(data){var v=data.val();v.$subkey=data.key;next(v);});},
     _getone:function(stype,dkey,key,next){this.db(stype+'_'+dkey.replace('-','/-')+'/'+key).once('value',function(data){var v=data.val();v.$subkey=data.key;next(v);});},
 /* SUBCOLLECTION END ------------------------------------------------------------------------------ COLLECTION START */
-  getonce:function(key,next,nextrem){this.db(key.replace('-','/')).once('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}else{if(nextrem){nextrem(key)}}});},
+	getonce:function(key,next,nextrem){this.db(key.replace('-','/')).once('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}else{if(nextrem){nextrem(key)}}});},
 	getone:function(key,next,nextrem){this.db(key.replace('-','/')).on('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}else{if(nextrem){nextrem(key)}}});},
 	getall:function(col,next,nextrem){var x=this.db('/'+col);x.off('child_added');x.off('child_changed');x.off('child_removed');
-	x.on('child_added',function(d){var v=d.val();v.$key=col+d.key;next(v)});
-	x.on('child_changed',function(d){var v=d.val();v.$key=col+d.key;next(v)});
-	x.on('child_removed',function(snap){var k=col+'+'+snap.key;nextrem(k)});	
-	},
+		x.on('child_added',function(d){var v=d.val();v.$key=col+d.key;next(v)});
+		x.on('child_changed',function(d){var v=d.val();v.$key=col+d.key;next(v)});
+		x.on('child_removed',function(snap){var k=col+'+'+snap.key;nextrem(k)});},
 	add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}if(!doc.parent){doc.parent='tag-root';doc.ptitle='root'}
 		var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
 		var nkey=otype+'-'+x;this._doindex(doc,nkey,this.docnamefield);doc.$key=nkey;return doc;},
