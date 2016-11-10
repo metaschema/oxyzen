@@ -34,22 +34,28 @@ Reindexing features help starting with an already existing db :
 
 The indexes are searched using the find function as follows
 
-- f$.db.find(exp) - 
+- f$.db.find(text,...) - 
 
 The indexes are mantained by pushing and updating and deleting documents in the db using oxyzen functions, insted of directly using the firebase apis, plus a small number of getters are implemented for easy coherency with the _key attribute in collname-dockey format
 
 - f$.db.add(collname,doc)
 - f$.db.set(doc,,)
 - f$.db.del(key)
+- f$.db.get(...)
+- f$.db.getone(key)
+- f$.db.getonce(...)
 
-# Recursive treeness and N <-> N relations.
-The oneliners setparent, link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities, searches in relations are provided by the same find function already mentioned for text searches.
+# Recursive treeness and N <-> N relations + relations query.
+The oneliners setparent, link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities.
 
 - f$.db.setparent(k1,k2,json)
 - f$.db.link(k1,k2,json)
 - f$.db.unlink(k1,k2,json)
 - f$.db.linkmany(k1,keys,json)
 - f$.db.unlinkmany(k1,keys,json)
+Searches in relations are provided by the same find function already mentioned for text searches.
+
+- f$.db.find(exp,...) - exp in the format parent:collname-dockey OR rel:collname-dockey OR  key:collname-dockey
 
 # Subcollections utility
 A small set of functions is provided to easily handle subcollections for documents.
