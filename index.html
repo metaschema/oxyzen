@@ -122,13 +122,13 @@ nonewUI:function(key){
         </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of query functionality</div><br>
+		<div><span id="scanned2"> </span><input type="button" value="Get collection childs" onclick="app.getcollection(this)" /></div>
+		<form onsubmit="var v=app.search(this.firstChild.value);return false;">f$.db.find('<input type="text" placeholder="search..." />',function(doc){...render doc button...},function(doc){...destroy doc button...});<input type="submit" value="run"/></form>
 		<div class="info">Try searching for apple then banana, then apple banana.<br/>
 		Searching for parent:_key (in the format "collname-doctitle") will search for documents having parent attribute equal to that provided.<br/>
 		Searching for rel:_key (in the format "collname-doctitle") will search for documents having a rel attribute child equal to that provided.<br/>
 		Searching for key:_key (in the format "collname-doctitle") is a shortcut for f$.db.getone(_key).<br/></div>
-		<div><span id="scanned2"> </span><input type="button" value="Get collection childs" onclick="app.getcollection(this)" /></div>
-  		<form onsubmit="var v=app.search(this.firstChild.value);return false;">f$.db.find('<input type="text" placeholder="search..." />',function(doc){...render doc button...},function(doc){...destroy doc button...});<input type="submit" value="run"/></form>
-		<div id="results"> </div>
+  		<div id="results"> </div>
 	</div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)" id="openerdiv">Edit documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Basically the add and set functions are used as one liners to instert/update document, automagically keeping the index up to date.</div><br>
