@@ -118,8 +118,7 @@ nonewUI:function(key){
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Reindex db</div><div class="hidden hiditem">
 	 f$.db.clearmetaschema() <input type="button" value="run" onclick="f$.db.clearmetaschema();" /><br />
 	 f$.db.scan(function(collections){...update below list...}) <input type="button" id="rescan" value="run" onclick="app.scandb()" /><br/>
-	 <div id="scanned1"> </div>
-	 f$.db.reindexcollections(<span id="cselection">_colls</span>,_stepfn,endfn)<input type="button" value="run" onclick="f$.db.reindexcollections(false,false,function(O){console.log(O);firebase.database().ref(f$.oxyprefix).set(O)})" />
+	 f$.db.reindexcollections(<span id="scanned1">_colls</span>,_stepfn,endfn)<input type="button" value="run" onclick="f$.db.reindexcollections(false,false,function(O){console.log(O);firebase.database().ref(f$.oxyprefix).set(O)})" />
         </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Query documents</div><div class="hidden hiditem">
 	<div class="_heading _4">Description of query functionality</div><br>
