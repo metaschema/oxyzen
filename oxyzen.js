@@ -53,14 +53,10 @@ db:{docnamefield:"doctitle",collections:['tag','generic','file'],db:function(ref
 		this.getonce(key,function(d){for(var k in d.rels){_this.db(k.replace('-','/')+'/rels/'+key).remove();
 			_this._add(f$.oxyprefix+'log',k,{text:'Unlinked from '+d[_this.docnamefield]+'['+key+'] because it\'s getting deleted.'});
 	}doend();});},
-	set:function(doc,log,_first){var _this=this;var k=doc.$key;this._doindex(doc,k,this.docnamefield);delete doc.$key;if(!log){log='Object Modified'}
+	set:function(doc,log,_first,_skipreindex){var _this=this;var k=doc.$key;if(!_skipreindex){this._doindex(doc,k,this.docnamefield);}delete doc.$key;if(!log){log='Object Modified'}
 		if(_first){_this.db(k.replace('-','/')).set(doc);this._add(f$.oxyprefix+'log',k,{text:"Object Created"});}
 		else{this.getonce(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 			_this.db(k.replace('-','/')).set(doc);_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
-	update:function(doc,log,_first){var _this=this;var k=doc.$key;/*this._doindex(doc,k,this.docnamefield);*/delete doc.$key;if(!log){log='Object Modified'}
-		if(_first){_this.db(k.replace('-','/')).update(doc);this._add(f$.oxyprefix+'log',k,{text:"Object Created"});}
-		else{this.getonce(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
-			_this.db(k.replace('-','/')).update(doc);_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
 /* COLLECTION END ---------------------------------------------------------------------------------- RELATIONS START */
 	setparent:function(k,pk,_pn){var _this=this;
 		if(!_pn){this.db(pk.replace('-','/')+'/'+f$.docnamefield).once('value',function(snap){
