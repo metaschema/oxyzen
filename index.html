@@ -128,7 +128,7 @@ nonewUI:function(key){
 		Searching for rel:_key (in the format "collname-doctitle") will search for documents having a rel attribute child equal to that provided.<br/>
 		Searching for key:_key (in the format "collname-doctitle") is a shortcut for f$.db.getone(_key).<br/></div>
 		<div><span id="scanned2"> </span><input type="button" value="Get collection childs" onclick="app.getcollection(this)" /></div>
-  f$.db.find('<form onsubmit="var v=app.search(this.firstChild.value);return false;"><input type="text" placeholder="search..." />',function(doc){...render button...});<input type="submit" value="search"/></form>
+  		<form onsubmit="var v=app.search(this.firstChild.value);return false;">f$.db.find('<input type="text" placeholder="search..." />',function(doc){...render doc button...},function(doc){...destroy doc button...});<input type="submit" value="run"/></form>
 		<div id="results"> </div>
 	</div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)" id="openerdiv">Edit documents</div><div class="hidden hiditem">
