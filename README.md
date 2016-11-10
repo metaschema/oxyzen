@@ -1,6 +1,6 @@
 # Oxyzen
 
-Basic library test form. https://cdn.rawgit.com/metaschema/oxyzen/master/index.html
+Basic library test form. https://rawgit.com/metaschema/oxyzen/master/index.html
 
 In json's dbs the structure is pretty much free, however,  except for special occasions, I' ve seen the "document collection concept" being a favourite, scalable and reusable, sharable also, talking with people, and finally it's most similar to that of tables and records, from sql.
 
