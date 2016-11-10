@@ -86,7 +86,7 @@ db:{docnamefield:"doctitle",collections:['tag','generic','file'],db:function(ref
 	});}});},
 /* RELATIONS END ------------------------------------------------------------------------------------- INDEXES START */
 	clearmetaschema:function(){firebase.database().ref(f$.oxyprefix).on('child_added',function(snap){firebase.database().ref(f$.oxyprefix+snap.key).remove()})},
-	reindexcollections:function(colls,stepfn,endfn){window.LOCDX={Wndex:{},Hndex:{},invdex:{},done:[]};LOCDX.colls=colls;this._loop_reindexcollections(stepfn,endfn);},
+	reindexcollections:function(colls,stepfn,endfn){if(!colls){colls=f$.db.collections}window.LOCDX={Wndex:{},Hndex:{},invdex:{},done:[]};LOCDX.colls=colls;this._loop_reindexcollections(stepfn,endfn);},
 	_loop_reindexcollections:function(stepfn,endfn){if(LOCDX.done.length<LOCDX.colls.length){
 		this._reindexcollection(LOCDX.colls[LOCDX.done.length],stepfn,function(cn,c,t){LOCDX.done[LOCDX.done.length]=cn;
 				console.log('FINESHED INDEXING '+LOCDX.done[LOCDX.done.length-1]);f$.db._loop_reindexcollections(stepfn,endfn);});
