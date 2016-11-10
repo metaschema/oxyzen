@@ -25,6 +25,19 @@ https://cdn.rawgit.com/metaschema/metaschema/master/app.html
 
 - Ugly but coeherently manageable _key attribut is added to documents during runtime (not stored in the db),  in the format collectionname-documentkey - this enables for example replations to ony require one attribute to reference any document in any collection, or enabled any document in any collection to be the parent of any other.
 
+# Recursive treeness and N <-> N relations + relations query.
+The oneliners setparent, link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities.
+
+- f$.db.setparent(k1,k2,json)
+- f$.db.link(k1,k2,json)
+- f$.db.unlink(k1,k2,json)
+- f$.db.linkmany(k1,keys,json)
+- f$.db.unlinkmany(k1,keys,json)
+
+Searches in relations are provided by the same find function already mentioned for text searches.
+
+- f$.db.find(exp,...) - exp in the format parent:collname-dockey OR rel:collname-dockey OR  key:collname-dockey
+
 # Indexing and searching
 Reindexing features help starting with an already existing db :
  
@@ -44,19 +57,6 @@ The indexes are mantained by pushing and updating and deleting documents in the 
 - f$.db.get(...)
 - f$.db.getone(key)
 - f$.db.getonce(...)
-
-# Recursive treeness and N <-> N relations + relations query.
-The oneliners setparent, link, linkmany, unlink and unlinkmany functions should be used to make use of the n to n relation among documents functionalities.
-
-- f$.db.setparent(k1,k2,json)
-- f$.db.link(k1,k2,json)
-- f$.db.unlink(k1,k2,json)
-- f$.db.linkmany(k1,keys,json)
-- f$.db.unlinkmany(k1,keys,json)
-
-Searches in relations are provided by the same find function already mentioned for text searches.
-
-- f$.db.find(exp,...) - exp in the format parent:collname-dockey OR rel:collname-dockey OR  key:collname-dockey
 
 # Subcollections utility
 A small set of functions is provided to easily handle subcollections for documents.
