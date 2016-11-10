@@ -129,19 +129,17 @@ nonewUI:function(key){
 		Searching for key:key is a shortcut for f$.db.getone(key).*<br/>
 		*key,(in the format "collname-doctitle")</div><div id="results"> </div>
 	</div></div><br/>
-	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)" id="openerdiv">Edit documents</div><div class="hidden hiditem">
-		<div class="info">This demo is days old - if you don't know what to do, click new document and add {"desc":"aaa bbb ccc"}, then click new doc again and add {"desc":"aaa bbb ccc ddd"}, then click new doc again and add {"desc":"ddd"}</div>
+	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)" id="openerdiv">Add - Edit - Delete documents</div><div class="hidden hiditem">
+		f$.db.add('COLLNAME',PARSEDJSON); <input type="button" value="run" onclick="app.save_clicked()"/><br/>
+		f$.db.set(PARSEDJSON); <input type="button" value="run" onclick="app.save_clicked()"/><br/>		
+		f$.db.del('<input id="deldockey" type="text" placeholder="testdata-XSQWSQ...." />'); <input type="button" id="delete-butt" value="run" onclick="f$.db.del(gid('deldockey').value)"/><br/>
 		<div id="collectiondiv"><input id="collection" type="text" value="testdata" placeholder="testdata" /> - collection name </div>
 		<input id="dockey" type="text" readonly="readonly" value="new doc" />
 		<input onclick="app.prenewUI()" id="newdoc-butt" disabled="disabled" type="button" value="make new JSON doc" /><br/>
-		<textarea id="details" placeholder="document json..."></textarea><br/>
-		<input type="button" value="save" onclick="app.save_clicked()"/>
+		<textarea id="details" placeholder="document json..."></textarea><br/>		
 		<input type="button" id="seelog" value="see log" onclick="app.seelog_clicked()" disabled="disabled"/>
 		<input type="button" id="seever" value="see log" onclick="app.seever_clicked()" disabled="disabled"/>
 		<div id="subcollections"> </div>
-        </div></div><br/>
-	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Delete documents</div><div class="hidden hiditem">
-		f$.db.del('<input id="deldockey" type="text" placeholder="testdata-XSQWSQ...." />'); <input type="button" id="delete-butt" value="run" onclick="f$.db.del(gid('deldockey').value)"/>
         </div></div><br/>
 	<div class="testitem"><div class="_heading _2" onclick="app.openUtility(this)">Link / Unlink documents</div><div class="hidden hiditem">
 		<div class="_heading _4">Description of link and unlink functionality</div><br>
