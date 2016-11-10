@@ -22,7 +22,7 @@ https://cdn.rawgit.com/metaschema/metaschema/master/app.html
 
 
 # How it works
-Beyond ugly but 100% coeherently managed, _key attribute is added to documents during runtime (not stored in the db), in the format collectionname-documentkey - this enables for replations to only require one attribute to reference any document in any collection.
+Beyond ugly but 100% coeherently managed, _key attribute is added to documents during runtime (not stored in the db), in the format collectionname-documentkey - this enables for relations to only require one attribute to reference any document in any collection.
 
 # Recursive treeness and N <-> N relations + relations query.
 The oneliners setparent, link, linkmany, unlink and unlinkmany functions should be used to make use of the relations features.
@@ -48,7 +48,7 @@ The indexes are searched using the find function as follows
 
 - f$.db.find(text,...) - 
 
-The indexes are mantained by pushing and updating and deleting documents in the db using oxyzen functions, insted of directly using the firebase apis, plus a small number of getters are implemented for easy coherency with the _key attribute in collname-dockey format
+The indexes are mantained by pushing, updating and deleting documents using oxyzen functions, instead of directly calling the firebase apis;A small number of getters are implemented for easy coherency with the _key attribute in collname-dockey format
 
 - f$.db.add(collname,doc)
 - f$.db.set(doc,,)
