@@ -88,11 +88,11 @@ nonewUI:function(key){		},
 		<g transform="translate(0.40,0.12) rotate(45 0.5 0.5)"><rect width="1" height="1" fill="#2bbcff" stroke-width="0"></rect></g>
 		<circle cx="0.5" cy="0.5" r="0.5" stroke="white" stroke-width="0.41" fill="rgba(0,0,0,0)"></circle>
 	</svg><h1 style="display:inline;">xyzen demo</h1><br /><br />
-<div class="_heading _3">Simple tests for <a href="#">oxyzen library</a>. Connect to our demo <a href="https://firebase.google.com/" target="_blank" style="color:#ffa611" target="_blank">Firebase</a> database or try oxyzen on your Firebase database.</div>
+<h3>Simple tests for <a href="#">oxyzen library</a>. Connect to our demo <a href="https://firebase.google.com/" target="_blank" style="color:#ffa611" target="_blank">Firebase</a> database or try oxyzen on your Firebase database.</h3>
 <br/><div class="_heading _4">(This demo is completely static - will work with http://localhost)</div><br/>
-<div class="_heading _4">(If it's, the first time you login, you will see this page twice and will have to paste your code snippe twice, this is normal and expected result of the login redirect.)</div><br/>
-<div class="_heading _4">(To connect your firebase to this demo, you may have to add rawgit.com in the authorized oauth domains, in your firebase console.)</div><br/>
-<div class="_heading _4">(To connect your firebase to this demo, if you already limited the browser api key in the api console, you may have to add rawgit.com as allowed domain, in the api console.)</div><br/>
+<h4>(If it's, the first time you login, you will see this page twice and will have to paste your code snippe twice, this is normal and expected result of the login redirect.)</h4><br/>
+<h4>(To connect your firebase to this demo, you may have to add rawgit.com in the authorized oauth domains, in your firebase console.)</h4><br/>
+<h4>(To connect your firebase to this demo, if you already limited the browser api key in the api console, you may have to add rawgit.com as allowed domain, in the api console.)</h4><br/>
   <input type="button" onclick="app.load_demo();gid('demomode').style.display='';this.parentNode.style.display='none';" value="Use our Firebase "/>
   <input type="button" onclick="gid('step1').style.display='';this.parentNode.style.display='none';" value="Connect your Firebase" />
 </div>
@@ -138,7 +138,6 @@ nonewUI:function(key){		},
 	<code>f$.db.del('<input id="deldockey" type="text" placeholder="testdata-XSQWSQ...." />');</code> <input type="button" id="delete-butt" value="run" onclick="f$.db.del(gid('deldockey').value)"/><br/>
 <br /></div></div>
 <div class="testitem"><h2 onclick="app.openUtility(this)">Link / Unlink documents</h2><div class="hidden hiditem">
-	<div class="_heading _4">Description of link and unlink functionality</div><br>
 	key:<input id="doclink1" type="text" placeholder="testdata-XSQWSQ...." />
 	key:<input id="doclink2" type="text" placeholder="testdata-HKETDF...." /><br/>
 	<textarea id="relationj" placeholder="Some optional json data for the relation...">{"role":"default"}</textarea><br/>
