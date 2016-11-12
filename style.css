@@ -1,29 +1,13 @@
+body {font-family: 'source sans pro';padding:20px;}
+h1,h2,h3,h4,h5,h6,h7,h8,._heading._1,._heading._2,._heading._3,._heading._4{font-family:'oxygen'}
 
-body {
-    font-family: 'source sans pro';
-    padding:20px;
-}
-h1,h2,h3,h4,h5,h6,h7,h8,._heading._1,._heading._2,._heading._3,._heading._4{
-    font-family:'oxygen'
-}
-._heading._1{
-    font-size: 2em;
-}
-._heading._2{
-    font-size: 1.5em;
-}
-._heading._2:hover{
-    cursor:pointer;
-}
-._heading._3{
-    font-size: 1.17em;
-}
-._heading._4{
-    
-}
-._heading{
-   font-weight: bold; 
-}
+._heading._1{font-size: 2em;}
+._heading._2{font-size: 1.5em;}
+._heading._2:hover{cursor:pointer;}
+._heading._3{font-size: 1.17em;}
+._heading._4{}
+._heading{font-weight: bold;}
+
 input[type=button]{
     background-color: white;
     border: 2px solid black;
