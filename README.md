@@ -37,7 +37,7 @@ Searches in relations are provided by using the find function with a given expre
 # Indexing and searching
 Reindexing features help starting with an already existing db :
  
-- f$.db.clearmetaschema() - explicitely deletes any data used by the oxyzen library.
+- f$.db.clearmetaschema() - explicitely deletes index data used by the oxyzen library.
 - f$.db.scan(nextfn) - using lightweight shallow query via REST, gets a list of the collections present in the database.
 - f$.db.reindexcollections(_colls,stepfn,endfn) - reindexes specified collections, if colls is set to false, all scanned collections are reindexed.
 
