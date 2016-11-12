@@ -8,11 +8,48 @@
   	<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
   	<link href='https://fonts.googleapis.com/css?family=Oxygen+Mono' rel='stylesheet' type='text/css'>
   	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-<style> .step{}
+<style> 
+	
+	body {font-family: 'source sans pro';padding:20px;}
+h1,h2,h3,h4,h5,h6,h7,h8,._heading._1,._heading._2,._heading._3,._heading._4{font-family:'oxygen'}
+a {color:#0059ee;text-decoration: none;}
+
+input[type=button]{background-color: white;
+    border: 2px solid black;
+    border-radius: 2px;
+    font-weight: bold;
+    padding:2px;margin:5px;
+    cursor:pointer;
+}
+input[type=button]:hover{color: #0059ee;border-color:#0059ee;}
+input[type=button]:disabled{border: 2px solid #808080;cursor:default;}
+input[type=button]:disabled:hover{color:#808080;border-color:#808080;}
+input[type=radio]{transform:scale(1.5);-webkit-filter:invert(1);filter:invert(1);}
+input[type=checkbox]{transform:scale(1.5);-webkit-filter:invert(1);filter:invert(1);}
+
+input[type=text] {
+    height: 5px;
+    border: 2px solid #d8d8d8;
+    padding: 5px 0px 5px 10px;
+    margin: 5px;
+}
+textarea{
+    width: 250px;
+    height: 5px;
+    border: 2px solid #d8d8d8;
+    padding: 20px 0px 20px 10px;
+    margin: 5px;
+    overflow:hidden;
+}
+
+	
+	.step{}
 	.testitem{border-bottom:dashed 1px black}
 	input[type=text]{width:200px}
 	textarea{width:50%}
 	.hidden{display:none;}
+	
+	
 </style>
 	<!--firebase-oxygen library-->
 	<script src="./oxyzen.js"></script>
