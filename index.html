@@ -144,7 +144,7 @@ nonewUI:function(key){		},
   <div class="_heading _4">This page is a test form for the oxyzen js library for firebase, <a target="_blank" href="https://github.com/metaschema/oxyzen">code and references are here</a>.<br/>Hover on the run buttons for more infos.</div><br />
 <!-- BEGIN TEST AREA --------------------------------------------------------------------------------------------- BEGIN TEST AREA -->
 <div class="testitem"><h2 onclick="app.openUtility(this)">Reindex db</h2><div class="hidden hiditem">
-	<br /><code>f$.db.clearmetaschema();</code><input type="button" value="run" onclick="f$.db.clearmetaschema();" title="Explicitely deletes index data used by the oxyzen library" /><br />
+	<code>f$.db.clearmetaschema();</code><input type="button" value="run" onclick="f$.db.clearmetaschema();" title="Explicitely deletes index data used by the oxyzen library" /><br />
 	<code>f$.db.scan(endfn)</code> <input type="button" id="rescan" value="run" onclick="app.scandb()" title="Scan the db root for the names of the collections."/><br/>
 	<code>f$.db.reindexcollections([<span id="scanned1">_colls</span>],_stepfn,endfn)</code><input type="button" title="this will try to push to index in the db after indexing" value="run1" onclick="f$.db.reindexcollections(false,false,function(O){console.log(O);firebase.database().ref(f$.oxyprefix).set(O)})" />
 	<input type="button" title="this will try pop a larger index up, for save and later upload using the firebase import from the console" value="run2" onclick="f$.db.reindexcollections(false,false,function(O){console.log(O);alert('todo');})" /><br/>
@@ -166,10 +166,11 @@ nonewUI:function(key){		},
 <br /></div></div>
 <div class="testitem"><h2 onclick="app.openUtility(this)">Link / Unlink documents</h2><div class="hidden hiditem">
 	key:<input id="doclink1" type="text" placeholder="testdata-XSQWSQ...." />
-	key:<input id="doclink2" type="text" placeholder="testdata-HKETDF...." /><br/>
-	<textarea id="relationj" placeholder="Some optional json data for the relation...">{"role":"default"}</textarea><br/>
+	key:<input id="doclink2" type="text" placeholder="testdata-HKETDF...." />
 	<input type="button" id="link-butt" value="Link" onclick="f$.db.link(gid('doclink1').value,gid('doclink2').value,JSON.parse(gid('relationj').value))"/>
 	<input type="button" id="unlink-butt" value="Unlink" onclick="f$.db.unlink(gid('doclink1').value,gid('doclink2').value)"/>
+	<br/>
+	<textarea id="relationj" placeholder="Some optional json data for the relation...">{"role":"default"}</textarea><br/>
 <br /></div></div>
 <div class="testitem"><h2 onclick="app.openUtility(this)">Subcollection utils</h2><div class="hidden hiditem">
 	<input type="button" id="seelog" value="see log" onclick="app.seelog_clicked()" disabled="disabled"/>
