@@ -56,7 +56,7 @@ scandb:function(){gid('scanned1').innerHTML='';gid('scanned2').innerHTML='';gid(
 _scandb:function(cls){for(var x=0;x<cls.length;x++){var d={key:cls[x]};var k=d.key;if(!(k.indexOf(f$.oxyprefix)==0)){
 	var s='<input type="checkbox" value="" />'+d.key;gid('scanned1').innerHTML+=s;
 	s='<input type="radio" name="collections" value="'+d.key+'" />'+d.key;gid('scanned2').innerHTML+=s;
-	s='<input type="radio" name="newdoccoll" value="'+d.key+'" onclick="if(this.checked){gid('collection').value=this.value}" />'+d.key;gid('scanned3').innerHTML+=s;
+	s='<input type="radio" name="newdoccoll" value="'+d.key+'" onclick="if(this.checked){gid(\'collection\').value=this.value}" />'+d.key;gid('scanned3').innerHTML+=s;
 	}}},
 	    
 getcollection:function(e){gid('results').innerHTML='';var cn=e.previousElementSibling.childNodes;for(var icn=0;icn<cn.length;icn++){
