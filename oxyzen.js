@@ -57,6 +57,7 @@ set:function(doc,log,_first,_skipreindex){var _this=this;var k=doc.$key;if(!_ski
 	if(_first){_this.db(k.replace('-','/')).set(doc);this._add(f$.oxyprefix+'log',k,{text:"Object Created"});}
 	else{this.getonce(k,function(d){delete d.$key;var verk=_this._add(f$.oxyprefix+"ver",k,d);
 	_this.db(k.replace('-','/')).set(doc);_this._add(f$.oxyprefix+'log',k,{text:log,prev:verk});});}},
+update:function(doc,log,_first){this.set(doc,log,_first,true);},
 /* COLLECTION END ---------------------------------------------------------------------------------- RELATIONS START */
 setparent:function(k,pk,_pn){var _this=this;
 	if(!_pn){this.db(pk.replace('-','/')+'/'+f$.docnamefield).once('value',function(snap){
