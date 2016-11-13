@@ -84,7 +84,7 @@ _scandb:function(cls){for(var x=0;x<cls.length;x++){var d={key:cls[x]};var k=d.k
 	s='<input type="radio" name="newdoccoll" value="'+d.key+'" onclick="if(this.checked){gid(\'collection\').value=this.value}" />'+d.key;gid('scanned3').innerHTML+=s;
 	}}},
 	    
-getcollection:function(e){gid('results').innerHTML='';var cn=e.previousElementSibling.childNodes;for(var icn=0;icn<cn.length;icn++){
+getcollection:function(e){gid('results').innerHTML='';var cn=gid('scanned2').childNodes;for(var icn=0;icn<cn.length;icn++){
         if(cn[icn].checked==true){var col=cn[icn].value;f$.db.getall(col,app._search);}
 	else{alert('No collection selected')}}},
 search:function(exp,_collection){gid('results').innerHTML='';f$.db.find(exp,app._search,_collection);},
