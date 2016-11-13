@@ -93,10 +93,7 @@ open:function($key){f$.db.getone($key,app._open);app.openUtility(gid('openerdiv'
  _open:function(d){app.nonewUI(d.$key);gid('details').value=JSON.stringify(d);},
 		
 save_clicked:function(){var J=JSON.parse(gid('details').value);if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}},
-newdoc_clicked:function(){var e=gid('dockey');
-	var J=JSON.parse(gid('details').value);
-	if(e.value=='new doc'){app.nonewUI(f$.db.add(gid('collection').value,J));}
-	else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},	
+newdoc_clicked:function(){var J=JSON.parse(gid('details').value);if(J.$key){alert('$key property must NOT be present in the document');}else{app.open(f$.db.add(gid('collection').value,J));}},	
 seelog_clicked:function(){gid('subcollections').innerHTML='';var k=gid('dockey').value;},
 seever_clicked:function(){gid('subcollections').innerHTML='';var k=gid('dockey').value;},				
 prenewUI:function(){},
