@@ -40,8 +40,8 @@ _getone:function(stype,dkey,key,next){this.db(stype+'_'+dkey.replace('-','/-')+'
 getonce:function(key,next,nextrem){this.db(key.replace('-','/')).once('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}else{if(nextrem){nextrem(key)}}});},
 getone:function(key,next,nextrem){this.db(key.replace('-','/')).on('value',function(d){var v=d.val();if(v){v.$key=key;next(v);}else{if(nextrem){nextrem(key)}}});},
 getall:function(col,next,nextrem){var x=this.db('/'+col);x.off('child_added');x.off('child_changed');x.off('child_removed');
-	x.on('child_added',function(d){var v=d.val();v.$key=col+d.key;next(v)});
-	x.on('child_changed',function(d){var v=d.val();v.$key=col+d.key;next(v)});
+	x.on('child_added',function(d){var v=d.val();v.$key=col+'-'+d.key;next(v)});
+	x.on('child_changed',function(d){var v=d.val();v.$key=col+'-'+d.key;next(v)});
 	x.on('child_removed',function(snap){var k=col+'+'+snap.key;nextrem(k)});},
 add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}if(!doc.parent){doc.parent='tag-root';doc.ptitle='root'}
 	var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
