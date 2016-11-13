@@ -42,7 +42,7 @@ getone:function(key,next,nextrem){this.db(key.replace('-','/')).on('value',funct
 getall:function(col,next,nextrem){var x=this.db('/'+col);x.off('child_added');x.off('child_changed');x.off('child_removed');
 	x.on('child_added',function(d){var v=d.val();v.$key=col+'-'+d.key;next(v)});
 	x.on('child_changed',function(d){var v=d.val();v.$key=col+'-'+d.key;next(v)});
-	x.on('child_removed',function(snap){var k=col+'+'+snap.key;nextrem(k)});},
+	x.on('child_removed',function(snap){var k=col+'-'+snap.key;nextrem(k)});},
 add:function(otype,doc){if(f$.inoe(doc[this.docnamefield])){doc[this.docnamefield]='new '+otype;}if(!doc.parent){doc.parent='tag-root';doc.ptitle='root'}
 	var x=this.db(otype).push(doc).key;this._add(f$.oxyprefix+'log',otype+x,{text:"Object Created"});
 	var nkey=otype+'-'+x;this._doindex(doc,nkey,this.docnamefield);doc.$key=nkey;return doc;},
@@ -63,10 +63,10 @@ setparent:function(k,pk,_pn){var _this=this;
 	if(!_pn){this.db(pk.replace('-','/')+'/'+f$.docnamefield).once('value',function(snap){
 		var v=snap.val();_this.db(k.replace('-','/')).update({"parent":pk,"ptitle":v});})}
 	else{this.db(k.replace('-','/')).update({"parent":pk,"ptitle":_pn})}},
-link:function(k1,k2,json){console.log('kok2');if(!json){json={r:'default'}}if(!json.r){json.r='default'}if(f$.inoe(k1)||(f$.inoe(k2))){console.log('only valid keys')}else{
+link:function(k1,k2,json){if(!json){json={r:'default'}}if(!json.r){json.r='default'}if(f$.inoe(k1)||(f$.inoe(k2))){console.log('only valid keys')}else{
 	var _this=this;this.getonce(k1,function(d){_this.getonce(k2,function(dd){var j2=json;
-	json.n=dd[_this.docnamefield];_this.db(k1.replace('-','/')+'/rels/'+k2).set(json);_this._add(f$.oxyprefix+'log',k1,{text:'Linked with '+dd[_this.docnamefield]+'['+k2+']'});
-	j2.n=d[_this.docnamefield];_this.db(k2.replace('-','/')+'/rels/'+k1).set(j2);_this._add(f$.oxyprefix+'log',k2,{text:'Linked with '+d[_this.docnamefield]+'['+k1+']'});
+	json.n=dd[_this.docnamefield]||'untitled';_this.db(k1.replace('-','/')+'/rels/'+k2).set(json);_this._add(f$.oxyprefix+'log',k1,{text:'Linked with '+dd[_this.docnamefield]+'['+k2+']'});
+	j2.n=d[_this.docnamefield]||'untitled';_this.db(k2.replace('-','/')+'/rels/'+k1).set(j2);_this._add(f$.oxyprefix+'log',k2,{text:'Linked with '+d[_this.docnamefield]+'['+k1+']'});
 });});}},
 unlink:function(k1,k2){if(f$.inoe(k1)||(f$.inoe(k2))){console.log('only valid keys')}else{
 	var _this=this;this.getonce(k1,function(d){_this.getonce(k2,function(dd){
