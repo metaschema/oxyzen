@@ -31,9 +31,7 @@ textarea{
     margin: 5px;
     overflow:hidden;
 }
-
-	
-	.step{}
+.step{}
 	.testitem{border-bottom:dashed 1px black}
 	input[type=text]{width:200px}
 	textarea{width:50%}
@@ -94,10 +92,7 @@ _search:function(d){if(d.$key.indexOf("root") >= 0){}else{var s='<input onclick=
 open:function($key){f$.db.getone($key,app._open);app.openUtility(gid('openerdiv'))},
  _open:function(d){app.nonewUI(d.$key);gid('details').value=JSON.stringify(d);},
 		
-save_clicked:function(){var e=gid('dockey');
-	var J=JSON.parse(gid('details').value);
-	if(e.value=='new doc'){app.nonewUI(f$.db.set(gid('collection').value,J));}
-	else{if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}}},
+save_clicked:function(){var J=JSON.parse(gid('details').value);if(!J.$key){alert('$key property must be present in the document');}else{f$.db.set(J)}},
 newdoc_clicked:function(){var e=gid('dockey');
 	var J=JSON.parse(gid('details').value);
 	if(e.value=='new doc'){app.nonewUI(f$.db.add(gid('collection').value,J));}
