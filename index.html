@@ -153,7 +153,7 @@ nonewUI:function(key){		},
 <div class="testitem"><h2 onclick="app.openUtility(this)" id="openerdiv">Add - Edit - Delete documents</h2><div class="hidden hiditem">
 	<br /><textarea id="details" placeholder="document json..."></textarea><br/>
 	<code>f$.db.set(PARSEDJSON);</code> <input type="button" value="run" onclick="app.save_clicked()"/><br/>
-	<code>f$.db.add('<input id="collection" type="text" value="testdata" placeholder="testdata" />',PARSEDJSON);</code> <input type="button" value="run" onclick="app.save_clicked()"/><span id="scanned3"> </span><br/>
+	<code>f$.db.add('<input id="collection" type="text" value="testdata" placeholder="testdata" />',PARSEDJSON);</code> <input type="button" value="run" onclick="app.newdoc_clicked()"/><span id="scanned3"> </span><br/>
 	<code>f$.db.del('<input id="deldockey" type="text" placeholder="testdata-XSQWSQ...." />');</code> <input type="button" id="delete-butt" value="run" onclick="f$.db.del(gid('deldockey').value)"/><br/>
 <br /></div></div>
 <div class="testitem"><h2 onclick="app.openUtility(this)">Link / Unlink documents</h2><div class="hidden hiditem">
