@@ -26,6 +26,7 @@ initAuth:function(nextToken){if(!nextToken){nextToken=function(r){var i=0;}}fire
 db:{docnamefield:"doctitle",collections:['tag','generic','file'],db:function(ref){return firebase.database().ref(ref)},
 scan:function(next){f$.db.afterscan=next;
 	var scanurl=firebase.database().app.options.databaseURL+'/.json?shallow=true&callback=f$.db._scanloaded';
+	if(f$.user){scanurl+='&access_token='+f$.user.token}
 	var ascr=document.createElement('script');ascr.src=scanurl;ascr.setAttribute('type','text/javascript');
 	document.getElementsByTagName('head')[0].appendChild(ascr);},
 _scanloaded:function(scandata){var c;f$.db.collections=[];for(c in scandata){if(c!=f$.oxyprefix.replace('/','')){if(scandata[c]===true){f$.db.collections[f$.db.collections.length]=c}}}f$.db.afterscan(f$.db.collections)},
