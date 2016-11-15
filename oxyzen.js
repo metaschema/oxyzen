@@ -1,7 +1,7 @@
 //OXYGEN for firebase by Hideki Yamamoto & Gioele Cerati
 /*TODO URGENT!!!!!!
 	-Use doctitles dedicated Ndex for autocompletes
-		-[NEW FUNCTION] -Add index for _subcollections 	
+	-[NEW FUNCTION] -Add index for _subcollections 	
 */
 f$={oxyprefix:'OXY/',
 inoe:function(v){if(!v)return true;if(typeof v!='string')return true;if(v.length==0)return true;return false;},
