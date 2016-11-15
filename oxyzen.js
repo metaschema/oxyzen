@@ -5,8 +5,8 @@
 */
 f$={oxyprefix:'OXY/',
 inoe:function(v){if(!v)return true;if(typeof v!='string')return true;if(v.length==0)return true;return false;},
-login:function(provider,method){if(!method){method='redirect'}provider=provider.toLowerCase();
-	if (!firebase.auth().currentUser){var provider;
+login:function(provider,method,must){if(!method){method='redirect'}provider=provider.toLowerCase();
+	if ((!firebase.auth().currentUser)||(must&&(!f$.user.token))){var provider;
 		if(provider=='twitter'){provider=new firebase.auth.TwitterAuthProvider();}
 		else if(provider=='google'){provider=new firebase.auth.GoogleAuthProvider();console.log('glogin');		
 		provider.addScope('https://www.googleapis.com/auth/devstorage.full_control');}
