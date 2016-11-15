@@ -9,7 +9,8 @@ login:function(provider,method,must){if(!method){method='redirect'}provider=prov
 	if ((!firebase.auth().currentUser)||(must&&(!f$.user))){var provider;
 		if(provider=='twitter'){provider=new firebase.auth.TwitterAuthProvider();}
 		else if(provider=='google'){provider=new firebase.auth.GoogleAuthProvider();console.log('glogin');		
-		provider.addScope('https://www.googleapis.com/auth/devstorage.full_control');}
+		provider.addScope('https://www.googleapis.com/auth/devstorage.full_control');
+		provider.addScope('https://www.googleapis.com/auth/firebase.database');}
 		else if(provider=='github'){provider=new firebase.auth.GithubAuthProvider();provider.addScope('repo');}
 		else if(provider=='facebook'){provider=new firebase.auth.FacebookAuthProvider();provider.addScope('user_likes');}
 		if(method=='redirect'){firebase.auth().signInWithRedirect(provider);}}else{console.log('Already logged in');}},
