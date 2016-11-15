@@ -15,7 +15,7 @@ login:function(provider,method,must){if(!method){method='redirect'}provider=prov
 		if(method=='redirect'){firebase.auth().signInWithRedirect(provider);}}else{console.log('Already logged in');}},
 logout:function(){firebase.auth().signOut();},
 initAuth:function(nextToken){if(!nextToken){nextToken=function(r){var i=0;}}firebase.auth().getRedirectResult().then(function(result){f$.user = result.user;
- if(result.credential){console.log(result.credential);f$.user.token = result.credential.accessToken;nextToken(result);}else{  nextToken(false);}
+ if(result.credential){f$.user.token = result.credential.accessToken;nextToken(result);}else{  nextToken(false);}
   }).catch(function(error) {if (error.code === 'auth/account-exists-with-different-credential') {
 			alert('You have already signed up with a different auth provider for that email.');
    // TODO: merge multiple user accounts here.
