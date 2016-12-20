@@ -120,7 +120,7 @@ find:function(s,next,nextrem,_collections){if(!_collections){_collections=this.c
 		for(var c=0;c<ee.length;c++){cn=ee[c].replace('-','/');
 			firebase.database().ref(cn+'/rels').once('value',function(snap){
 			var RR=snap.val();var R;for(R in RR){
-				firebase.database().ref(R.replace('-','/').once('value',fn(R.substr(0,R.indexOf('-'))));
+				firebase.database().ref(R.replace('-','/')).once('value',fn(R.substr(0,R.indexOf('-'))));
 			}
 		});			
 	}}else if(s.indexOf('parent:')==0){var k=s.replace('parent:','');var cn;var colname="parent";
