@@ -116,10 +116,10 @@ find:function(s,next,nextrem,_collections){if(!_collections){_collections=this.c
 			tr.on('child_added',fn(cn));tr.on('child_changed',fn(cn));tr.on('child_removed',fn2);
 	}}else if(s.indexOf('frel:')==0){var cn;	
 		var fn=function(v){return function(snap){var d=snap.val();d.$key=v+'-'+snap.key;next(d)}}
-		var ee=[];ee[0]=s.replace('frel:','');
+		var ee=[];ee[0]=s.replace('frel:','');console.log(ee);
 		for(var c=0;c<ee.length;c++){cn=ee[c].replace('-','/');
 			firebase.database().ref(cn+'/rels').once('value',function(snap){
-			var RR=snap.val();var R;for(R in RR){
+			var RR=snap.val();console.log(RR);var R;for(R in RR){
 				firebase.database().ref(R.replace('-','/')).once('value',fn(R.substr(0,R.indexOf('-'))));
 			}
 		});			
