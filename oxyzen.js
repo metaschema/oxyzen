@@ -160,6 +160,9 @@ _relevantText:function(o){var s=JSON.stringify(o);s=s.replace(/\\n/g,' ');s=s.re
 	s=s.replace(/<([^>]+)\/>/g,' ');s=s.replace(/(<([^>]+)>)/ig,'');s=s.replace(/<link .*>/g,' ');
 	s=s.replace(/{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:|-/g,' ');
 	s=s.replace(/  /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');return s.toLowerCase()},},
+/*todo:integrate next 2 functions in critical places to enable storing functions*/
+s2fn:function(d){var s;for(s in d){if(typeof d[s]=='string'){if(d[s].indexOf('function(')==0){try{d[s]=eval(d[s]);}catch(ex){console.log('indata function didn\' evaluate correctly: '+d[s]+'\nError:'+ex.message);d[s]=ex.message;}}}}return d;},
+fn2s:function(d){var s;for(s in d){if(typeof d[s]=='function'){if(s.indexOf('fn-')==0){d[s]=d[s].toString()}else{delete d[s]}}}return d;},
 /* ------------------------------------------------------------------------------------------------- INDEXES end */
 /* ----------------------------------------------------------------------------------------------- STORAGE START */	
 fs:{tagparent:'tag--KRKRoP7M9JVhp9Toz8m',fs:function(k){return firebase.storage().ref().child(k)},
