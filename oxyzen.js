@@ -32,6 +32,7 @@ scan:function(next){f$.db.afterscan=next;
 _scanloaded:function(scandata){var c;f$.db.collections=[];for(c in scandata){if(c!=f$.oxyprefix.replace('/','')){if(scandata[c]===true){f$.db.collections[f$.db.collections.length]=c}}}f$.db.afterscan(f$.db.collections)},
 start:function(key,event,next){this.db(key.replace('-','/-')).on(event,function(d){var v=d.val();if(v){v.$key=key.split('-')[0]+d.key;next(v);}});},
 end:function(key,event){this.db(key.replace('-','/-')).off(event);},
+autocomplete:function(w,next){this.db(f$.oxyprefix+'Wndex').orderByKey().startAt(w).endAt(w+'ÿ').on('child_added',function(snap){next(snap.key)});},
 /* --------------------------------------------------------------------------------------------- SUBCOLLECTION START */
 _add:function(stype,dkey,json){return this.db(stype+'_'+dkey.replace('-','/-')).push(json).key;},
 _set:function(stype,dkey,key,json){delete json.subkey;this.db(stype+'_'+dkey.replace('-','/-')+'/'+key).set(json);},
