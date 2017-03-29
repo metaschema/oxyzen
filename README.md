@@ -2,6 +2,8 @@
 
 Basic library test form. https://rawgit.com/metaschema/oxyzen/master/index.html
 
+A WEBSITE USING OXYZEN : https://eoitecne.it - pure static / firebase only (try and use the search at the top)
+
 In json's dbs the structure is pretty much free, however,  except for special occasions, I' ve seen the "document collection concept" being a favourite, scalable and reusable, sharable also, talking with people, and finally it's most similar to that of tables and records, from sql.
 
 Many, many, many projects could be covered by a bunch of collections, given firebase's integrated login.
