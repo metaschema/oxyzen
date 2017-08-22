@@ -129,8 +129,7 @@ find:function(s,next,nextrem,_collections){if(!_collections){_collections=this.c
 			tr.on('child_added',fn(cn));tr.on('child_changed',fn(cn));tr.on('child_removed',fn2);
 	}}else{var _this=this;var popped=[];s=s.toLowerCase();var xx=s.split(' ');var xlen=xx.length;
 		s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
-		s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');
-	       
+		s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');console.log(s);	       
 	var uninext=function(d){if(!popped[d.$key]){popped[d.$key]=1;}else{popped[d.$key]++}if(popped[d.$key]>=xlen){next(d);}};
 	var step=function(d){_this.getone(d.key,uninext,nextrem);}
 	for(var x=0;x<xlen;x++){xx[x]=xx[x].trim();if(xx[x].length>2){var tref=null;
