@@ -127,9 +127,9 @@ find:function(s,next,nextrem,_collections){if(!_collections){_collections=this.c
 		for(var c=0;c<_collections.length;c++){cn=_collections[c];
 			var tr=firebase.database().ref(cn).orderByChild(colname).startAt(k).endAt(k);tr.off('child_added');tr.off('child_changed');tr.off('child_removed');
 			tr.on('child_added',fn(cn));tr.on('child_changed',fn(cn));tr.on('child_removed',fn2);
-	}}else{var _this=this;var popped=[];var xx=s.split(' ');var xlen=xx.length;
+	}}else{var _this=this;var popped=[];s=s.toLowerCase();var xx=s.split(' ');var xlen=xx.length;
 		s=s.replace(/\n|\t|\r|{|}|\||<|>|\\|!|"|£|$|%|&|\/|\(|\)|=|\?|'|"|^|\*|\+|\[|\]|§|°|@|\.|,|;|:/g,' ');
-		s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');s=s.toLowerCase();
+		s=s.replace(/# /g,' ');s=s.replace(/   /g,' ');s=s.replace(/  /g,' ');
 	       
 	var uninext=function(d){if(!popped[d.$key]){popped[d.$key]=1;}else{popped[d.$key]++}if(popped[d.$key]>=xlen){next(d);}};
 	var step=function(d){_this.getone(d.key,uninext,nextrem);}
